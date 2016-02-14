@@ -7,7 +7,7 @@
   ],
   "license": "ISC",
   "moduleType": [],
-  "homepage": "",
+  "homepage": "https://github.com/supernoir/ensemble",
   "ignore": [
     "**/.*",
     "node_modules",

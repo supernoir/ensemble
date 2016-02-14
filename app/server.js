@@ -45,6 +45,18 @@ var Characters = mongoose.model('Characters', {
 });
 
 // -----------------------------------------------------------------------------  
+//  REST API
+// -----------------------------------------------------------------------------
+
+app.get('/characters', function(request, response) {
+        Characters.find(function(error, characters) {
+            if (error)
+                response.send(error)
+            response.json(characters);
+        });
+    });
+
+// -----------------------------------------------------------------------------  
 //  LISTENING
 // -----------------------------------------------------------------------------
 
