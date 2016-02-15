@@ -7,15 +7,17 @@
     <meta name="description" content="">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="styles/main.css">
-    <link rel="stylesheet" href="../bower_components/bootstrap-theme-bootswatch-flatly/css/bootstrap.css">
-        <script src="../bower_components/jquery/dist/jquery.js"></script>
-    <script src="../bower_components/bootstrap/js/collapse.js"></script>
-    <script src="../bower_components/angular/angular.min.js"></script>
-    <script src="../bower_components/angular-resource/angular-resource.min.js"></script>
-    <script src="../bower_components/angular-route/angular-route.min.js"></script>
+    <!-- build:css /css/site.css -->
+    <link rel="stylesheet" href="/public/bower_components/bootstrap-theme-bootswatch-flatly/css/bootstrap.css">
+    <!-- endbuild -->
+    <!-- build:js /js/site.js -->
+    <script src="/public/bower_components/jquery/dist/jquery.js"></script>
+    <script src="/public/bower_components/bootstrap/js/collapse.js"></script>
+    <script src="/public/bower_components/angular/angular.min.js"></script>
+    <script src="/public/bower_components/angular-resource/angular-resource.min.js"></script>
+    <script src="/public/bower_components/angular-route/angular-route.min.js"></script>
     <script src="scripts/app.js"></script>
-    <!-- build:css({.tmp/serve,src}) styles/vendor.css -->
-    <!-- build:css({.tmp/serve,src}) styles/app.css -->
+    <!-- endbuild -->
   </head>
   
   <body ng-app="ensembleApp">
@@ -39,15 +41,17 @@
     <!-- Collect the nav links, forms, and other content for toggling -->
     <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
       <ul class="nav navbar-nav">
-        <li><a href="#/ensemble"><span class="glyphicon glyphicon-user"></span> Ensemble</a></li>
-        <li class="active"><a href="#/"><span class="glyphicon glyphicon-globe"></span> Journeys</a></li>
+        <li class="active"><a href="#/"><span class="glyphicon glyphicon-user"></span> Ensemble</a></li>
+        <li><a href="#/travelogue"><span class="glyphicon glyphicon-globe"></span> Journeys</a></li>
         <li><a href="#/timeline"><span class="glyphicon glyphicon-calendar"></span> Timeline</a></li>
       </ul>
     </div>
   </div>
 </nav>
-
+    <div class="container"> 
         <h1>{{hello}}</h1>
+    </div>
+        
 <!-- VIEWS -->
 	  <div ng-view><!-- Render views --></div>
 

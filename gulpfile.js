@@ -1,6 +1,9 @@
 var gulp        = require('gulp');
 var browserSync = require('browser-sync').create();
-var sass        = require('gulp-sass');
+var sass        = require('gulp-sass');;
+var usemin = require('gulp-usemin');
+var uglify = require('gulp-uglify');
+var minifyCss = require('gulp-minify-css');
 
 // Static Server + watching scss/html files
 gulp.task('serve', ['sass'], function() {
