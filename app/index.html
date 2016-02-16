@@ -42,15 +42,13 @@
     <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
       <ul class="nav navbar-nav">
         <li class="active"><a href="#/"><span class="glyphicon glyphicon-user"></span> Ensemble</a></li>
-        <li><a href="#/travelogue"><span class="glyphicon glyphicon-globe"></span> Journeys</a></li>
+        <li><a href="http://localhost:9000/#/"><span class="glyphicon glyphicon-globe"></span> Journeys</a></li>
         <li><a href="#/timeline"><span class="glyphicon glyphicon-calendar"></span> Timeline</a></li>
       </ul>
     </div>
   </div>
 </nav>
-    <div class="container"> 
-        <h1>{{hello}}</h1>
-    </div>
+
         
 <!-- VIEWS -->
 	  <div ng-view><!-- Render views --></div>
@@ -62,7 +60,5 @@
       </div>
 
     </div>
-<!-- build:js(src) scripts/vendor.js -->
-<!-- build:js({.tmp/serve,.tmp/partials,src}) scripts/app.js -->
   </body>
 </html>

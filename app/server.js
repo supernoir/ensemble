@@ -36,9 +36,9 @@ app.use(function (request, response, next) {
 // -----------------------------------------------------------------------------
 
 var Characters = mongoose.model('Characters', {
-    firstname : String,
-    middlename : String,
-    lastname : String, 
+    first_name : String,
+    middle_name : String,
+    last_name : String, 
     gender : String,
     origin : String,
     birthday : Date
