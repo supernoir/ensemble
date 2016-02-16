@@ -23,6 +23,7 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({
   extended: true
 }));
+app.set('view engine', 'jade');
 
 app.use(function (request, response, next) {
     response.header("Access-Control-Allow-Origin", "*");
