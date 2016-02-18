@@ -73,6 +73,13 @@ app.post("/characters", function(request, response, next) {
     });
 });
 
+app.post("/view_character", function(request, response, next) {
+    Characters.findById(request.body._id, function(error, selection) {
+    if (error)
+        response.send(error)
+    response.json(selection);
+  });
+});
 
 // -----------------------------------------------------------------------------  
 //  LISTENING

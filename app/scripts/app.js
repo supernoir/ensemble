@@ -8,6 +8,15 @@
 var ensembleApp = angular.module('ensembleApp',['ngRoute']);
 
 // -----------------------------------------------------------------------------  
+//  CHARACTER FACTORY
+// -----------------------------------------------------------------------------
+
+    ensembleApp.factory('characterFactory',function() {
+        return {
+        };
+    });  
+
+// -----------------------------------------------------------------------------  
 //  ROUTING
 // -----------------------------------------------------------------------------
 
@@ -31,9 +40,9 @@ var ensembleApp = angular.module('ensembleApp',['ngRoute']);
             $locationProvider.html5Mode(false);
     });
 
-ensembleApp.controller('mainController', ['$scope','$http','$location', function ($scope, $http, $location) {
+ensembleApp.controller('mainController', ['$scope','$http','$location','characterFactory', function ($scope, $http, $location, characterFactory) {
 
-
+$scope.factory = characterFactory;
 // -----------------------------------------------------------------------------  
 //  REST API
 // -----------------------------------------------------------------------------
@@ -60,4 +69,20 @@ $scope.submitCharacter = function() {
     $location.path('/');
     }
 
+  $scope.viewCharacterbyId = function(id) {
+        var selected = { _id : id };
+        $http.post('http://localhost:3000/view_character', selected)
+            .success(function(data) {
+                console.log("POST found the right Character");
+                $scope.factory.selection = data;
+                console.log($scope.factory.selection);
+            })
+            .error(function(data) {
+                console.error("POST encountered an error");
+            })
+                $location.path('/view_character'); 
+        } 
+
 }]);
+
+  
