@@ -23,7 +23,10 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({
   extended: true
 }));
-app.set('view engine', 'jade');
+
+// Setting up views
+// app.set('views', './views')
+// app.set('view engine', 'jade');
 
 app.use(function (request, response, next) {
     response.header("Access-Control-Allow-Origin", "*");
@@ -56,6 +59,20 @@ app.get('/characters', function(request, response) {
             response.json(characters);
         });
     });
+
+app.post("/characters", function(request, response, next) {
+    var character = new Characters();
+        character.first_name = request.body.first_name;
+        character.last_name = request.body.last_name;
+        character.origin = request.body.origin;
+
+    character.save(function(error, character) {
+        if (error) { return next(error) }
+        response.json({ message: 'Character added!', data: character });
+       
+    });
+});
+
 
 // -----------------------------------------------------------------------------  
 //  LISTENING

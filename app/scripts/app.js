@@ -19,7 +19,10 @@ var ensembleApp = angular.module('ensembleApp',['ngRoute']);
                 templateUrl : 'views/home.html',
                 controller  : 'mainController'
             })
-
+            .when('/add_character', {
+                templateUrl : 'views/add_character.html',
+                controller  : 'mainController'
+            })
             .when('/view_character', {
                 templateUrl : 'views/view_character.html',
                 controller  : 'mainController'
@@ -37,7 +40,7 @@ ensembleApp.controller('mainController', ['$scope','$http','$location', function
 
 $http({
   method: 'GET',
-  url: 'http://localhost:8080/characters'
+  url: 'http://localhost:3000/characters'
 }).then(function successCallback(response) {
        console.log(response.status, "GET CHARACTERS: " + response.statusText);
     $scope.characters = response.data;
@@ -45,5 +48,16 @@ $http({
       console.error(response.status, response.statusText);
   });
 
+$scope.submitCharacter = function() {
+    var data = $scope.character;  
+
+    $http.post('http://localhost:3000/characters', data).
+        success(function(data) {
+            console.log("posted successfully");
+        }).error(function(data) {
+            console.error("error in posting");
+        })
+    $location.path('/');
+    }
 
 }]);

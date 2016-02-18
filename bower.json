@@ -21,6 +21,7 @@
     "angular": "^1.5.0",
     "angular-route": "^1.5.0",
     "angular-resource": "^1.5.0",
-    "bootstrap-theme-bootswatch-flatly": "^1.0.2"
+    "bootstrap-theme-bootswatch-flatly": "^1.0.2",
+    "angular-flash": "^0.1.14"
   }
 }
