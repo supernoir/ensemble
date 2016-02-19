@@ -32,6 +32,10 @@ var ensembleApp = angular.module('ensembleApp',['ngRoute']);
                 templateUrl : 'views/add_character.html',
                 controller  : 'mainController'
             })
+            .when('/edit_character', {
+                templateUrl : 'views/edit_character.html',
+                controller  : 'mainController'
+            })
             .when('/view_character', {
                 templateUrl : 'views/view_character.html',
                 controller  : 'mainController'
