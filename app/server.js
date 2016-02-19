@@ -45,7 +45,7 @@ var Characters = mongoose.model('Characters', {
     last_name : String, 
     gender : String,
     origin : String,
-    birthday : Date
+    age : String,
 });
 
 // -----------------------------------------------------------------------------  
@@ -64,6 +64,7 @@ app.post("/characters", function(request, response, next) {
     var character = new Characters();
         character.first_name = request.body.first_name;
         character.last_name = request.body.last_name;
+        character.age = request.body.age;
         character.origin = request.body.origin;
 
     character.save(function(error, character) {
