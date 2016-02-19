@@ -104,6 +104,15 @@ app.post("/edit_character", function(request, response, next) {
   });
 });
 
+app.post("/delete_character", function(request, response, next) {
+
+    Characters.findByIdAndRemove(request.body._id, function(error, character) {
+    if (error)
+        response.send(error)
+    response.json({ message: 'Character deleted!', data: character });
+  });
+});
+
 // -----------------------------------------------------------------------------  
 //  LISTENING
 // -----------------------------------------------------------------------------

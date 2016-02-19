@@ -85,6 +85,17 @@ $scope.changeCharacter = function() {
     $location.path('/');
     }
 
+    $scope.deleteCharacter = function(id) {
+        var data = { _id : id };  
+        $http.post('http://localhost:3000/delete_character', data).
+        success(function(data) {
+            console.log(data)
+            console.log("deleted successfully");
+        }).error(function(data) {
+            console.error("error in deleting");
+        })
+    $location.path('/delete_character');
+    }
 
   $scope.viewCharacterbyId = function(id) {
         var viewselect = { _id : id };
