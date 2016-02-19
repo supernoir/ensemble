@@ -73,9 +73,22 @@ $scope.submitCharacter = function() {
     $location.path('/');
     }
 
+$scope.changeCharacter = function() {
+    var data = $scope.character;  
+
+    $http.put('http://localhost:3000/characters', data).
+        success(function(data) {
+            console.log("put successfully");
+        }).error(function(data) {
+            console.error("error in putting");
+        })
+    $location.path('/');
+    }
+
+
   $scope.viewCharacterbyId = function(id) {
-        var selected = { _id : id };
-        $http.post('http://localhost:3000/view_character', selected)
+        var viewselect = { _id : id };
+        $http.post('http://localhost:3000/view_character', viewselected)
             .success(function(data) {
                 console.log("POST found the right Character");
                 $scope.factory.selection = data;
@@ -85,6 +98,20 @@ $scope.submitCharacter = function() {
                 console.error("POST encountered an error");
             })
                 $location.path('/view_character'); 
+        } 
+
+  $scope.editCharacterbyId = function(id) {
+        var editselected = { _id : id };
+        $http.post('http://localhost:3000/edit_character', editselected)
+            .success(function(data) {
+                console.log("POST found the right Character");
+                $scope.factory.selection = data;
+                console.log($scope.factory.selection);
+            })
+            .error(function(data) {
+                console.error("POST encountered an error");
+            })
+                $location.path('/edit_character'); 
         } 
 
 }]);

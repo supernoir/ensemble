@@ -74,7 +74,29 @@ app.post("/characters", function(request, response, next) {
     });
 });
 
+app.put("/characters", function(request, response, next) {
+    var character = new Characters();
+        character.first_name = request.body.first_name;
+        character.last_name = request.body.last_name;
+        character.age = request.body.age;
+        character.origin = request.body.origin;
+
+    character.save(function(error, character) {
+        if (error) { return next(error) }
+        response.json({ message: 'Character changed!', data: character });
+       
+    });
+});
+
 app.post("/view_character", function(request, response, next) {
+    Characters.findById(request.body._id, function(error, selection) {
+    if (error)
+        response.send(error)
+    response.json(selection);
+  });
+});
+
+app.post("/edit_character", function(request, response, next) {
     Characters.findById(request.body._id, function(error, selection) {
     if (error)
         response.send(error)
