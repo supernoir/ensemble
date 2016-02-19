@@ -20,7 +20,7 @@
         </thead>
         <tbody>
         <tr ng-repeat="character in characters">
-            <td><a href="#/view_character" ng-click="viewCharacterbyId(character._id)">{{character.first_name}} {{character.last_name}}</a></td>
+            <td><a ng-href="#/view_character" ng-click="viewCharacterbyId(character._id)">{{character.first_name}} {{character.last_name}}</a></td>
             <td>{{character.age}}</td>
             <td><a ng-click="editCharacterbyId(character._id)" ng-href="#/edit_character">Edit</a> | <a ng-click="deleteCharacter(character._id)" ng-href="#/">Delete</a></td>
         </tr> </tbody> </table>

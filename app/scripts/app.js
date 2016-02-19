@@ -5,7 +5,7 @@
 //  APP SETUP
 // -----------------------------------------------------------------------------
 
-var ensembleApp = angular.module('ensembleApp',['ngRoute']);
+var ensembleApp = angular.module("ensembleApp",["ngRoute"]);
 
 // -----------------------------------------------------------------------------  
 //  CHARACTER FACTORY
@@ -47,6 +47,7 @@ var ensembleApp = angular.module('ensembleApp',['ngRoute']);
 ensembleApp.controller('mainController', ['$scope','$http','$location','characterFactory', function ($scope, $http, $location, characterFactory) {
 
 $scope.factory = characterFactory;
+
 // -----------------------------------------------------------------------------  
 //  REST API
 // -----------------------------------------------------------------------------
@@ -126,5 +127,3 @@ $scope.changeCharacter = function() {
         } 
 
 }]);
-
-  
