@@ -94,7 +94,7 @@ $scope.changeCharacter = function() {
         }).error(function(data) {
             console.error("error in deleting");
         })
-    $location.path('/delete_character');
+    $location.path('/');
     }
 
   $scope.viewCharacterbyId = function(id) {

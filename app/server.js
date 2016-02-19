@@ -31,7 +31,7 @@ app.use(bodyParser.urlencoded({
 app.use(function (request, response, next) {
     response.header("Access-Control-Allow-Origin", "*");
     response.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
-    response.header("Access-Control-Allow-Methods", "POST, GET, DELETE, OPTIONS");  
+    response.header("Access-Control-Allow-Methods", "POST, GET, PUT, DELETE, OPTIONS");  
   next();      
 });
 
@@ -70,7 +70,7 @@ app.post("/characters", function(request, response, next) {
     character.save(function(error, character) {
         if (error) { return next(error) }
         response.json({ message: 'Character added!', data: character });
-       
+
     });
 });
 
@@ -97,10 +97,10 @@ app.post("/view_character", function(request, response, next) {
 });
 
 app.post("/edit_character", function(request, response, next) {
-    Characters.findById(request.body._id, function(error, selection) {
+    Characters.findById(request.body._id, function(error, character) {
     if (error)
         response.send(error)
-    response.json(selection);
+    response.json(character);
   });
 });
 
@@ -120,4 +120,3 @@ app.post("/delete_character", function(request, response, next) {
 var port = 3000;
 app.listen(port);
 console.log("App listening on port " + port);
-
