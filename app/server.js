@@ -87,9 +87,7 @@ app.put("/characters", function(request, response, next) {
         if (error) { return next(error) }
         
         response.json({ message: 'Character added!', data: character });
-
-    });
-        
+    });  
 
   });
 
