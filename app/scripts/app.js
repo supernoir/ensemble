@@ -84,7 +84,9 @@ $scope.changeCharacter = function() {
                 console.log(data);
             console.error("error in putting");
         })
+
     $location.path('/');
+    $render();
     }
 
     $scope.deleteCharacter = function(id) {

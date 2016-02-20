@@ -66,7 +66,8 @@ app.post("/characters", function(request, response, next) {
         character.last_name = request.body.last_name;
         character.age = request.body.age;
         character.origin = request.body.origin;
-
+        character.gender = request.body.gender;
+        
     character.save(function(error, character) {
         if (error) { return next(error) }
         
@@ -82,6 +83,7 @@ app.put("/characters", function(request, response, next) {
         character.last_name = request.body.last_name;
         character.age = request.body.age;
         character.origin = request.body.origin;
+        character.gender = request.body.gender;        
         
     character.save(function(error, character) {
         if (error) { return next(error) }
