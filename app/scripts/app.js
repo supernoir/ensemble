@@ -75,10 +75,11 @@ $scope.submitCharacter = function() {
     }
 
 $scope.changeCharacter = function() {
-    var data = $scope.character;  
-
+    var data = $scope.factory.selection;
+    console.log("here's your " + data);
     $http.put('http://localhost:3000/characters', data).
         success(function(data) {
+            console.log(data);
             console.log("put successfully");
         }).error(function(data) {
             console.error("error in putting");
@@ -99,7 +100,7 @@ $scope.changeCharacter = function() {
     }
 
   $scope.viewCharacterbyId = function(id) {
-        var viewselect = { _id : id };
+        var viewselected = { _id : id };
         $http.post('http://localhost:3000/view_character', viewselected)
             .success(function(data) {
                 console.log("POST found the right Character");

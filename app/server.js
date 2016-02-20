@@ -80,6 +80,12 @@ app.put("/characters", function(request, response, next) {
         character.last_name = request.body.last_name;
         character.age = request.body.age;
         character.origin = request.body.origin;
+        
+    Characters.findByIdAndUpdate(request.body._id, function(error, character) {
+    if (error)
+        response.send(error)
+    response.json(character);
+  });
 
     character.save(function(error, character) {
         if (error) { return next(error) }
