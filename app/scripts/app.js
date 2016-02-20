@@ -86,7 +86,6 @@ $scope.changeCharacter = function() {
         })
 
     $location.path('/');
-    $render();
     }
 
     $scope.deleteCharacter = function(id) {
