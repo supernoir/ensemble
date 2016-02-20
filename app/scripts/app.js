@@ -64,7 +64,6 @@ $http({
 
 $scope.submitCharacter = function() {
     var data = $scope.character;  
-
     $http.post('http://localhost:3000/characters', data).
         success(function(data) {
             console.log("posted successfully");
@@ -76,12 +75,13 @@ $scope.submitCharacter = function() {
 
 $scope.changeCharacter = function() {
     var data = $scope.factory.selection;
-    console.log("here's your " + data);
+    console.log(data);
     $http.put('http://localhost:3000/characters', data).
         success(function(data) {
-            console.log(data);
+                console.log(data);
             console.log("put successfully");
         }).error(function(data) {
+                console.log(data);
             console.error("error in putting");
         })
     $location.path('/');
@@ -116,10 +116,10 @@ $scope.changeCharacter = function() {
   $scope.editCharacterbyId = function(id) {
         var editselected = { _id : id };
         $http.post('http://localhost:3000/edit_character', editselected)
-            .success(function(data) {
+            .success(function(data) { 
                 console.log("POST found the right Character");
                 $scope.factory.selection = data;
-                console.log($scope.factory.selection);
+                console.log(data);
             })
             .error(function(data) {
                 console.error("POST encountered an error");

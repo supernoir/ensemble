@@ -69,29 +69,30 @@ app.post("/characters", function(request, response, next) {
 
     character.save(function(error, character) {
         if (error) { return next(error) }
+        
         response.json({ message: 'Character added!', data: character });
 
     });
 });
 
 app.put("/characters", function(request, response, next) {
-    var character = new Characters();
+    Characters.findById(request.body._id, function(error, character) {
+
         character.first_name = request.body.first_name;
         character.last_name = request.body.last_name;
         character.age = request.body.age;
         character.origin = request.body.origin;
         
-    Characters.findByIdAndUpdate(request.body._id, function(error, character) {
-    if (error)
-        response.send(error)
-    response.json(character);
-  });
-
     character.save(function(error, character) {
         if (error) { return next(error) }
-        response.json({ message: 'Character changed!', data: character });
-       
+        
+        response.json({ message: 'Character added!', data: character });
+
     });
+        
+
+  });
+
 });
 
 app.post("/view_character", function(request, response, next) {
