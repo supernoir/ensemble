@@ -82,6 +82,18 @@ $scope.submitBook = function() {
         })
     $location.path('/books');
     }
+    
+    $scope.deleteBook = function(id) {
+        var data = { _id : id };  
+        $http.post('http://localhost:3000/delete_book', data).
+        success(function(data) {
+            console.log(data)
+            console.log("Book deleted successfully");
+        }).error(function(data) {
+            console.error("error in deleting Book");
+        })
+    $location.path('/books');
+    }    
 
 // -----------------------------------------------------------------------------  
 //  REST API -- CHARACTERS

@@ -82,6 +82,14 @@ app.post("/books", function(request, response, next) {
     });
 });
 
+app.post("/delete_book", function(request, response, next) {
+
+    Books.findByIdAndRemove(request.body._id, function(error, book) {
+    if (error)
+        response.send(error)
+    response.json({ message: 'Book deleted!', data: book });
+  });
+});
 
 // -----------------------------------------------------------------------------  
 //  REST API -- CHARACTERS
