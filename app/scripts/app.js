@@ -28,6 +28,10 @@ var ensembleApp = angular.module("ensembleApp",["ngRoute"]);
                 templateUrl : 'views/home.html',
                 controller  : 'mainController'
             })
+            .when('/books', {
+                templateUrl : 'views/books.html',
+                controller  : 'mainController'
+            })
             .when('/add_character', {
                 templateUrl : 'views/add_character.html',
                 controller  : 'mainController'
@@ -48,8 +52,24 @@ ensembleApp.controller('mainController', ['$scope','$http','$location','characte
 
 $scope.factory = characterFactory;
 
+
+
 // -----------------------------------------------------------------------------  
-//  REST API
+//  REST API -- CHARACTERS
+// -----------------------------------------------------------------------------
+
+$http({
+  method: 'GET',
+  url: 'http://localhost:3000/books'
+}).then(function successCallback(response) {
+       console.log(response.status, "GET BOOKS: " + response.statusText);
+    $scope.books = response.data;
+  }, function errorCallback(response) {
+      console.error(response.status, response.statusText);
+  });
+
+// -----------------------------------------------------------------------------  
+//  REST API -- CHARACTERS
 // -----------------------------------------------------------------------------
 
 $http({

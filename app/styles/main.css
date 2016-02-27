@@ -55,19 +55,31 @@ body {
   border-bottom: 1px solid #e5e5e5;
   color: rgba(255,255,255,0.8) !important;
   
-  /* Shamelessly hijacking the jumbotron */
-    background: url('../public/img/photo-1427805371062-cacdd21273f1.jpeg');
-    background-position: center;
-    background-size: cover;
-    -webkit-background-size: cover;
-    -moz-background-size: cover;
-    -o-background-size: cover;
     
   .btn {
     font-size: 21px;
     padding: 14px 24px;
   }
 }
+
+.jumbo-characters {
+    background: url('../public/img/photo-1427805371062-cacdd21273f1.jpeg');
+    background-position: center;
+    background-size: cover;
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    -o-background-size: cover;    
+}
+
+.jumbo-books {
+    background: url('../public/img/photo-1453748866136-b1dd97284f49.jpeg');
+    background-position: center;
+    background-size: cover;
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    -o-background-size: cover;    
+}
+
 
 /* Supporting marketing content */
 .marketing {

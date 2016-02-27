@@ -1,0 +1,33 @@
+<ol class="breadcrumb">
+  <li><a href="#/">Home</a></li>
+  <li class="active"><a href="#/">Books</a></li>
+</ol>
+
+
+<div class="jumbotron jumbo-books">
+    <h1>Books</h1>
+</div>
+
+<div class="panel panel-default">
+    <div class="panel-body">
+        <table class=table>
+        <thead>
+            <tr>
+                <th>Name</th>
+                <th>Series</th>
+                <th>Cast</th>
+                <th>Desc</th>
+                <th>Edit</th>
+            </tr>
+        </thead>
+        <tbody>
+        <tr ng-repeat="book in books">
+            <td><a ng-href="#/view_character" ng-click="viewCharacterbyId(character._id)">{{book.name}}</a></td>
+            <td>{{book.series}}</td>
+            <td>{{book.cast}}</td>
+            <td>{{book.desc}}</td>
+            <td><a ng-click="editCharacterbyId(character._id)" ng-href="#/edit_character">Edit</a> | <a ng-click="deleteCharacter(character._id)" ng-href="#/">Delete</a></td>
+        </tr> </tbody> </table>
+      <a href="#/add_character"><button type="submit" class="btn btn-default">Add Character</button></a>
+     </div>
+     </div>

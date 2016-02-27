@@ -48,8 +48,29 @@ var Characters = mongoose.model('Characters', {
     age : String,
 });
 
+var Books = mongoose.model('Books', {
+    name : String,
+    series : String,
+    cast : String, 
+    desc : String,
+});
+
 // -----------------------------------------------------------------------------  
-//  REST API
+//  REST API -- BOOKS
+// -----------------------------------------------------------------------------
+
+app.get('/books', function(request, response) {
+        Books.find(function(error, books) {
+            if (error)
+                response.send(error)
+            response.json(books);
+        });
+    });
+
+
+
+// -----------------------------------------------------------------------------  
+//  REST API -- CHARACTERS
 // -----------------------------------------------------------------------------
 
 app.get('/characters', function(request, response) {
