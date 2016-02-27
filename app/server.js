@@ -67,6 +67,20 @@ app.get('/books', function(request, response) {
         });
     });
 
+app.post("/books", function(request, response, next) {
+    var book = new Books();
+        book.name = request.body.name;
+        book.series = request.body.series;
+        book.cast = request.body.cast;
+        book.desc = request.body.desc;
+        
+    book.save(function(error, book) {
+        if (error) { return next(error) }
+        
+        response.json({ message: 'Book added!', data: book });
+
+    });
+});
 
 
 // -----------------------------------------------------------------------------  

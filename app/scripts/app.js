@@ -32,6 +32,10 @@ var ensembleApp = angular.module("ensembleApp",["ngRoute"]);
                 templateUrl : 'views/books.html',
                 controller  : 'mainController'
             })
+            .when('/add_book', {
+                templateUrl : 'views/add_book.html',
+                controller  : 'mainController'
+            })
             .when('/add_character', {
                 templateUrl : 'views/add_character.html',
                 controller  : 'mainController'
@@ -67,6 +71,17 @@ $http({
   }, function errorCallback(response) {
       console.error(response.status, response.statusText);
   });
+
+$scope.submitBook = function() {
+    var data = $scope.book;  
+    $http.post('http://localhost:3000/books', data).
+        success(function(data) {
+            console.log("Book posted successfully");
+        }).error(function(data) {
+            console.error("error in posting Book");
+        })
+    $location.path('/books');
+    }
 
 // -----------------------------------------------------------------------------  
 //  REST API -- CHARACTERS
