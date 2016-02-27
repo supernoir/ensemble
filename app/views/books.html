@@ -6,28 +6,31 @@
 
 <div class="jumbotron jumbo-books">
     <h1>Books</h1>
+          <a href="#/add_book"><button type="submit" class="btn btn-default">Add Book</button></a>
 </div>
 
-<div class="panel panel-default">
+<div class="panel panel-default" ng-repeat="book in books">
+    <div class="panel-heading">
+        <h2>{{book.name}}</h2>
+        <h4>{{book.series}}</h4>
+    </div>
     <div class="panel-body">
+        <p class="text-muted">{{book.desc}}</p>
         <table class="table">
-        <thead>
-            <tr>
-                <th>Name</th>
-                <th>Series</th>
-                <th>Cast</th>
-                <th>Desc</th>
-                <th>Edit</th>
-            </tr>
-        </thead>
-        <tbody>
-        <tr ng-repeat="book in books">
-            <td><a ng-href="#/view_character" ng-click="viewCharacterbyId(character._id)">{{book.name}}</a></td>
-            <td>{{book.series}}</td>
-            <td>{{book.cast}}</td>
-            <td>{{book.desc}}</td>
-            <td><a ng-click="editCharacterbyId(character._id)" ng-href="#/edit_character">Edit</a> | <a ng-click="deleteBook(book._id)" ng-href="#/books">Delete</a></td>
-        </tr> </tbody> </table>
-      <a href="#/add_book"><button type="submit" class="btn btn-default">Add Book</button></a>
-     </div>
-     </div>
+            <thead>
+                <tr>
+                <th>Characters</th>
+                <th>id</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                <td><a href="#/{{book.cast}}">{{book.cast}}</a></td>
+                <td><code>their _id</code></td>      
+                </tr>
+            </tbody>
+        </table>
+        <hr>
+        <a ng-click="editCharacterbyId(character._id)" ng-href="#/edit_character">Edit</a> | <a ng-click="deleteBook(book._id)" ng-href="#/books">Delete</a>
+    </div>
+</div>
