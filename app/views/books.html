@@ -1,3 +1,4 @@
+<div ng-controller="bookController">
 <ol class="breadcrumb">
   <li><a href="#/">Home</a></li>
   <li class="active"><a href="#/">Books</a></li>
@@ -5,7 +6,7 @@
 
 
 <div class="jumbotron jumbo-books">
-    <h1>Books</h1>
+    <h1>Books - {{hello}}</h1>
           <a href="#/add_book"><button type="submit" class="btn btn-default">Add Book</button></a>
 </div>
 
@@ -33,4 +34,5 @@
         <hr>
         <a ng-click="editCharacterbyId(character._id)" ng-href="#/edit_character">Edit</a> | <a ng-click="deleteBook(book._id)" ng-href="#/books">Delete</a>
     </div>
+</div>
 </div>

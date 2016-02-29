@@ -30,11 +30,11 @@ var ensembleApp = angular.module("ensembleApp",["ngRoute"]);
             })
             .when('/books', {
                 templateUrl : 'views/books.html',
-                controller  : 'mainController'
+                controller  : 'bookController'
             })
             .when('/add_book', {
                 templateUrl : 'views/add_book.html',
-                controller  : 'mainController'
+                controller  : 'bookController'
             })
             .when('/add_character', {
                 templateUrl : 'views/add_character.html',
@@ -58,42 +58,7 @@ $scope.factory = characterFactory;
 
 
 
-// -----------------------------------------------------------------------------  
-//  REST API -- CHARACTERS
-// -----------------------------------------------------------------------------
-
-$http({
-  method: 'GET',
-  url: 'http://localhost:3000/books'
-}).then(function successCallback(response) {
-       console.log(response.status, "GET BOOKS: " + response.statusText);
-    $scope.books = response.data;
-  }, function errorCallback(response) {
-      console.error(response.status, response.statusText);
-  });
-
-$scope.submitBook = function() {
-    var data = $scope.book;  
-    $http.post('http://localhost:3000/books', data).
-        success(function(data) {
-            console.log("Book posted successfully");
-        }).error(function(data) {
-            console.error("error in posting Book");
-        })
-    $location.path('/books');
-    }
-    
-    $scope.deleteBook = function(id) {
-        var data = { _id : id };  
-        $http.post('http://localhost:3000/delete_book', data).
-        success(function(data) {
-            console.log(data)
-            console.log("Book deleted successfully");
-        }).error(function(data) {
-            console.error("error in deleting Book");
-        })
-    $location.path('/books');
-    }    
+   
 
 // -----------------------------------------------------------------------------  
 //  REST API -- CHARACTERS
@@ -175,5 +140,47 @@ $scope.changeCharacter = function() {
             })
                 $location.path('/edit_character'); 
         } 
+$scope.world = "Mundo";
 
+}]);
+
+ensembleApp.controller('bookController', ['$scope','$http','$location', function ($scope, $http, $location) {
+    $scope.hello = "Hello " + $scope.world;
+    
+// -----------------------------------------------------------------------------  
+//  REST API -- BOOKS
+// -----------------------------------------------------------------------------
+
+$http({
+  method: 'GET',
+  url: 'http://localhost:3000/books'
+}).then(function successCallback(response) {
+       console.log(response.status, "GET BOOKS: " + response.statusText);
+    $scope.books = response.data;
+  }, function errorCallback(response) {
+      console.error(response.status, response.statusText);
+  });
+
+$scope.submitBook = function() {
+    var data = $scope.book;  
+    $http.post('http://localhost:3000/books', data).
+        success(function(data) {
+            console.log("Book posted successfully");
+        }).error(function(data) {
+            console.error("error in posting Book");
+        })
+    $location.path('/books');
+    }
+    
+    $scope.deleteBook = function(id) {
+        var data = { _id : id };  
+        $http.post('http://localhost:3000/delete_book', data).
+        success(function(data) {
+            console.log(data)
+            console.log("Book deleted successfully");
+        }).error(function(data) {
+            console.error("error in deleting Book");
+        })
+    $location.path('/books');
+    }     
 }]);

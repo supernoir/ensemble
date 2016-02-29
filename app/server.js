@@ -51,7 +51,7 @@ var Characters = mongoose.model('Characters', {
 var Books = mongoose.model('Books', {
     name : String,
     series : String,
-    cast : String, 
+    cast : String,
     desc : String,
 });
 
@@ -167,6 +167,6 @@ app.post("/delete_character", function(request, response, next) {
 //  LISTENING
 // -----------------------------------------------------------------------------
 
-var port = 3000;
+var port = process.env.PORT || 3000;
 app.listen(port);
 console.log("App listening on port " + port);
