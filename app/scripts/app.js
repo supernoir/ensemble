@@ -140,12 +140,12 @@ $scope.changeCharacter = function() {
             })
                 $location.path('/edit_character'); 
         } 
-$scope.world = "Mundo";
+
 
 }]);
 
 ensembleApp.controller('bookController', ['$scope','$http','$location', function ($scope, $http, $location) {
-    $scope.hello = "Hello " + $scope.world;
+
     
 // -----------------------------------------------------------------------------  
 //  REST API -- BOOKS
