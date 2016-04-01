@@ -1,5 +1,6 @@
 'use strict';
 
+console.log("Hello World");
 
 // -----------------------------------------------------------------------------  
 //  APP SETUP
@@ -66,7 +67,7 @@ $scope.factory = characterFactory;
 
 $http({
   method: 'GET',
-  url: 'http://localhost:3000/characters'
+  url: 'http://localhost:3030/characters'
 }).then(function successCallback(response) {
        console.log(response.status, "GET CHARACTERS: " + response.statusText);
     $scope.characters = response.data;
@@ -76,7 +77,7 @@ $http({
 
 $scope.submitCharacter = function() {
     var data = $scope.character;  
-    $http.post('http://localhost:3000/characters', data).
+    $http.post('http://localhost:3030/characters', data).
         success(function(data) {
             console.log("posted successfully");
         }).error(function(data) {
@@ -88,7 +89,7 @@ $scope.submitCharacter = function() {
 $scope.changeCharacter = function() {
     var data = $scope.factory.selection;
     console.log(data);
-    $http.put('http://localhost:3000/characters', data).
+    $http.put('http://localhost:3030/characters', data).
         success(function(data) {
                 console.log(data);
             console.log("put successfully");
@@ -103,7 +104,7 @@ $scope.changeCharacter = function() {
 
     $scope.deleteCharacter = function(id) {
         var data = { _id : id };  
-        $http.post('http://localhost:3000/delete_character', data).
+        $http.post('http://localhost:3030/delete_character', data).
         success(function(data) {
             console.log(data)
             console.log("deleted successfully");
@@ -115,7 +116,7 @@ $scope.changeCharacter = function() {
 
   $scope.viewCharacterbyId = function(id) {
         var viewselected = { _id : id };
-        $http.post('http://localhost:3000/view_character', viewselected)
+        $http.post('http://localhost:3030/view_character', viewselected)
             .success(function(data) {
                 console.log("POST found the right Character");
                 $scope.factory.selection = data;
@@ -129,7 +130,7 @@ $scope.changeCharacter = function() {
 
   $scope.editCharacterbyId = function(id) {
         var editselected = { _id : id };
-        $http.post('http://localhost:3000/edit_character', editselected)
+        $http.post('http://localhost:3030/edit_character', editselected)
             .success(function(data) { 
                 console.log("POST found the right Character");
                 $scope.factory.selection = data;
@@ -153,7 +154,7 @@ ensembleApp.controller('bookController', ['$scope','$http','$location', function
 
 $http({
   method: 'GET',
-  url: 'http://localhost:3000/books'
+  url: 'http://localhost:3030/books'
 }).then(function successCallback(response) {
        console.log(response.status, "GET BOOKS: " + response.statusText);
     $scope.books = response.data;
@@ -163,7 +164,7 @@ $http({
 
 $scope.submitBook = function() {
     var data = $scope.book;  
-    $http.post('http://localhost:3000/books', data).
+    $http.post('http://localhost:3030/books', data).
         success(function(data) {
             console.log("Book posted successfully");
         }).error(function(data) {
@@ -174,7 +175,7 @@ $scope.submitBook = function() {
     
     $scope.deleteBook = function(id) {
         var data = { _id : id };  
-        $http.post('http://localhost:3000/delete_book', data).
+        $http.post('http://localhost:3030/delete_book', data).
         success(function(data) {
             console.log(data)
             console.log("Book deleted successfully");

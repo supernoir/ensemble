@@ -167,6 +167,6 @@ app.post("/delete_character", function(request, response, next) {
 //  LISTENING
 // -----------------------------------------------------------------------------
 
-var port = process.env.PORT || 3000;
+var port = process.env.PORT || 3030;
 app.listen(port);
 console.log("App listening on port " + port);
