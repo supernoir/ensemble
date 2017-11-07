@@ -23,5 +23,9 @@
     "jade": "^1.11.0",
     "mongoose": "^4.4.3",
     "node": "0.0.0"
+  },
+  "dependencies": {
+    "body-parser": "^1.17.2",
+    "morgan": "^1.8.2"
   }
 }
