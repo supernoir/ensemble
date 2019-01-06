@@ -1,47 +1,187 @@
-const express = require('express');
-const app = express();
-const port = 3032 || process.env.port;
-const bookRouter = express.Router();
-const Book = require('./models/bookModel');
+// -----------------------------------------------------------------------------
+//  SETUP
+// -----------------------------------------------------------------------------
+
+const port = process.env.PORT || 3030;
+
+const express  = require('express');
+const bodyParser = require('body-parser');
+// const cors = require('cors');
+const morgan = require('morgan');
 const mongoose = require('mongoose');
-const db = mongoose.connect('mongodb://localhost/bookAPI');
 
-bookRouter.route('/Books').get(function(req, res) {
-	const query = {};
+const app = express();
 
-	if (req.query.genre) {
-		query.genre = req.query.genre;
-	}
+// -----------------------------------------------------------------------------
+//  CONFIGURATION
+// -----------------------------------------------------------------------------
 
-	Book.find(query, function(err, books) {
-		if (err) {
-			res.status(500).send(err);
-		} else {
-			res.json(books);
+mongoose.connect('mongodb://localhost/ensembledb');
+app.use(express.static(__dirname + '/app'));
+
+app.use(morgan('combined'));
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({
+	extended: true
+}));
+
+app.use(function (request, response, next) {
+	response.header('Access-Control-Allow-Origin', '*');
+	response.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept');
+	response.header('Access-Control-Allow-Methods', 'POST, GET, PUT, DELETE, OPTIONS');
+	next();
+});
+
+// -----------------------------------------------------------------------------
+//  MONGOOSE MODELS
+// -----------------------------------------------------------------------------
+
+const Characters = mongoose.model('Characters', {
+	first_name : String,
+	middle_name: String,
+	last_name  : String,
+	gender     : String,
+	origin     : String,
+	age        : String,
+});
+
+const Books = mongoose.model('Books', {
+	title : String,
+	author: String,
+	series: String,
+	cast  : String,
+	desc  : String,
+	genre : String,
+	read  : String
+});
+
+// -----------------------------------------------------------------------------
+//  REST API -- BOOKS
+// -----------------------------------------------------------------------------
+
+app.get('/books', function(request, response) {
+	Books.find(function(error, books) {
+		if (error) {
+			response.send(error);
 		}
+		response.json(books);
 	});
 });
 
-bookRouter.route('/Books/:bookId').get(function(req, res) {
-	Book.findById(req.params.bookId, function(err, book) {
-		if (err) {
-			res.status(500).send(err);
-		} else {
-			res.json(book);
+app.get('/book/:id', (req, res) => {
+	Books.findOne({ _id: req.params.id }, function(err, book) {
+		if (err){
+			res.json({ error: err });
 		}
+		res.json({ book });
 	});
 });
 
-bookRouter.route('/Books').post(function(req, res) {
-	res.send('Posted to /Books');
+
+app.post('/book', function(request, response) {
+	const book = new Books();
+	book.title = request.body.title;
+	book.author = request.body.author;
+	book.series = request.body.series;
+	book.cast = request.body.cast;
+	book.desc = request.body.desc;
+	book.genre = request.body.genre;
+	book.read = request.body.read;
+
+	book.save(function(error, book) {
+		if (error) {
+			response.json({ error: error });
+		}
+
+		response.json({ message: 'Book added!', data: book });
+
+	});
 });
 
-app.use('/api', bookRouter);
+app.delete('/book', function(request, response, next) {
 
-app.get('/', (req, res) => {
-	res.send('App is running');
+	Books.findByIdAndRemove(request.body._id, function(error, book) {
+		if (error)
+			response.send(error);
+		response.json({ message: 'Book deleted!', data: book });
+	});
 });
+
+// -----------------------------------------------------------------------------
+//  REST API -- CHARACTERS
+// -----------------------------------------------------------------------------
+
+app.get('/characters', function(request, response) {
+	Characters.find(function(error, characters) {
+		if (error)
+			response.send(error);
+		response.json(characters);
+	});
+});
+
+app.post('/characters', function(request, response, next) {
+	const character = new Characters();
+	character.first_name = request.body.first_name;
+	character.last_name = request.body.last_name;
+	character.age = request.body.age;
+	character.origin = request.body.origin;
+	character.gender = request.body.gender;
+
+	character.save(function(error, character) {
+		if (error) { return next(error); }
+
+		response.json({ message: 'Character added!', data: character });
+
+	});
+});
+
+app.put('/characters', function(request, response, next) {
+	Characters.findById(request.body._id, function(error, character) {
+
+		character.first_name = request.body.first_name;
+		character.last_name = request.body.last_name;
+		character.age = request.body.age;
+		character.origin = request.body.origin;
+		character.gender = request.body.gender;
+
+		character.save(function(error, character) {
+			if (error) { return next(error); }
+
+			response.json({ message: 'Character added!', data: character });
+		});
+
+	});
+
+});
+
+app.post('/view_character', function(request, response, next) {
+	Characters.findById(request.body._id, function(error, selection) {
+		if (error)
+			response.send(error);
+		response.json(selection);
+	});
+});
+
+app.post('/edit_character', function(request, response, next) {
+	Characters.findById(request.body._id, function(error, character) {
+		if (error)
+			response.send(error);
+		response.json(character);
+	});
+});
+
+app.post('/delete_character', function(request, response, next) {
+
+	Characters.findByIdAndRemove(request.body._id, function(error, character) {
+		if (error)
+			response.send(error);
+		response.json({ message: 'Character deleted!', data: character });
+	});
+});
+
+// -----------------------------------------------------------------------------
+//  LISTENING
+// -----------------------------------------------------------------------------
 
 app.listen(port);
-console.log(`Running on port ${port}`);
-
+console.log('App listening on port ' + port);
