@@ -23,8 +23,8 @@ export default class Book extends React.Component {
 			<div>
 				<ol class="breadcrumb">
 					<li><a href="#/">Home</a></li>
-					<li class="active"><a href="#/">Books</a></li>
-					<li class="active"><a href="#/">{this.state.book.title}</a></li>
+					<li class="active"><a href="/books">Books</a></li>
+					<li class="active"><a href="/">{this.state.book.title}</a></li>
 				</ol>
 
 				<div class="panel panel-default">

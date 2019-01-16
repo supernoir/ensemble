@@ -8,7 +8,7 @@ export default class Dashboard extends React.Component {
 				<h1>{'Dashboard'}</h1>
 				<ul>
 					<li><Link to="/books">{'Books'}</Link></li>
-					<li><Link to="/ensemble">{'Ensemble'}</Link></li>
+					<li><Link to="/characters">{'Characters'}</Link></li>
 				</ul>
 			</div>
 		);

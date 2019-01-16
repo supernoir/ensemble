@@ -21,13 +21,13 @@ export default class Books extends React.Component {
 		return(
 			<div>
 				<ol class="breadcrumb">
-					<li><a href="#/">Home</a></li>
-					<li class="active"><a href="#/">Books</a></li>
+					<li><Link to="/">Home</Link></li>
+					<li class="active"><Link to="/books">Book</Link></li>
 				</ol>
 
 				<div class="jumbotron jumbo-books">
 					<h1>Books</h1>
-					<a href="#/add_book"><button type="submit" class="btn btn-default">Add Book</button></a>
+					<Link to="/addbook"><button type="submit" class="btn btn-default">Add Book</button></Link>
 				</div>
 
 				{this.state.books.map(book => {
