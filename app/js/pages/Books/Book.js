@@ -14,8 +14,10 @@ export default class Book extends React.Component {
 	componentDidMount(){
 		axios.get(`http://localhost:3030/book/${this.props.match.params.id}`)
 			.then(res => {
-				let rawCast = res.data.book.cast.split(',');
-				rawCast.map(member => this.getCharacter(member));
+				if (res.data.book.cast !== void 0) {
+					let rawCast = res.data.book.cast.split(',');
+					rawCast.map(member => this.getCharacter(member));
+				}
 				this.setState({ book: res.data.book });
 			}
 			);
@@ -56,7 +58,7 @@ export default class Book extends React.Component {
 								</tr>
 							</thead>
 							<tbody>
-								{this.state.cast.length > 0
+								{this.state.cast !== void 0 || this.state.cast.length > 0
 									? this.state.cast.map(member => {
 										return <tr>
 											<td><Link to={`/character/${member._id}`}>{member.first_name} {member.last_name}</Link></td>
