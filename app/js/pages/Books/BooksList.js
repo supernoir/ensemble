@@ -35,24 +35,15 @@ export default class Books extends React.Component {
 						<div class="panel panel-default">
 							<div class="panel-heading">
 								<Link to={`/book/${book._id}`}><h2>{book.title}</h2></Link>
-								<h4>{'book.series'}</h4>
+								{book.series !== void 0
+									? <h4>
+										<b>Series</b>{' '}<Link to='/books/series/id'>{book.series}</Link>
+									</h4>
+									: null
+								}
 							</div>
 							<div class="panel-body">
 								<p class="text-muted">{book.desc}</p>
-								<table class="table">
-									<thead>
-										<tr>
-											<th>Characters</th>
-											<th>id</th>
-										</tr>
-									</thead>
-									<tbody>
-										<tr>
-											<td><a href="/:cast">{book.cast}</a></td>
-											<td><code>{'their id'}</code></td>
-										</tr>
-									</tbody>
-								</table>
 								<hr/>
 								<a>{'Edit'}</a> {' | '} <a>{'Delete'}</a>
 							</div>

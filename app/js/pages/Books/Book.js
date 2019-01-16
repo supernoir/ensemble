@@ -1,19 +1,35 @@
 import React from 'react';
 import axios from 'axios';
-import PropTypes from 'prop-types';
+import { Link } from 'react-router-dom';
 
 export default class Book extends React.Component {
 	constructor(){
 		super();
 		this.state = {
-			book: []
+			book: [],
+			cast: [],
 		};
+		this.getCharacter = this.getCharacter.bind(this);
 	}
 	componentDidMount(){
 		axios.get(`http://localhost:3030/book/${this.props.match.params.id}`)
 			.then(res => {
+				let rawCast = res.data.book.cast.split(',');
+				rawCast.map(member => this.getCharacter(member));
 				this.setState({ book: res.data.book });
-				console.log(res.data.book);
+			}
+			);
+	}
+
+	getCharacter(id) {
+		return axios.get(`http://localhost:3030/character/${id}`)
+			.then(res => {
+				this.setState({
+					cast: [
+						...this.state.cast,
+						res.data.character
+					]
+				});
 			}
 			);
 	}
@@ -26,7 +42,6 @@ export default class Book extends React.Component {
 					<li class="active"><a href="/books">Books</a></li>
 					<li class="active"><a href="/">{this.state.book.title}</a></li>
 				</ol>
-
 				<div class="panel panel-default">
 					<div class="panel-heading">
 						<h2>{this.state.book.title}</h2>
@@ -38,14 +53,17 @@ export default class Book extends React.Component {
 							<thead>
 								<tr>
 									<th>Characters</th>
-									<th>id</th>
 								</tr>
 							</thead>
 							<tbody>
-								<tr>
-									<td><a href="/:cast">{this.state.book.cast}</a></td>
-									<td><code>{'their id'}</code></td>
-								</tr>
+								{this.state.cast.length > 0
+									? this.state.cast.map(member => {
+										return <tr>
+											<td><Link to={`/character/${member._id}`}>{member.first_name} {member.last_name}</Link></td>
+										</tr>;
+									})
+									: null
+								}
 							</tbody>
 						</table>
 						<hr/>
