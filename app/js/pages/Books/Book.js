@@ -1,6 +1,7 @@
 import React from 'react';
 import axios from 'axios';
 import { Link } from 'react-router-dom';
+import intl from 'react-intl-universal';
 
 export default class Book extends React.Component {
 	constructor(){
@@ -11,6 +12,7 @@ export default class Book extends React.Component {
 		};
 		this.getCharacter = this.getCharacter.bind(this);
 	}
+
 	componentDidMount(){
 		axios.get(`http://localhost:3030/book/${this.props.match.params.id}`)
 			.then(res => {
@@ -40,8 +42,8 @@ export default class Book extends React.Component {
 		return(
 			<div>
 				<ol class="breadcrumb">
-					<li><a href="#/">Home</a></li>
-					<li class="active"><a href="/books">Books</a></li>
+					<li><a href="#/">{intl.get('component.dashboard')}</a></li>
+					<li class="active"><a href="/books">{intl.get('entity.books')}</a></li>
 					<li class="active"><a href="/">{this.state.book.title}</a></li>
 				</ol>
 				<div class="panel panel-default">
@@ -54,7 +56,7 @@ export default class Book extends React.Component {
 						<table class="table">
 							<thead>
 								<tr>
-									<th>Characters</th>
+									<th>{intl.get('entity.characters')}</th>
 								</tr>
 							</thead>
 							<tbody>
@@ -69,7 +71,7 @@ export default class Book extends React.Component {
 							</tbody>
 						</table>
 						<hr/>
-						<a>{'Edit'}</a> {' | '} <a>{'Delete'}</a>
+						<a>{intl.get('book.action-edit')}</a> {' | '} <a>{intl.get('book.action-delete')}</a>
 					</div>
 				</div>
 			</div>

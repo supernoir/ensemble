@@ -1,0 +1,23 @@
+{
+  "brand": "Ensemble",
+  "entity.books": "Libros",
+  "entity.books.series": "Serie",
+  "entity.characters": "Caracteres",
+  "entity.journeys": "Viajes",
+  "entity.timeline": "Cronograma",
+  "component.dashboard": "Dashboard",
+  "book.action-view": "Ver Libro",
+  "book.action-add": "Añadir Libro",
+  "book.action-edit": "Editar Libro",
+  "book.action-delete": "Borrar Libro",
+  "book.label-title":"Título",
+  "book.label-genre":"Género",
+  "book.label-series":"Serie",
+  "book.label-cast":"Elenco",
+  "book.label-connectcharacters":"Conectar Caracteres",
+  "book.label-description":"Descripción",
+  "character.action-view": "Ver Caracter",
+  "character.action-add": "Añadir Caracter",
+  "character.action-edit": "Editar Caracter",
+  "character.action-delete": "Borrar Caracter"
+}

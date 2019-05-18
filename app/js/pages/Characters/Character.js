@@ -1,6 +1,7 @@
 import React from 'react';
 import axios from 'axios';
 import PropTypes from 'prop-types';
+import intl from 'react-intl-universal';
 
 export default class Character extends React.Component {
 	constructor(){
@@ -21,8 +22,8 @@ export default class Character extends React.Component {
 		return(
 			<div>
 				<ol class="breadcrumb">
-					<li><a href="#/">Home</a></li>
-					<li class="active"><a href="/characters">Characters</a></li>
+					<li><a href="#/">{intl.get('component.dashboard')}</a></li>
+					<li class="active"><a href="/characters">{intl.get('entity.characters')}</a></li>
 					<li class="active"><a href="/">{this.state.character.first_name} {this.state.character.last_name}</a></li>
 				</ol>
 
@@ -34,7 +35,7 @@ export default class Character extends React.Component {
 					<div class="panel-body">
 						<p class="text-muted">{this.state.character.desc}</p>
 						<hr/>
-						<a>{'Edit'}</a> {' | '} <a>{'Delete'}</a>
+						<a>{intl.get('character.action-edit')}</a> {' | '} <a>{intl.get('character.action-delete')}</a>
 					</div>
 				</div>
 			</div>

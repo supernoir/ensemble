@@ -1,6 +1,7 @@
 import React from 'react';
 import axios from 'axios';
 import { Link } from 'react-router-dom';
+import intl from 'react-intl-universal';
 
 export default class CharactersList extends React.Component {
 	constructor(){
@@ -21,13 +22,13 @@ export default class CharactersList extends React.Component {
 		return(
 			<div>
 				<ol class="breadcrumb">
-					<li><Link to="/">Home</Link></li>
-					<li class="active"><Link to="/characters">Characters</Link></li>
+					<li><Link to="/">{intl.get('component.dashboard')}</Link></li>
+					<li class="active"><Link to="/characters">{intl.get('entity.characters')}</Link></li>
 				</ol>
 
 				<div class="jumbotron jumbo-characters">
-					<h1>Characters</h1>
-					<Link to="/addcharacter"><button type="submit" class="btn btn-default">Add Character</button></Link>
+					<h1>{intl.get('entity.characters')}</h1>
+					<Link to="/addcharacter"><button type="submit" class="btn btn-default">{intl.get('character.action-add')}</button></Link>
 				</div>
 
 				{this.state.characters.map(character => {
@@ -41,25 +42,25 @@ export default class CharactersList extends React.Component {
 								<ul>
 									{character.series !== void 0
 										? <li>
-												  <b>Series:</b> <a href="/:cast">{character.series}</a>
+												  <b>{intl.get('entity.books.series')}</b> <a href="/:cast">{character.series}</a>
 											  </li>
 										: null
 									}
 									{character.book !== void 0
 										? <li>
-												  <b>Book:</b> <a href="/:cast">{character.book}</a>
+												  <b>{intl.get('entity.character')}</b> <a href="/:cast">{character.book}</a>
 											  </li>
 										: null
 									}
 									{character.family !== void 0
 										? <li>
-												  <b>Family:</b> <a href="/:cast">{character.family}</a>
+												  <b>{'I18N Family'}:</b> <a href="/:cast">{character.family}</a>
 											  </li>
 										: null
 									}
 								</ul>
 								<hr/>
-								<a>{'Edit'}</a> {' | '} <a>{'Delete'}</a>
+								<a>{intl.get('character.action-edit')}</a> {' | '} <a>{intl.get('character.action-delete')}</a>
 							</div>
 						</div>
 					);

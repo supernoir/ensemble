@@ -1,6 +1,7 @@
 import React from 'react';
 import axios from 'axios';
 import { Link } from 'react-router-dom';
+import intl from 'react-intl-universal';
 
 export default class Books extends React.Component {
 	constructor(){
@@ -21,13 +22,13 @@ export default class Books extends React.Component {
 		return(
 			<div>
 				<ol class="breadcrumb">
-					<li><Link to="/">Home</Link></li>
-					<li class="active"><Link to="/books">Book</Link></li>
+					<li><Link to="/">{intl.get('component.dashboard')}</Link></li>
+					<li class="active"><Link to="/books">{intl.get('entity.books')}</Link></li>
 				</ol>
 
 				<div class="jumbotron jumbo-books">
-					<h1>Books</h1>
-					<Link to="/addbook"><button type="submit" class="btn btn-default">Add Book</button></Link>
+					<h1>{intl.get('entity.books')}</h1>
+					<Link to="/addbook"><button type="submit" class="btn btn-default">{intl.get('book.action-add')}</button></Link>
 				</div>
 
 				{this.state.books.map(book => {
@@ -37,7 +38,7 @@ export default class Books extends React.Component {
 								<Link to={`/book/${book._id}`}><h2>{book.title}</h2></Link>
 								{book.series !== void 0
 									? <h4>
-										<b>Series</b>{' '}<Link to='/books/series/id'>{book.series}</Link>
+										<b>{intl.get('entity.books.series')}</b>{' '}<Link to='/books/series/id'>{book.series}</Link>
 									</h4>
 									: null
 								}
@@ -45,7 +46,7 @@ export default class Books extends React.Component {
 							<div class="panel-body">
 								<p class="text-muted">{book.desc}</p>
 								<hr/>
-								<a>{'Edit'}</a> {' | '} <a>{'Delete'}</a>
+								<a>{intl.get('book.action-edit')}</a> {' | '} <a>{intl.get('book.action-delete')}</a>
 							</div>
 						</div>
 					);

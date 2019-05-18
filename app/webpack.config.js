@@ -10,8 +10,11 @@ module.exports = {
 		path    : path.resolve(__dirname, 'dist'),
 		filename: 'bundle.js'
 	},
-	devtool: 'source-map',
-	module : {
+	devtool  : 'source-map',
+	devServer: {
+		historyApiFallback: true
+	},
+	module: {
 		rules: [
 			{
 				test   : /\.js$/,

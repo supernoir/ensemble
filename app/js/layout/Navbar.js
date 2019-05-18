@@ -1,5 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+import intl from 'react-intl-universal';
 
 export default class Navbar extends React.Component {
 	render(){
@@ -18,10 +19,10 @@ export default class Navbar extends React.Component {
 
 					<div className="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
 						<ul className="nav navbar-nav">
-							<li><Link to="/books"><span className="glyphicon glyphicon-book"></span> Books</Link></li>
-							<li><Link to="/characters"><span className="glyphicon glyphicon-user"></span> Characters</Link></li>
-							<li><Link to="/journeys"><span className="glyphicon glyphicon-globe"></span> Journeys</Link></li>
-							<li><Link to="/events"><span className="glyphicon glyphicon-calendar"></span> Timeline</Link></li>
+							<li><Link to="/books"><span className="glyphicon glyphicon-book"></span> {intl.get('entity.books')}</Link></li>
+							<li><Link to="/characters"><span className="glyphicon glyphicon-user"></span> {intl.get('entity.characters')}</Link></li>
+							<li><Link to="/journeys"><span className="glyphicon glyphicon-globe"></span> {intl.get('entity.journeys')}</Link></li>
+							<li><Link to="/events"><span className="glyphicon glyphicon-calendar"></span> {intl.get('entity.timeline')}</Link></li>
 						</ul>
 					</div>
 				</div>
