@@ -1,6 +1,8 @@
 {
   "brand": "Ensemble",
   "entity.books": "Libros",
+  "desc.books":"Maneja tus libros",
+  "desc.characters":"Maneja tus caracteres",
   "entity.books.series": "Serie",
   "entity.characters": "Caracteres",
   "entity.journeys": "Viajes",

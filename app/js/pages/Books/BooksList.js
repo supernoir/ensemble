@@ -2,6 +2,7 @@ import React from 'react';
 import axios from 'axios';
 import { Link } from 'react-router-dom';
 import intl from 'react-intl-universal';
+import { Container, Breadcrumb, Segment, Header, Card, Divider, Button, Icon } from 'semantic-ui-react';
 
 export default class Books extends React.Component {
 	constructor(){
@@ -20,39 +21,58 @@ export default class Books extends React.Component {
 
 	render(){
 		return(
-			<div>
-				<ol class="breadcrumb">
-					<li><Link to="/">{intl.get('component.dashboard')}</Link></li>
-					<li class="active"><Link to="/books">{intl.get('entity.books')}</Link></li>
-				</ol>
+			<Container>
+				<Breadcrumb>
+					<Breadcrumb.Section link>
+						<Link to="/">{intl.get('component.dashboard')}</Link>
+					</Breadcrumb.Section>
+					<Breadcrumb.Divider />
+					<Breadcrumb.Section active>
+						<Link to="/books">{intl.get('entity.books')}</Link>
+					</Breadcrumb.Section>
+				</Breadcrumb>
 
-				<div class="jumbotron jumbo-books">
-					<h1>{intl.get('entity.books')}</h1>
-					<Link to="/addbook"><button type="submit" class="btn btn-default">{intl.get('book.action-add')}</button></Link>
-				</div>
+				<Segment>
+					<Header as='h2'>
+						{intl.get('entity.books')}
+						<Header.Subheader>{intl.get('desc.books')}</Header.Subheader>
+					</Header>
+					<Divider/>
+					<Button icon='add'>
+						<Link to="/addbook">{intl.get('book.action-add')}</Link>
+					</Button>
 
-				{this.state.books.map(book => {
-					return (
-						<div class="panel panel-default">
-							<div class="panel-heading">
-								<Link to={`/book/${book._id}`}><h2>{book.title}</h2></Link>
-								{book.series !== void 0
-									? <h4>
-										<b>{intl.get('entity.books.series')}</b>{' '}<Link to='/books/series/id'>{book.series}</Link>
-									</h4>
-									: null
-								}
-							</div>
-							<div class="panel-body">
-								<p class="text-muted">{book.desc}</p>
-								<hr/>
-								<a>{intl.get('book.action-edit')}</a> {' | '} <a>{intl.get('book.action-delete')}</a>
-							</div>
-						</div>
-					);
-				})}
+				</Segment>
 
-			</div>
+				<Divider/>
+
+				<Card.Group>
+					{this.state.books.map(book => {
+						return (
+							<Card>
+								<Card.Content>
+									<Card.Header>
+										<Link to={`/book/${book._id}`}>{book.title}</Link>
+									</Card.Header>
+									<Card.Meta>
+										{book.series !== void 0
+											? <h4>
+												<b>{intl.get('entity.books.series')}</b>{' '}<Link to='/books/series/id'>{book.series}</Link>
+											</h4>
+											: null
+										}
+									</Card.Meta>
+									<Card.Description>{book.desc}</Card.Description>
+								</Card.Content>
+								<Card.Content extra>
+									<Button circular icon='edit' color='green'/>
+									<Button circular icon='delete' color='red'/>
+								</Card.Content>
+							</Card>
+						);
+					})}
+				</Card.Group>
+			</Container>
 		);
 	}
 }

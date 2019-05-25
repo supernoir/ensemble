@@ -9,6 +9,7 @@ const bodyParser = require('body-parser');
 // const cors = require('cors');
 const morgan = require('morgan');
 const mongoose = require('mongoose');
+const genres_en = require('./data/genres/en-US.json');
 
 const app = express();
 
@@ -189,6 +190,18 @@ app.post('/delete_character', function(request, response, next) {
 			response.send(error);
 		response.json({ message: 'Character deleted!', data: character });
 	});
+});
+
+// -----------------------------------------------------------------------------
+//  REST API -- GENRES
+// -----------------------------------------------------------------------------
+
+app.get('/genres/:lang', function(req, res) {
+	res.json({
+		lang: req.params.lang,
+		data: genres_en
+	});
+
 });
 
 // -----------------------------------------------------------------------------

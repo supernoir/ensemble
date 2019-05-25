@@ -2,6 +2,13 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import { BrowserRouter as Router, Route } from 'react-router-dom';
 import intl from 'react-intl-universal';
+import axios from 'axios';
+import {
+	Container
+} from 'semantic-ui-react';
+
+// Import Styles
+import '../public/styles/main.scss';
 
 // I18N
 const DEFAULT_LOCALE = 'es-ES';
@@ -26,14 +33,17 @@ import NewBook from './pages/Books/NewBook';
 import CharactersList from './pages/Characters/CharactersList';
 import Character from './pages/Characters/Character';
 import NewCharacter from './pages/Characters/NewCharacter';
+import Login from './pages/Base/Login';
 
 export default class Ensemble extends React.Component {
 	constructor(){
 		super();
 		this.state = {
 			loading               : false,
-			currentLocale: DEFAULT_LOCALE
+			currentLocale: DEFAULT_LOCALE,
+			genres       : [],
 		};
+		this.retrieveGenres = this.retrieveGenres.bind(this);
 	}
 
 	loadLocales(lang) {
@@ -47,8 +57,20 @@ export default class Ensemble extends React.Component {
 			});
 	}
 
+	retrieveGenres(lang){
+		axios
+			.get(`http://localhost:3030/genres/${lang}`)
+			.catch(err => console.error(err))
+			.then(res => {
+				this.setState({
+					genres: res.data.data
+				});
+			});
+	}
+
 	componentWillMount() {
 		this.loadLocales(this.state.currentLocale);
+		this.retrieveGenres(this.state.currentLocale);
 		this.setState({
 			loading: true
 		});
@@ -56,15 +78,16 @@ export default class Ensemble extends React.Component {
 
 	render(){
 		return (
-			<div class="container">
+			<Container>
 				<Router>
 					<React.Fragment>
-						<Navbar/>
+						<Navbar />
 						<main className="mx-0">
 							<Route exact path="/" render={props => <Dashboard {...props} />} />
+							<Route exact path="/login" render={props => <Login {...props} />} />
 							{/* BOOKS */}
 							<Route exact path="/books" render={props => <BooksList {...props} />} />
-							<Route exact path="/addbook" render={props => <NewBook {...props}/>} />
+							<Route exact path="/addbook" render={props => <NewBook genres={this.state.genres} {...props}/>} />
 							<Route exact path="/book/:id" render={props => <Book {...props} />} />
 							{/* CHARACTERS */}
 							<Route exact path="/characters" render={props => <CharactersList {...props} />} />
@@ -74,7 +97,7 @@ export default class Ensemble extends React.Component {
 					</React.Fragment>
 				</Router>
 				<Footer/>
-			</div>
+			</Container>
 
 		);
 	}

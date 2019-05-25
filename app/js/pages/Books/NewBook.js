@@ -1,6 +1,8 @@
 import React from 'react';
 import axios from 'axios';
 import intl from 'react-intl-universal';
+import { Link } from 'react-router-dom';
+import { Container, Segment, Form, Button, Divider, Header, Breadcrumb, Dropdown } from 'semantic-ui-react';
 
 export default class NewBook extends React.Component {
 	constructor() {
@@ -12,7 +14,6 @@ export default class NewBook extends React.Component {
 			cast  : '',
 			desc  : ''
 		};
-
 		this.handleInput = this.handleInput.bind(this);
 	}
 
@@ -36,11 +37,6 @@ export default class NewBook extends React.Component {
 			default:
 				break;
 		}
-		console.log(source, evt.currentTarget.value);
-	}
-
-	componentDidMount() {
-		console.log(this.props);
 	}
 
 	postNewBook(evt) {
@@ -59,92 +55,94 @@ export default class NewBook extends React.Component {
 
 	render() {
 		return (
-			<div ng-controller="bookController">
-				<ol className="breadcrumb">
-					<li><a href="#/">{intl.get('entity.books')}</a></li>
-					<li className="active"><a href="/add_book">{intl.get('book.action-add')}</a></li>
-				</ol>
+			<Container>
+				<Breadcrumb>
+					<Breadcrumb.Section link>
+						<Link to="/">{intl.get('component.dashboard')}</Link>
+					</Breadcrumb.Section>
+					<Breadcrumb.Divider />
+					<Breadcrumb.Section link>
+						<Link to="/books">{intl.get('entity.books')}</Link>
+					</Breadcrumb.Section>
+					<Breadcrumb.Divider />
+					<Breadcrumb.Section active>
+						{intl.get('book.action-add')}
+					</Breadcrumb.Section>
+				</Breadcrumb>
 
-				<div className="panel panel-default">
-					<div className="panel-heading">
-						<h2>{intl.get('book.action-add')}</h2>
-					</div>
-					<div className="panel-body">
-						<form className="form-horizontal" name="book" ng-submit="submitBook()">
-							<div className="form-group">
-								<label for="book" className="col-sm-2 control-label">{intl.get('book.label-title')}</label>
-								<div className="col-sm-10">
-									<input
-										onChange={evt => this.handleInput('title', evt)}
-										type="text"
-										className="form-control"
-										id="title"
-										placeholder="The Final Problem"
-										required
-									/>
-								</div>
-							</div>
-							<div className="form-group">
-								<label for="book" className="col-sm-2 control-label">{intl.get('book.label-genre')}</label>
-								<div className="col-sm-10">
-									<input onChange={evt => this.handleInput('genre', evt)} type="text" className="form-control" id="genre" placeholder="Crime, Suspense" />
-								</div>
-							</div>
-							<div className="form-group">
-								<label for="book" className="col-sm-2 control-label">{intl.get('book.label-series')}</label>
-								<div className="col-sm-10">
-									<input
-										onChange={evt => this.handleInput('series', evt)}
-										type="text"
-										className="form-control"
-										id="series"
-										placeholder="The Memoirs of Sherlock Holmes"
-									/>
-								</div>
-							</div>
-							<div className="form-group">
-								<label for="book" className="col-sm-2 control-label">{intl.get('book.label-cast')}</label>
-								<div className="col-sm-10">
-									<input
-										onChange={evt => this.handleInput('cast', evt)}
-										type="text"
-										className="form-control"
-										id="cast"
-										placeholder="Sherlock Holmes, James Watson"
-									/>
-								</div>
-							</div>
-							<div className="form-group">
-								<label for="book" className="col-sm-2 control-label"><code>{intl.get('book.label-connectcharacters')}</code></label>
-								<div className="col-sm-10">
-									<select className="form-control">
-										<option ng-repeat="character in characters">{'character.first_name'} {'character.last_name'}</option>
-									</select>
-								</div>
-							</div>
-							<div className="form-group">
+				<Segment>
+					<Header as='h2'>
+						{intl.get('book.action-add')}
+					</Header>
+
+					<Divider/>
+
+					<Form>
+						<Form.Field>
+							<label for="book" className="col-sm-2 control-label">{intl.get('book.label-title')}</label>
+							<input
+								onChange={evt => this.handleInput('title', evt)}
+								type="text"
+								className="form-control"
+								id="title"
+								placeholder="The Final Problem"
+								required
+							/>
+
+						</Form.Field>
+						<Form.Field>
+							<label for="book" className="col-sm-2 control-label">{intl.get('book.label-genre')}</label>
+							<select>
+								{this.props.genres !== void 0 ? this.props.genres.map((genre,index) => {
+									return <option key={`${genre}-${index}`}>{genre}</option>;
+								}) : null}
+							</select>
+							<input onChange={evt => this.handleInput('genre', evt)} type="text" className="form-control" id="genre" placeholder="Crime, Suspense" />
+						</Form.Field>
+						<Form.Field>
+							<label for="book" className="col-sm-2 control-label">{intl.get('book.label-series')}</label>
+							<input
+								onChange={evt => this.handleInput('series', evt)}
+								type="text"
+								className="form-control"
+								id="series"
+								placeholder="The Memoirs of Sherlock Holmes"
+							/>
+						</Form.Field>
+						<Form.Field>
+							<label for="book" className="col-sm-2 control-label">{intl.get('book.label-cast')}</label>
+							<input
+								onChange={evt => this.handleInput('cast', evt)}
+								type="text"
+								className="form-control"
+								id="cast"
+								placeholder="Sherlock Holmes, James Watson"
+							/>
+						</Form.Field>
+						<label for="book" className="col-sm-2 control-label"><code>{intl.get('book.label-connectcharacters')}</code></label>
+						<select className="form-control">
+							<option ng-repeat="character in characters">{'character.first_name'} {'character.last_name'}</option>
+						</select>
+						<Form.Field>
+							<Form.Field>
+
 								<label for="book" className="col-sm-2 control-label">{intl.get('book.label-description')}</label>
-								<div className="col-sm-10">
-									<input
-										onChange={evt => this.handleInput('desc', evt)}
-										type="text"
-										className="form-control"
-										id="desc"
-										placeholder="The Adventures of Sherlock Holmes"
-										required
-									/>
-								</div>
-							</div>
-							<div className="form-group">
-								<div className="col-sm-offset-2 col-sm-10">
-									<button onClick={evt => this.postNewBook(evt)} type="submit" className="btn btn-default">{intl.get('book.action-add')}</button>
-								</div>
-							</div>
-						</form>
+								<input
+									onChange={evt => this.handleInput('desc', evt)}
+									type="text"
+									className="form-control"
+									id="desc"
+									placeholder="The Adventures of Sherlock Holmes"
+									required
+								/>
+							</Form.Field>
 
-					</div>
-				</div>
-			</div>
+						</Form.Field>
+						<Button onClick={evt => this.postNewBook(evt)} type="submit" className="btn btn-default">{intl.get('book.action-add')}</Button>
+					</Form>
+
+				</Segment>
+			</Container>
 		);
 	}
 }

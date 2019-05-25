@@ -2,6 +2,7 @@ import React from 'react';
 import axios from 'axios';
 import { Link } from 'react-router-dom';
 import intl from 'react-intl-universal';
+import { Container, Breadcrumb, Segment, Header, Table, Divider, Button, Icon } from 'semantic-ui-react';
 
 export default class Book extends React.Component {
 	constructor(){
@@ -40,41 +41,65 @@ export default class Book extends React.Component {
 
 	render(){
 		return(
-			<div>
-				<ol class="breadcrumb">
-					<li><a href="#/">{intl.get('component.dashboard')}</a></li>
-					<li class="active"><a href="/books">{intl.get('entity.books')}</a></li>
-					<li class="active"><a href="/">{this.state.book.title}</a></li>
-				</ol>
-				<div class="panel panel-default">
-					<div class="panel-heading">
-						<h2>{this.state.book.title}</h2>
-						<h4>{this.state.book.series}</h4>
-					</div>
-					<div class="panel-body">
-						<p class="text-muted">{this.state.book.desc}</p>
-						<table class="table">
-							<thead>
-								<tr>
-									<th>{intl.get('entity.characters')}</th>
-								</tr>
-							</thead>
-							<tbody>
-								{this.state.cast !== void 0 || this.state.cast.length > 0
-									? this.state.cast.map(member => {
-										return <tr>
-											<td><Link to={`/character/${member._id}`}>{member.first_name} {member.last_name}</Link></td>
-										</tr>;
-									})
-									: null
-								}
-							</tbody>
-						</table>
-						<hr/>
-						<a>{intl.get('book.action-edit')}</a> {' | '} <a>{intl.get('book.action-delete')}</a>
-					</div>
-				</div>
-			</div>
+			<Container>
+				<Breadcrumb>
+					<Breadcrumb.Section link>
+						<Link to="/">{intl.get('component.dashboard')}</Link>
+					</Breadcrumb.Section>
+					<Breadcrumb.Divider />
+					<Breadcrumb.Section link>
+						<Link to="/books">{intl.get('entity.books')}</Link>
+					</Breadcrumb.Section>
+					<Breadcrumb.Divider />
+					<Breadcrumb.Section active>
+						{this.state.book.title}
+					</Breadcrumb.Section>
+				</Breadcrumb>
+
+				<Segment>
+					<Header as='h2'>
+						{this.state.book.title}
+						<Header.Subheader>{this.state.book.series}</Header.Subheader>
+					</Header>
+					<Divider/>
+
+					<p>
+						<Icon name='info circle'/>{this.state.book.desc}
+					</p>
+
+					<Divider/>
+
+
+					<Table celled striped>
+						<Table.Header>
+							<Table.Row>
+								<Table.HeaderCell colSpan='3'>{intl.get('entity.characters')}</Table.HeaderCell>
+							</Table.Row>
+						</Table.Header>
+
+						<Table.Body>
+							{this.state.cast !== void 0 || this.state.cast.length > 0
+								? this.state.cast.map(member => {
+									return <Table.Row>
+										<Table.Cell>
+											<Link to={`/character/${member._id}`}>{member.first_name} {member.last_name}</Link>
+										</Table.Cell>
+									</Table.Row>;
+								})
+								: null
+							}
+						</Table.Body>
+					</Table>
+					<Divider/>
+					<Button>
+						{intl.get('book.action-edit')}
+					</Button>
+					<Button>
+						{intl.get('book.action-delete')}
+					</Button>
+				</Segment>
+
+			</Container>
 		);
 	}
 }

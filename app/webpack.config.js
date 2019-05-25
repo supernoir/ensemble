@@ -10,7 +10,7 @@ module.exports = {
 		path    : path.resolve(__dirname, 'dist'),
 		filename: 'bundle.js'
 	},
-	devtool  : 'source-map',
+	devtool  : false,
 	devServer: {
 		historyApiFallback: true
 	},
@@ -39,10 +39,11 @@ module.exports = {
 				}
 			},
 			{
-				test   : /\.(sass|scss)$/,
+				test   : /\.(css|sass|scss)$/,
 				exclude: /node_modules/,
 				use    : ExtractTextPlugin.extract({
-					use     : [{ loader: 'css-loader', options: { sourceMap: true } }, { loader: 'sass-loader', options: { sourceMap: true } }],
+					use: [{ loader: 'css-loader', options: { sourceMap: true } },
+						{ loader: 'sass-loader', options: { sourceMap: true } }],
 					fallback: 'style-loader'
 				})
 			}

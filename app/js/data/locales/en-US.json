@@ -2,6 +2,8 @@
   "brand": "Ensemble",
   "entity.books": "Books",
   "entity.book": "Book",
+  "desc.books":"Manage your books",
+  "desc.characters":"Manage your characters",
   "entity.books.series": "Series",
   "entity.characters": "Characters",
   "entity.character": "Character",

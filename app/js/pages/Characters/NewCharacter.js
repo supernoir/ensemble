@@ -1,6 +1,8 @@
 import React from 'react';
 import axios from 'axios';
 import intl from 'react-intl-universal';
+import { Link } from 'react-router-dom';
+import { Container, Segment, Form, Button, Divider, Header, Breadcrumb } from 'semantic-ui-react';
 
 export default class NewCharacter extends React.Component {
 	constructor() {
@@ -56,46 +58,58 @@ export default class NewCharacter extends React.Component {
 
 	render() {
 		return (
-			<div>
-				<ol className="breadcrumb">
-					<li><a href="/">{intl.get('entity.characters')}</a></li>
-					<li className="active"><a href="/add_character">{intl.get('character.action-add')}</a></li>
-				</ol>
+			<Container>
+				<Breadcrumb>
+					<Breadcrumb.Section link>
+						<Link to="/">{intl.get('component.dashboard')}</Link>
+					</Breadcrumb.Section>
+					<Breadcrumb.Divider />
+					<Breadcrumb.Section link>
+						<Link to="/characters">{intl.get('entity.characters')}</Link>
+					</Breadcrumb.Section>
+					<Breadcrumb.Divider />
+					<Breadcrumb.Section active>
+						{intl.get('character.action-add')}
+					</Breadcrumb.Section>
+				</Breadcrumb>
 
-				<div className="panel panel-default">
-					<div className="panel-heading">
-						<h2>{intl.get('character.action-add')}</h2>
-					</div>
-					<div className="panel-body">
-						<form className="form-horizontal" name="book" ng-submit="submitBook()">
-							<div className="form-group">
-								<label for="book" className="col-sm-2 control-label">I18N First Name</label>
-								<div className="col-sm-10">
-									<input onChange={evt => this.handleInput('firstname', evt)} type="text" className="form-control" id="firstname" placeholder="Jane" required />
-								</div>
-							</div>
-							<div className="form-group">
-								<label for="book" className="col-sm-2 control-label">I18N Last Name</label>
-								<div className="col-sm-10">
-									<input onChange={evt => this.handleInput('lastname', evt)} type="text" className="form-control" id="lastname" placeholder="Doe" />
-								</div>
-							</div>
-							<div className="form-group">
-								<label for="book" className="col-sm-2 control-label">I18N Gender</label>
-								<div className="col-sm-10">
-									<input onChange={evt => this.handleInput('gender', evt)} type="text" className="form-control" id="gender" placeholder="Female" />
-								</div>
-							</div>
-							<div className="form-group">
-								<div className="col-sm-offset-2 col-sm-10">
-									<button onClick={evt => this.postnewCharacter(evt)} type="submit" className="btn btn-default">{intl.get('character.action-add')}</button>
-								</div>
-							</div>
-						</form>
+				<Segment>
+					<Header as='h2'>
+						{intl.get('character.action-add')}
+					</Header>
 
-					</div>
-				</div>
-			</div>
+					<Divider/>
+
+					<Form>
+						<Form.Field>
+							<label for="character">I18N First Name</label>
+							<input onChange={evt => this.handleInput('firstname', evt)} type="text" id="firstname" placeholder="Jane" required />
+						</Form.Field>
+						<Form.Field>
+							<label for="book">I18N Last Name</label>
+							<input onChange={evt => this.handleInput('lastname', evt)} type="text" id="lastname" placeholder="Doe" />
+						</Form.Field>
+						<Form.Field>
+							<label for="book" className="col-sm-2 control-label">I18N Gender</label>
+							<input onChange={evt => this.handleInput('gender', evt)} type="text" className="form-control" id="gender" placeholder="Female" />
+						</Form.Field>
+
+						<Form.Field>
+							<label for="book" className="col-sm-2 control-label">{intl.get('book.label-description')}</label>
+							<input
+								onChange={evt => this.handleInput('desc', evt)}
+								type="text"
+								className="form-control"
+								id="desc"
+								placeholder="The Adventures of Sherlock Holmes"
+								required
+							/>
+						</Form.Field>
+						<Button onClick={evt => this.postnewCharacter(evt)} type="submit" className="btn btn-default">{intl.get('character.action-add')}</Button>
+					</Form>
+
+				</Segment>
+			</Container>
 		);
 	}
 }
