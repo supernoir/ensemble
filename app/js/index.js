@@ -23,6 +23,7 @@ import Navbar from './layout/Navbar';
 
 /* Import Pages */
 import Dashboard from './pages/Dashboard';
+import NotFound from './pages/Base/NotFound';
 
 // --- BOOKS
 import BooksList from './pages/Books/BooksList';
@@ -84,15 +85,15 @@ export default class Ensemble extends React.Component {
 						<Navbar />
 						<main className="mx-0">
 							<Route exact path="/" render={props => <Dashboard {...props} />} />
-							<Route exact path="/login" render={props => <Login {...props} />} />
+							<Route  path="/login" render={props => <Login {...props} />} />
 							{/* BOOKS */}
-							<Route exact path="/books" render={props => <BooksList {...props} />} />
-							<Route exact path="/addbook" render={props => <NewBook genres={this.state.genres} {...props}/>} />
-							<Route exact path="/book/:id" render={props => <Book {...props} />} />
+							<Route  path="/books" render={props => <BooksList {...props} />} />
+							<Route  path="/addbook" render={props => <NewBook genres={this.state.genres} {...props}/>} />
+							<Route  path="/book/:id" render={props => <Book {...props} />} />
 							{/* CHARACTERS */}
-							<Route exact path="/characters" render={props => <CharactersList {...props} />} />
-							<Route exact path="/addcharacter" render={props => <NewCharacter {...props} />} />
-							<Route exact path="/character/:id" render={props => <Character {...props} />} />
+							<Route  path="/characters" render={props => <CharactersList {...props} />} />
+							<Route  path="/addcharacter" render={props => <NewCharacter {...props} />} />
+							<Route  path="/character/:id" render={props => <Character {...props} />} />
 						</main>
 					</React.Fragment>
 				</Router>
