@@ -4,6 +4,7 @@ const HtmlWebpackPlugin = require('html-webpack-plugin');
 const BrowserSyncPlugin = require('browser-sync-webpack-plugin');
 
 module.exports = {
+	mode   : 'development',
 	context: path.resolve(__dirname),
 	entry  : './js/index.js',
 	output : {

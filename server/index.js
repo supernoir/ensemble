@@ -8,9 +8,12 @@ const express  = require('express');
 const bodyParser = require('body-parser');
 // const cors = require('cors');
 const morgan = require('morgan');
+const fs = require('fs');
+const path = require('path');
 const mongoose = require('mongoose');
 const genres_en = require('./data/genres/en-US.json');
 
+const apiVersion = 'v0.0.1';
 const app = express();
 
 // -----------------------------------------------------------------------------
@@ -20,7 +23,6 @@ const app = express();
 mongoose.connect('mongodb://localhost/ensembledb');
 app.use(express.static(__dirname + '/app'));
 
-app.use(morgan('combined'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({
 	extended: true
@@ -32,6 +34,12 @@ app.use(function (request, response, next) {
 	response.header('Access-Control-Allow-Methods', 'POST, GET, PUT, DELETE, OPTIONS');
 	next();
 });
+
+// Write Logs to file
+const accessLogStream = fs.createWriteStream(path.join(__dirname, 'access.log'), { flags: 'a' });
+const loggingFormat = ':method :url :status :res[content-length] - :response-time ms';
+
+app.use(morgan(loggingFormat, { stream: accessLogStream }));
 
 // -----------------------------------------------------------------------------
 //  MONGOOSE MODELS
@@ -203,6 +211,61 @@ app.get('/genres/:lang', function(req, res) {
 	});
 
 });
+
+// -----------------------------------------------------------------------------
+//  REST API -- BOOKS
+// -----------------------------------------------------------------------------
+const logsFromFile  = fs.readFileSync(path.join(__dirname, 'access.log')).toString()
+	.split('\n');
+
+const getDbReadyState = () => {
+	let dbState = mongoose.connection.readyState;
+	let status = '';
+
+	switch (dbState) {
+		case 0:
+			status = '0 - Disconnected';
+			break;
+		case 1:
+			status = '1 - Connected';
+			break;
+		case 2:
+			status = '2 - Connecting';
+			break;
+		case 3:
+			status = '3 - Disconnecting';
+			break;
+		case 4:
+			status = '4 - Invalid Credentials';
+			break;
+		default:
+			status = 'X - Status couldn\'nt be obtained';
+			break;
+	}
+	return status;
+};
+
+app.get('/admin', function(req, res) {
+	res.json({
+		api: [{
+			version: apiVersion,
+			logs   : logsFromFile,
+			uptime : process.uptime()
+		}],
+		db: [{
+			status: getDbReadyState(),
+			// models         : async() => await mongoose.connection.models,
+			// totalBooks     : async() => await Books.countDocuments(),
+			// totalCharacters: async() => await Characters.countDocuments()
+		}],
+		/*
+		client: {
+					lang: req.params.lang
+				}
+		*/
+	});
+});
+
 
 // -----------------------------------------------------------------------------
 //  LISTENING

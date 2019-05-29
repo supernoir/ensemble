@@ -21,9 +21,10 @@ const locales = {
 import Footer from './layout/Footer';
 import Navbar from './layout/Navbar';
 
-/* Import Pages */
+// --- BASE
 import Dashboard from './pages/Dashboard';
-import NotFound from './pages/Base/NotFound';
+import Login from './pages/Base/Login';
+import AdminPanel from './pages/Admin/AdminPanel';
 
 // --- BOOKS
 import BooksList from './pages/Books/BooksList';
@@ -34,7 +35,6 @@ import NewBook from './pages/Books/NewBook';
 import CharactersList from './pages/Characters/CharactersList';
 import Character from './pages/Characters/Character';
 import NewCharacter from './pages/Characters/NewCharacter';
-import Login from './pages/Base/Login';
 
 export default class Ensemble extends React.Component {
 	constructor(){
@@ -43,8 +43,9 @@ export default class Ensemble extends React.Component {
 			loading               : false,
 			currentLocale: DEFAULT_LOCALE,
 			genres       : [],
+			adminData    : {}
 		};
-		this.retrieveGenres = this.retrieveGenres.bind(this);
+		this.retrieveAdminData = this.retrieveAdminData.bind(this);
 	}
 
 	loadLocales(lang) {
@@ -58,7 +59,7 @@ export default class Ensemble extends React.Component {
 			});
 	}
 
-	retrieveGenres(lang){
+	retrieveGenres = (lang) => {
 		axios
 			.get(`http://localhost:3030/genres/${lang}`)
 			.catch(err => console.error(err))
@@ -69,9 +70,20 @@ export default class Ensemble extends React.Component {
 			});
 	}
 
+	retrieveAdminData = () => {
+		axios.get(`http://localhost:3030/admin`)
+			.catch(err => console.error(err))
+			.then(res => {
+				this.setState({
+					adminData: res.data
+				});
+			});
+	}
+
 	componentWillMount() {
 		this.loadLocales(this.state.currentLocale);
 		this.retrieveGenres(this.state.currentLocale);
+		this.retrieveAdminData();
 		this.setState({
 			loading: true
 		});
@@ -86,6 +98,7 @@ export default class Ensemble extends React.Component {
 						<main className="mx-0">
 							<Route exact path="/" render={props => <Dashboard {...props} />} />
 							<Route  path="/login" render={props => <Login {...props} />} />
+							<Route  path="/admin" render={props => <AdminPanel adminData={this.state.adminData} {...props} />} />
 							{/* BOOKS */}
 							<Route  path="/books" render={props => <BooksList {...props} />} />
 							<Route  path="/addbook" render={props => <NewBook genres={this.state.genres} {...props}/>} />

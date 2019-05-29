@@ -1,6 +1,9 @@
 # Ignore folders
 node_modules
 
+# logs
+access.log
+
 # Ignore hidden files
 .DS_Store
 
