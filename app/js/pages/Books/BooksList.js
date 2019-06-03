@@ -35,7 +35,7 @@ export default class Books extends React.Component {
 				<Segment>
 					<Header as='h2'>
 						{intl.get('entity.books')}
-						<Header.Subheader>{intl.get('desc.books')}</Header.Subheader>
+						<Icon name='book'></Icon><Header.Subheader>{intl.get('desc.books')}</Header.Subheader>
 					</Header>
 					<Divider/>
 					<Button icon='add'>

@@ -53,6 +53,16 @@ export default class NewCharacter extends React.Component {
 				cast      : this.state.cast
 			})
 			.catch(err => console.log(err));
+
+		axios
+			.post('http://localhost:3030/event', {
+				user  : 'testAdmin',
+				action: 'add_character',
+				ref   : 'testCharacter',
+
+			})
+			.catch(err => console.log(err));
+
 		this.props.history.push('/characters');
 	}
 

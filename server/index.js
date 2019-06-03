@@ -4,7 +4,7 @@
 
 const port = process.env.PORT || 3030;
 
-const express  = require('express');
+const express = require('express');
 const bodyParser = require('body-parser');
 // const cors = require('cors');
 const morgan = require('morgan');
@@ -24,11 +24,13 @@ mongoose.connect('mongodb://localhost/ensembledb');
 app.use(express.static(__dirname + '/app'));
 
 app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({
-	extended: true
-}));
+app.use(
+	bodyParser.urlencoded({
+		extended: true
+	})
+);
 
-app.use(function (request, response, next) {
+app.use(function(request, response, next) {
 	response.header('Access-Control-Allow-Origin', '*');
 	response.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept');
 	response.header('Access-Control-Allow-Methods', 'POST, GET, PUT, DELETE, OPTIONS');
@@ -51,7 +53,7 @@ const Characters = mongoose.model('Characters', {
 	last_name  : String,
 	gender     : String,
 	origin     : String,
-	age        : String,
+	age        : String
 });
 
 const Books = mongoose.model('Books', {
@@ -62,6 +64,22 @@ const Books = mongoose.model('Books', {
 	desc  : String,
 	genre : String,
 	read  : String
+});
+
+const actions = {
+	'add_book'        : 'add_book',
+	'edit_book'       : 'edit_book',
+	'delete_book'     : 'delete_book',
+	'add_character'   : 'add_character',
+	'edit_character'  : 'edit_character',
+	'delete_character': 'delete_character'
+};
+
+const Events = mongoose.model('Events', {
+	user     : String,
+	action   : String,
+	timestamp: String,
+	ref      : String
 });
 
 // -----------------------------------------------------------------------------
@@ -79,13 +97,12 @@ app.get('/books', function(request, response) {
 
 app.get('/book/:id', (req, res) => {
 	Books.findOne({ _id: req.params.id }, function(err, book) {
-		if (err){
+		if (err) {
 			res.json({ error: err });
 		}
 		res.json({ book });
 	});
 });
-
 
 app.post('/book', function(request, response) {
 	const book = new Books();
@@ -101,17 +118,37 @@ app.post('/book', function(request, response) {
 		if (error) {
 			response.json({ error: error });
 		}
-		console.log('Book added!');
 		response.json({ message: 'Book added!', data: book });
+	});
+});
 
+/**
+ * Edit a single book
+ */
+app.post('/book/:id', (req, res) => {
+	Books.findOne({ _id: req.params.id }, function(err, book) {
+		if (err) {
+			res.json({ error: err });
+		}
+		book.title = req.body.title;
+		book.author = req.body.author;
+		book.series = req.body.series;
+		book.cast = req.body.cast;
+		book.desc = req.body.desc;
+		book.genre = req.body.genre;
+
+		book.save(function(error, book) {
+			if (error) {
+				res.json({ error: error });
+			}
+			res.json({ message: `Book ${req.params.id} edited`, data: book });
+		});
 	});
 });
 
 app.delete('/book', function(request, response, next) {
-
 	Books.findByIdAndRemove(request.body._id, function(error, book) {
-		if (error)
-			response.send(error);
+		if (error) response.send(error);
 		response.json({ message: 'Book deleted!', data: book });
 	});
 });
@@ -122,15 +159,14 @@ app.delete('/book', function(request, response, next) {
 
 app.get('/characters', function(request, response) {
 	Characters.find(function(error, characters) {
-		if (error)
-			response.send(error);
+		if (error) response.send(error);
 		response.json(characters);
 	});
 });
 
 app.get('/character/:id', (req, res) => {
 	Characters.findOne({ _id: req.params.id }, function(err, character) {
-		if (err){
+		if (err) {
 			res.json({ error: err });
 		}
 		res.json({ character });
@@ -149,16 +185,16 @@ app.post('/character', function(request, response, next) {
 	character.family = request.body.family;
 
 	character.save(function(error, character) {
-		if (error) { return next(error); }
+		if (error) {
+			return next(error);
+		}
 
 		response.json({ message: 'Character added!', data: character });
-
 	});
 });
 
 app.put('/characters', function(request, response, next) {
 	Characters.findById(request.body._id, function(error, character) {
-
 		character.first_name = request.body.first_name;
 		character.last_name = request.body.last_name;
 		character.age = request.body.age;
@@ -166,36 +202,32 @@ app.put('/characters', function(request, response, next) {
 		character.gender = request.body.gender;
 
 		character.save(function(error, character) {
-			if (error) { return next(error); }
+			if (error) {
+				return next(error);
+			}
 
 			response.json({ message: 'Character added!', data: character });
 		});
-
 	});
-
 });
 
 app.post('/view_character', function(request, response, next) {
 	Characters.findById(request.body._id, function(error, selection) {
-		if (error)
-			response.send(error);
+		if (error) response.send(error);
 		response.json(selection);
 	});
 });
 
 app.post('/edit_character', function(request, response, next) {
 	Characters.findById(request.body._id, function(error, character) {
-		if (error)
-			response.send(error);
+		if (error) response.send(error);
 		response.json(character);
 	});
 });
 
 app.post('/delete_character', function(request, response, next) {
-
 	Characters.findByIdAndRemove(request.body._id, function(error, character) {
-		if (error)
-			response.send(error);
+		if (error) response.send(error);
 		response.json({ message: 'Character deleted!', data: character });
 	});
 });
@@ -209,13 +241,43 @@ app.get('/genres/:lang', function(req, res) {
 		lang: req.params.lang,
 		data: genres_en
 	});
+});
 
+// -----------------------------------------------------------------------------
+//  REST API -- HISTORY
+// -----------------------------------------------------------------------------
+
+app.get('/events', (req, res) => {
+	Events.find((err, events) => {
+		if (err) {
+			res.json(err);
+		}
+		res.json(events);
+	});
+});
+
+app.post('/event', (req, res) => {
+	const event = new Events();
+	event.user = req.body.user;
+	event.action = req.body.action;
+	event.timestamp = new Date().getTime();
+	event.ref = req.body.ref;
+
+	event.save((error, event) => {
+		if (error) {
+			res.json({
+				error: error
+			});
+		}
+		res.json({ message: 'Event added!', data: event });
+	});
 });
 
 // -----------------------------------------------------------------------------
 //  REST API -- BOOKS
 // -----------------------------------------------------------------------------
-const logsFromFile  = fs.readFileSync(path.join(__dirname, 'access.log')).toString()
+const logsFromFile = fs.readFileSync(path.join(__dirname, 'access.log'))
+	.toString()
 	.split('\n');
 
 const getDbReadyState = () => {
@@ -247,17 +309,21 @@ const getDbReadyState = () => {
 
 app.get('/admin', function(req, res) {
 	res.json({
-		api: [{
-			version: apiVersion,
-			logs   : logsFromFile,
-			uptime : process.uptime()
-		}],
-		db: [{
-			status: getDbReadyState(),
-			// models         : async() => await mongoose.connection.models,
-			// totalBooks     : async() => await Books.countDocuments(),
-			// totalCharacters: async() => await Characters.countDocuments()
-		}],
+		api: [
+			{
+				version: apiVersion,
+				logs   : logsFromFile,
+				uptime : process.uptime()
+			}
+		],
+		db: [
+			{
+				status: getDbReadyState()
+				// models         : async() => await mongoose.connection.models,
+				// totalBooks     : async() => await Books.countDocuments(),
+				// totalCharacters: async() => await Characters.countDocuments()
+			}
+		]
 		/*
 		client: {
 					lang: req.params.lang
@@ -265,7 +331,6 @@ app.get('/admin', function(req, res) {
 		*/
 	});
 });
-
 
 // -----------------------------------------------------------------------------
 //  LISTENING

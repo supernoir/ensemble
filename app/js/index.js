@@ -43,7 +43,8 @@ export default class Ensemble extends React.Component {
 			loading               : false,
 			currentLocale: DEFAULT_LOCALE,
 			genres       : [],
-			adminData    : {}
+			adminData    : {},
+			eventsData   : []
 		};
 		this.retrieveAdminData = this.retrieveAdminData.bind(this);
 	}
@@ -70,6 +71,16 @@ export default class Ensemble extends React.Component {
 			});
 	}
 
+	retrieveEventData = () => {
+		axios.get(`http://localhost:3030/events`)
+			.catch(err => console.error(err))
+			.then(res => {
+				this.setState({
+					eventsData: res.data
+				});
+			});
+	}
+
 	retrieveAdminData = () => {
 		axios.get(`http://localhost:3030/admin`)
 			.catch(err => console.error(err))
@@ -84,6 +95,7 @@ export default class Ensemble extends React.Component {
 		this.loadLocales(this.state.currentLocale);
 		this.retrieveGenres(this.state.currentLocale);
 		this.retrieveAdminData();
+		this.retrieveEventData();
 		this.setState({
 			loading: true
 		});
@@ -96,7 +108,7 @@ export default class Ensemble extends React.Component {
 					<React.Fragment>
 						<Navbar />
 						<main className="mx-0">
-							<Route exact path="/" render={props => <Dashboard {...props} />} />
+							<Route exact path="/" render={props => <Dashboard {...props} eventsData={this.state.eventsData} />} />
 							<Route  path="/login" render={props => <Login {...props} />} />
 							<Route  path="/admin" render={props => <AdminPanel adminData={this.state.adminData} {...props} />} />
 							{/* BOOKS */}
