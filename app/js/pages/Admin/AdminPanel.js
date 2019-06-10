@@ -9,11 +9,28 @@ export default class AdminPanel extends React.Component {
 		super();
 		this.state = {
 			api: {},
-			db : {}
+			db : {},
+			app: {}
 		};
 	}
 	componentDidMount(){
-	//	console.log(this.props.adminData);
+		window.addEventListener('online', () => {
+			this.setState({
+				...this.state,
+				app: {
+					online: true
+				}
+			});
+		});
+
+		window.addEventListener('offline', () => {
+			this.setState({
+				...this.state,
+				app: {
+					online: false
+				}
+			});
+		});
 	}
 
 	componentWillReceiveProps(nextProps) {
@@ -22,7 +39,6 @@ export default class AdminPanel extends React.Component {
 				api: nextProps.adminData.api,
 				db : nextProps.adminData.db
 			});
-			//console.log(nextProps.adminData.api.map(entry => entry));
 		}
 	}
 
@@ -43,6 +59,30 @@ export default class AdminPanel extends React.Component {
 				</Segment>
 
 
+				{this.state.app !== void 0
+					? <Segment>
+						<Header as="h3">
+							{'APP'}
+						</Header>
+						<Table celled striped>
+							<Table.Header>
+								<Table.Row>
+									<Table.HeaderCell>{'Type'}</Table.HeaderCell>
+									<Table.HeaderCell>{'Status'}</Table.HeaderCell>
+								</Table.Row>
+							</Table.Header>
+							<Table.Body>
+								<Table.Row>
+									<Table.Cell collapsing>
+										{'Service Worker'}
+									</Table.Cell>
+									<Table.Cell>{this.state.app.online ? 'Online': 'Offline'}</Table.Cell>
+								</Table.Row>
+							</Table.Body>
+						</Table>
+					</Segment>
+					: null
+				}
 
 				{this.props.adminData.api
 					? this.props.adminData.api.map(entry => {
