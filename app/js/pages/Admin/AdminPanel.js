@@ -1,6 +1,5 @@
 import React from 'react';
 import intl from 'react-intl-universal';
-import { Link } from 'react-router-dom';
 import { Container, Breadcrumb, Segment, Header, Divider, Table, List } from 'semantic-ui-react';
 
 export default class AdminPanel extends React.Component {
@@ -14,23 +13,13 @@ export default class AdminPanel extends React.Component {
 		};
 	}
 	componentDidMount(){
-		window.addEventListener('online', () => {
-			this.setState({
-				...this.state,
-				app: {
-					online: true
-				}
-			});
+		this.setState({
+			...this.state,
+			app: {
+				online: navigator.onLine
+			}
 		});
 
-		window.addEventListener('offline', () => {
-			this.setState({
-				...this.state,
-				app: {
-					online: false
-				}
-			});
-		});
 	}
 
 	componentWillReceiveProps(nextProps) {
