@@ -1,6 +1,11 @@
 const baseuri = 'http://localhost:3030';
 const axios = require('axios');
 
+const testBookId = '5c2e38fdbfcb4562e33ffe58';
+const testCharacterId = '5c3f166db50bd9919450aac1';
+
+/** TODO: Mock API Calls */
+
 describe('BOOKS', () => {
 	test('GET All Books', () => {
 		axios.get(baseuri + '/books').then(res => {
@@ -10,29 +15,25 @@ describe('BOOKS', () => {
 	});
 
 	test('GET Book by Id', () => {
-		axios.get(baseuri + '/book/1').then(res => {
+		axios.get(baseuri + '/book/' + testBookId).then(res => {
 			expect(res.status).toBe(200);
 			//expect(res.data).toHaveLength(1);
 		});
 	});
-
 });
 
 describe('CHARACTERS', () => {
 	test('GET All Characters', () => {
 		axios.get(baseuri + '/characters').then(res => {
 			expect(res.status).toBe(200);
-			// expect(res.data).toHaveLength(1);
 		});
 	});
 
 	test('GET Character by Id', () => {
-		axios.get(baseuri + '/character/1').then(res => {
+		axios.get(baseuri + '/character/' + testCharacterId).then(res => {
 			expect(res.status).toBe(200);
-			// expect(res.data).toHaveLength(1);
 		});
 	});
-
 });
 
 describe('EVENTS', () => {
@@ -42,7 +43,6 @@ describe('EVENTS', () => {
 			// expect(res.data).toHaveLength(1);
 		});
 	});
-
 });
 
 describe('ADMIN', () => {
@@ -52,5 +52,4 @@ describe('ADMIN', () => {
 			// expect(res.data).toHaveLength(1);
 		});
 	});
-
 });

@@ -86,19 +86,21 @@ const Events = mongoose.model('Events', {
 //  REST API -- BOOKS
 // -----------------------------------------------------------------------------
 
-app.get('/books', function(request, response) {
-	Books.find(function(error, books) {
+app.get('/books', async(req, res) => {
+	await Books.find((error, books) => {
 		if (error) {
-			response.send(error);
+			res.json({ error });
+			throw error;
 		}
-		response.json(books);
+		res.json(books);
 	});
 });
 
-app.get('/book/:id', (req, res) => {
-	Books.findOne({ _id: req.params.id }, function(err, book) {
-		if (err) {
-			res.json({ error: err });
+app.get('/book/:id', async(req, res) => {
+	await Books.findOne({ _id: req.params.id }, (error, book) => {
+		if (error) {
+			res.json({ error });
+			throw error;
 		}
 		res.json({ book });
 	});
@@ -157,17 +159,21 @@ app.delete('/book', function(request, response, next) {
 //  REST API -- CHARACTERS
 // -----------------------------------------------------------------------------
 
-app.get('/characters', function(request, response) {
-	Characters.find(function(error, characters) {
-		if (error) response.send(error);
-		response.json(characters);
+app.get('/characters', async (req, res) => {
+	await Characters.find((error, characters) => {
+		if (error) {
+			res.json({ error });
+			throw error;
+		}
+		res.json(characters);
 	});
 });
 
-app.get('/character/:id', (req, res) => {
-	Characters.findOne({ _id: req.params.id }, function(err, character) {
-		if (err) {
-			res.json({ error: err });
+app.get('/character/:id', async(req, res) => {
+	await Characters.findOne({ _id: req.params.id }, (error, character) => {
+		if (error) {
+			res.json({ error });
+			throw error;
 		}
 		res.json({ character });
 	});
