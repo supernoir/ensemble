@@ -1,21 +1,21 @@
 const baseuri = 'http://localhost:3030';
 const axios = require('axios');
 
-const testBookId = '5c2e38fdbfcb4562e33ffe58';
+const testProjectId = '5c2e38fdbfcb4562e33ffe58';
 const testCharacterId = '5c3f166db50bd9919450aac1';
 
 /** TODO: Mock API Calls */
 
-describe('BOOKS', () => {
-	test('GET All Books', () => {
+describe('PROJECTS', () => {
+	test('GET All Projects', () => {
 		axios.get(baseuri + '/books').then(res => {
 			expect(res.status).toBe(200);
 			//expect(res.data).toHaveLength(1);
 		});
 	});
 
-	test('GET Book by Id', () => {
-		axios.get(baseuri + '/book/' + testBookId).then(res => {
+	test('GET Project by Id', () => {
+		axios.get(baseuri + '/book/' + testProjectId).then(res => {
 			expect(res.status).toBe(200);
 			//expect(res.data).toHaveLength(1);
 		});

@@ -4,24 +4,24 @@ import { Link } from 'react-router-dom';
 import intl from 'react-intl-universal';
 import { Container, Breadcrumb, Segment, Header, Table, Divider, Button, Icon } from 'semantic-ui-react';
 
-export default class Book extends React.Component {
+export default class Project extends React.Component {
 	constructor(){
 		super();
 		this.state = {
-			book: [],
-			cast: [],
+			project: [],
+			cast   : [],
 		};
 		this.getCharacter = this.getCharacter.bind(this);
 	}
 
 	componentDidMount(){
-		axios.get(`http://localhost:3030/book/${this.props.match.params.id}`)
+		axios.get(`http://localhost:3030/project/${this.props.match.params.id}`)
 			.then(res => {
-				if (res.data.book.cast !== void 0) {
-					let rawCast = res.data.book.cast.split(',');
+				if (res.data.project.cast !== void 0) {
+					let rawCast = res.data.project.cast.split(',');
 					rawCast.map(member => this.getCharacter(member));
 				}
-				this.setState({ book: res.data.book });
+				this.setState({ project: res.data.project });
 			}
 			);
 	}
@@ -48,23 +48,23 @@ export default class Book extends React.Component {
 					</Breadcrumb.Section>
 					<Breadcrumb.Divider />
 					<Breadcrumb.Section link>
-						<Link to="/books">{intl.get('entity.books')}</Link>
+						<Link to="/projects">{intl.get('entity.projects')}</Link>
 					</Breadcrumb.Section>
 					<Breadcrumb.Divider />
 					<Breadcrumb.Section active>
-						{this.state.book.title}
+						{this.state.project.title}
 					</Breadcrumb.Section>
 				</Breadcrumb>
 
 				<Segment>
 					<Header as='h2'>
-						{this.state.book.title}
-						<Header.Subheader>{this.state.book.series}</Header.Subheader>
+						{this.state.project.title}
+						<Header.Subheader>{this.state.project.series}</Header.Subheader>
 					</Header>
 					<Divider/>
 
 					<p>
-						<Icon name='info circle'/>{this.state.book.desc}
+						<Icon name='info circle'/>{this.state.project.desc}
 					</p>
 
 					<Divider/>
@@ -92,10 +92,10 @@ export default class Book extends React.Component {
 					</Table>
 					<Divider/>
 					<Button>
-						{intl.get('book.action-edit')}
+						{intl.get('project.action-edit')}
 					</Button>
 					<Button>
-						{intl.get('book.action-delete')}
+						{intl.get('project.action-delete')}
 					</Button>
 				</Segment>
 

@@ -56,7 +56,7 @@ const Characters = mongoose.model('Characters', {
 	age        : String
 });
 
-const Books = mongoose.model('Books', {
+const Projects = mongoose.model('Projects', {
 	title : String,
 	author: String,
 	series: String,
@@ -67,9 +67,9 @@ const Books = mongoose.model('Books', {
 });
 
 const actions = {
-	'add_book'        : 'add_book',
-	'edit_book'       : 'edit_book',
-	'delete_book'     : 'delete_book',
+	'add_project'        : 'add_project',
+	'edit_project'       : 'edit_project',
+	'delete_project'     : 'delete_project',
 	'add_character'   : 'add_character',
 	'edit_character'  : 'edit_character',
 	'delete_character': 'delete_character'
@@ -86,72 +86,72 @@ const Events = mongoose.model('Events', {
 //  REST API -- BOOKS
 // -----------------------------------------------------------------------------
 
-app.get('/books', async(req, res) => {
-	await Books.find((error, books) => {
+app.get('/projects', async(req, res) => {
+	await Projects.find((error, projects) => {
 		if (error) {
 			res.json({ error });
 			throw error;
 		}
-		res.json(books);
+		res.json(projects);
 	});
 });
 
-app.get('/book/:id', async(req, res) => {
-	await Books.findOne({ _id: req.params.id }, (error, book) => {
+app.get('/project/:id', async(req, res) => {
+	await Projects.findOne({ _id: req.params.id }, (error, project) => {
 		if (error) {
 			res.json({ error });
 			throw error;
 		}
-		res.json({ book });
+		res.json({ project });
 	});
 });
 
-app.post('/book', function(request, response) {
-	const book = new Books();
-	book.title = request.body.title;
-	book.author = request.body.author;
-	book.series = request.body.series;
-	book.cast = request.body.cast;
-	book.desc = request.body.desc;
-	book.genre = request.body.genre;
-	book.read = request.body.read;
+app.post('/project', function(request, response) {
+	const project = new Projects();
+	project.title = request.body.title;
+	project.author = request.body.author;
+	project.series = request.body.series;
+	project.cast = request.body.cast;
+	project.desc = request.body.desc;
+	project.genre = request.body.genre;
+	project.read = request.body.read;
 
-	book.save(function(error, book) {
+	project.save(function(error, project) {
 		if (error) {
 			response.json({ error: error });
 		}
-		response.json({ message: 'Book added!', data: book });
+		response.json({ message: 'Project added!', data: project });
 	});
 });
 
 /**
- * Edit a single book
+ * Edit a single project
  */
-app.post('/book/:id', (req, res) => {
-	Books.findOne({ _id: req.params.id }, function(err, book) {
+app.post('/project/:id', (req, res) => {
+	Projects.findOne({ _id: req.params.id }, function(err, project) {
 		if (err) {
 			res.json({ error: err });
 		}
-		book.title = req.body.title;
-		book.author = req.body.author;
-		book.series = req.body.series;
-		book.cast = req.body.cast;
-		book.desc = req.body.desc;
-		book.genre = req.body.genre;
+		project.title = req.body.title;
+		project.author = req.body.author;
+		project.series = req.body.series;
+		project.cast = req.body.cast;
+		project.desc = req.body.desc;
+		project.genre = req.body.genre;
 
-		book.save(function(error, book) {
+		project.save(function(error, project) {
 			if (error) {
 				res.json({ error: error });
 			}
-			res.json({ message: `Book ${req.params.id} edited`, data: book });
+			res.json({ message: `Project ${req.params.id} edited`, data: project });
 		});
 	});
 });
 
-app.delete('/book', function(request, response, next) {
-	Books.findByIdAndRemove(request.body._id, function(error, book) {
+app.delete('/project', function(request, response, next) {
+	Projects.findByIdAndRemove(request.body._id, function(error, project) {
 		if (error) response.send(error);
-		response.json({ message: 'Book deleted!', data: book });
+		response.json({ message: 'Project deleted!', data: project });
 	});
 });
 
@@ -186,7 +186,7 @@ app.post('/character', function(request, response, next) {
 	character.age = request.body.age;
 	character.origin = request.body.origin;
 	character.gender = request.body.gender;
-	character.book = request.body.book;
+	character.project = request.body.project;
 	character.series = request.body.series;
 	character.family = request.body.family;
 
@@ -326,7 +326,7 @@ app.get('/admin', function(req, res) {
 			{
 				status: getDbReadyState()
 				// models         : async() => await mongoose.connection.models,
-				// totalBooks     : async() => await Books.countDocuments(),
+				// totalProjects     : async() => await Projects.countDocuments(),
 				// totalCharacters: async() => await Characters.countDocuments()
 			}
 		]

@@ -27,9 +27,9 @@ import Login from './pages/Base/Login';
 import AdminPanel from './pages/Admin/AdminPanel';
 
 // --- BOOKS
-import BooksList from './pages/Books/BooksList';
-import Book from './pages/Books/Book';
-import NewBook from './pages/Books/NewBook';
+import ProjectsList from './pages/Projects/ProjectsList';
+import Project from './pages/Projects/Project';
+import NewProject from './pages/Projects/NewProject';
 
 // --- CHARACTERS
 import CharactersList from './pages/Characters/CharactersList';
@@ -112,9 +112,9 @@ export default class Ensemble extends React.Component {
 							<Route  path="/login" render={props => <Login {...props} />} />
 							<Route  path="/admin" render={props => <AdminPanel adminData={this.state.adminData} {...props} />} />
 							{/* BOOKS */}
-							<Route  path="/books" render={props => <BooksList {...props} />} />
-							<Route  path="/addbook" render={props => <NewBook genres={this.state.genres} {...props}/>} />
-							<Route  path="/book/:id" render={props => <Book {...props} />} />
+							<Route  path="/projects" render={props => <ProjectsList {...props} />} />
+							<Route  path="/addproject" render={props => <NewProject genres={this.state.genres} {...props}/>} />
+							<Route  path="/project/:id" render={props => <Project {...props} />} />
 							{/* CHARACTERS */}
 							<Route  path="/characters" render={props => <CharactersList {...props} />} />
 							<Route  path="/addcharacter" render={props => <NewCharacter {...props} />} />

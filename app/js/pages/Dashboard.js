@@ -21,11 +21,11 @@ export default class Dashboard extends React.Component {
 
 	parseEvent = event => {
 		switch (event.action) {
-			case 'add_book':
-				return `You added ${event.ref} to your books.`;
+			case 'add_project':
+				return `You added ${event.ref} to your projects.`;
 			case 'add_character':
 				return `You added ${event.ref} to your Characters.`;
-			case 'edit_book':
+			case 'edit_project':
 			case 'edit_character':
 				return `You edited ${event.ref}`;
 		}
@@ -43,10 +43,10 @@ export default class Dashboard extends React.Component {
 					<Divider />
 					<Card.Group>
 						<Card
-							href="/books"
+							href="/projects"
 							image={'../../public/img/photo-1443188631128-a1b6b1c5c207.jpeg'}
-							header={intl.get('entity.books')}
-							meta={`12 Books available`}
+							header={intl.get('entity.projects')}
+							meta={`12 Projects available`}
 						/>
 						<Card
 							href="/characters"

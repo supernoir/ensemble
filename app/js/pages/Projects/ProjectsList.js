@@ -4,17 +4,17 @@ import { Link } from 'react-router-dom';
 import intl from 'react-intl-universal';
 import { Container, Breadcrumb, Segment, Header, Card, Divider, Button, Icon } from 'semantic-ui-react';
 
-export default class Books extends React.Component {
+export default class Projects extends React.Component {
 	constructor(){
 		super();
 		this.state = {
-			books: []
+			projects: []
 		};
 	}
 	componentDidMount(){
-		axios.get('http://localhost:3030/books')
+		axios.get('http://localhost:3030/projects')
 			.then(res => {
-				this.setState({ books: res.data });
+				this.setState({ projects: res.data });
 			}
 			);
 	}
@@ -28,18 +28,18 @@ export default class Books extends React.Component {
 					</Breadcrumb.Section>
 					<Breadcrumb.Divider />
 					<Breadcrumb.Section active>
-						<Link to="/books">{intl.get('entity.books')}</Link>
+						<Link to="/projects">{intl.get('entity.projects')}</Link>
 					</Breadcrumb.Section>
 				</Breadcrumb>
 
 				<Segment>
 					<Header as='h2'>
-						{intl.get('entity.books')}
-						<Icon name='book'></Icon><Header.Subheader>{intl.get('desc.books')}</Header.Subheader>
+						{intl.get('entity.projects')}
+						<Icon name='project'></Icon><Header.Subheader>{intl.get('desc.projects')}</Header.Subheader>
 					</Header>
 					<Divider/>
 					<Button icon='add'>
-						<Link to="/addbook">{intl.get('book.action-add')}</Link>
+						<Link to="/addproject">{intl.get('project.action-add')}</Link>
 					</Button>
 
 				</Segment>
@@ -47,22 +47,22 @@ export default class Books extends React.Component {
 				<Divider/>
 
 				<Card.Group>
-					{this.state.books.map(book => {
+					{this.state.projects.map(project => {
 						return (
 							<Card>
 								<Card.Content>
 									<Card.Header>
-										<Link to={`/book/${book._id}`}>{book.title}</Link>
+										<Link to={`/project/${project._id}`}>{project.title}</Link>
 									</Card.Header>
 									<Card.Meta>
-										{book.series !== void 0
+										{project.series !== void 0
 											? <h4>
-												<b>{intl.get('entity.books.series')}</b>{' '}<Link to='/books/series/id'>{book.series}</Link>
+												<b>{intl.get('entity.projects.series')}</b>{' '}<Link to='/projects/series/id'>{project.series}</Link>
 											</h4>
 											: null
 										}
 									</Card.Meta>
-									<Card.Description>{book.desc}</Card.Description>
+									<Card.Description>{project.desc}</Card.Description>
 								</Card.Content>
 								<Card.Content extra>
 									<Button circular icon='edit' color='green'/>

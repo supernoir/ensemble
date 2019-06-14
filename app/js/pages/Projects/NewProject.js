@@ -4,7 +4,7 @@ import intl from 'react-intl-universal';
 import { Link } from 'react-router-dom';
 import { Container, Segment, Form, Button, Divider, Header, Breadcrumb, Dropdown } from 'semantic-ui-react';
 
-export default class NewBook extends React.Component {
+export default class NewProject extends React.Component {
 	constructor() {
 		super();
 		this.state = {
@@ -39,10 +39,10 @@ export default class NewBook extends React.Component {
 		}
 	}
 
-	postNewBook(evt) {
+	postNewProject(evt) {
 		evt.preventDefault();
 		axios
-			.post('http://localhost:3030/book', {
+			.post('http://localhost:3030/project', {
 				title : this.state.title,
 				genre : this.state.genre,
 				series: this.state.series,
@@ -53,12 +53,12 @@ export default class NewBook extends React.Component {
 		axios
 			.post('http://localhost:3030/event', {
 				user  : 'testAdmin',
-				action: 'add_book',
+				action: 'add_project',
 				ref   : '',
 
 			})
 			.catch(err => console.log(err));
-		this.props.history.push('/books');
+		this.props.history.push('/projects');
 	}
 
 	render() {
@@ -70,24 +70,24 @@ export default class NewBook extends React.Component {
 					</Breadcrumb.Section>
 					<Breadcrumb.Divider />
 					<Breadcrumb.Section link>
-						<Link to="/books">{intl.get('entity.books')}</Link>
+						<Link to="/projects">{intl.get('entity.projects')}</Link>
 					</Breadcrumb.Section>
 					<Breadcrumb.Divider />
 					<Breadcrumb.Section active>
-						{intl.get('book.action-add')}
+						{intl.get('project.action-add')}
 					</Breadcrumb.Section>
 				</Breadcrumb>
 
 				<Segment>
 					<Header as='h2'>
-						{intl.get('book.action-add')}
+						{intl.get('project.action-add')}
 					</Header>
 
 					<Divider/>
 
 					<Form>
 						<Form.Field>
-							<label for="book" className="col-sm-2 control-label">{intl.get('book.label-title')}</label>
+							<label for="project" className="col-sm-2 control-label">{intl.get('project.label-title')}</label>
 							<input
 								onChange={evt => this.handleInput('title', evt)}
 								type="text"
@@ -99,7 +99,7 @@ export default class NewBook extends React.Component {
 
 						</Form.Field>
 						<Form.Field>
-							<label for="book" className="col-sm-2 control-label">{intl.get('book.label-genre')}</label>
+							<label for="project" className="col-sm-2 control-label">{intl.get('project.label-genre')}</label>
 							<select>
 								{this.props.genres !== void 0 ? this.props.genres.map((genre,index) => {
 									return <option key={`${genre}-${index}`}>{genre}</option>;
@@ -108,7 +108,7 @@ export default class NewBook extends React.Component {
 							<input onChange={evt => this.handleInput('genre', evt)} type="text" className="form-control" id="genre" placeholder="Crime, Suspense" />
 						</Form.Field>
 						<Form.Field>
-							<label for="book" className="col-sm-2 control-label">{intl.get('book.label-series')}</label>
+							<label for="project" className="col-sm-2 control-label">{intl.get('project.label-series')}</label>
 							<input
 								onChange={evt => this.handleInput('series', evt)}
 								type="text"
@@ -118,7 +118,7 @@ export default class NewBook extends React.Component {
 							/>
 						</Form.Field>
 						<Form.Field>
-							<label for="book" className="col-sm-2 control-label">{intl.get('book.label-cast')}</label>
+							<label for="project" className="col-sm-2 control-label">{intl.get('project.label-cast')}</label>
 							<input
 								onChange={evt => this.handleInput('cast', evt)}
 								type="text"
@@ -127,26 +127,28 @@ export default class NewBook extends React.Component {
 								placeholder="Sherlock Holmes, James Watson"
 							/>
 						</Form.Field>
-						<label for="book" className="col-sm-2 control-label"><code>{intl.get('book.label-connectcharacters')}</code></label>
-						<select className="form-control">
+						{/**
+						// TODO: implement Input Select with Characters
+												<label for="project" className="col-sm-2 control-label"><code>{intl.get('project.label-connectcharacters')}</code></label>
+
+												<select className="form-control">
 							<option ng-repeat="character in characters">{'character.first_name'} {'character.last_name'}</option>
 						</select>
+						*/}
 						<Form.Field>
-							<Form.Field>
 
-								<label for="book" className="col-sm-2 control-label">{intl.get('book.label-description')}</label>
-								<input
-									onChange={evt => this.handleInput('desc', evt)}
-									type="text"
-									className="form-control"
-									id="desc"
-									placeholder="The Adventures of Sherlock Holmes"
-									required
-								/>
-							</Form.Field>
+							<label for="project" className="col-sm-2 control-label">{intl.get('project.label-description')}</label>
+							<input
+								onChange={evt => this.handleInput('desc', evt)}
+								type="text"
+								className="form-control"
+								id="desc"
+								placeholder="The Adventures of Sherlock Holmes"
+								required
+							/>
 
 						</Form.Field>
-						<Button onClick={evt => this.postNewBook(evt)} type="submit" className="btn btn-default">{intl.get('book.action-add')}</Button>
+						<Button onClick={evt => this.postNewProject(evt)} type="submit" className="btn btn-default">{intl.get('project.action-add')}</Button>
 					</Form>
 
 				</Segment>
