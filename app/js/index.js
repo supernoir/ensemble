@@ -17,6 +17,9 @@ const locales = {
 	'es-ES': require('./data/locales/es-ES.json')
 };
 
+// Import Services
+import Auth from './services/Auth';
+
 // Import Layouts
 import Footer from './layout/Footer';
 import Navbar from './layout/Navbar';
@@ -37,8 +40,12 @@ import Character from './pages/Characters/Character';
 import NewCharacter from './pages/Characters/NewCharacter';
 
 export default class Ensemble extends React.Component {
-	constructor(){
-		super();
+	constructor(props){
+		super(props);
+		// Initialize Auth
+		this.auth = new Auth(this.props.history);
+
+		// Initialize component state
 		this.state = {
 			loading               : false,
 			currentLocale: DEFAULT_LOCALE,

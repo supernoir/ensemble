@@ -2,6 +2,7 @@ const path = require('path');
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const BrowserSyncPlugin = require('browser-sync-webpack-plugin');
+const Dotenv = require('dotenv-webpack');
 
 module.exports = {
 	mode   : 'development',
@@ -43,8 +44,7 @@ module.exports = {
 				test   : /\.(css|sass|scss)$/,
 				exclude: /node_modules/,
 				use    : ExtractTextPlugin.extract({
-					use: [{ loader: 'css-loader', options: { sourceMap: true } },
-						{ loader: 'sass-loader', options: { sourceMap: true } }],
+					use     : [{ loader: 'css-loader', options: { sourceMap: true } }, { loader: 'sass-loader', options: { sourceMap: true } }],
 					fallback: 'style-loader'
 				})
 			}
@@ -53,9 +53,9 @@ module.exports = {
 
 	plugins: [
 		new BrowserSyncPlugin({
-			host  : 'localhost',
-			port  : 3000,
-			proxy: 'http://localhost:3001/',
+			host : 'localhost',
+			port : 3000,
+			proxy: 'http://localhost:3001/'
 			//server: { baseDir: ['public'] }
 		}),
 		new ExtractTextPlugin('style.css'),
@@ -63,6 +63,9 @@ module.exports = {
 			title   : 'Ensemble • by Mirage',
 			filename: 'index.html',
 			template: 'index.html'
+		}),
+		new Dotenv({
+			path: path.resolve(__dirname,'.env')
 		})
 	]
 };

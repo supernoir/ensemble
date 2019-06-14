@@ -15,6 +15,7 @@
     "@babel/plugin-proposal-class-properties": "^7.4.4",
     "@babel/preset-env": "^7.2.3",
     "@babel/preset-react": "^7.0.0",
+    "auth0-js": "^9.10.4",
     "axios": "^0.18.0",
     "babel": "^6.23.0",
     "babel-loader": "8",
@@ -40,5 +41,8 @@
     "webpack": "^4.28.3",
     "webpack-cli": "^3.2.0",
     "webpack-dev-server": "^3.1.14"
+  },
+  "devDependencies": {
+    "dotenv-webpack": "^1.7.0"
   }
 }

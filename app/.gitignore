@@ -7,3 +7,6 @@ node_modules
 # Ignore Lockfiles
 yarn.lock
 package-lock.json
+
+# Ignore Environment Variable Files
+.env

@@ -35,7 +35,7 @@ export default class Projects extends React.Component {
 				<Segment>
 					<Header as='h2'>
 						{intl.get('entity.projects')}
-						<Icon name='project'></Icon><Header.Subheader>{intl.get('desc.projects')}</Header.Subheader>
+						<Icon name='books'></Icon><Header.Subheader>{intl.get('desc.projects')}</Header.Subheader>
 					</Header>
 					<Divider/>
 					<Button icon='add'>

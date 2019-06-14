@@ -11,14 +11,6 @@ export default class Dashboard extends React.Component {
 		};
 	}
 
-	componentDidMount() {}
-
-	componentWillReceiveProps(nextProps) {
-		if (nextProps !== this.props) {
-			console.log(nextProps.eventsData);
-		}
-	}
-
 	parseEvent = event => {
 		switch (event.action) {
 			case 'add_project':
