@@ -24,6 +24,10 @@ export default class Dashboard extends React.Component {
 	};
 
 
+	componentDidMount() {
+		this.props.getEvents();
+	}
+
 
 	render() {
 		return (

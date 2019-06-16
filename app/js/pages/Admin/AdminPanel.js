@@ -13,6 +13,7 @@ export default class AdminPanel extends React.Component {
 		};
 	}
 	componentDidMount(){
+		this.props.getAdminData();
 		this.setState({
 			...this.state,
 			app: {

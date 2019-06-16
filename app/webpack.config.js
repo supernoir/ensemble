@@ -1,3 +1,5 @@
+require('@babel/polyfill');
+
 const path = require('path');
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
@@ -7,7 +9,7 @@ const Dotenv = require('dotenv-webpack');
 module.exports = {
 	mode   : 'development',
 	context: path.resolve(__dirname),
-	entry  : './js/index.js',
+	entry  : 	['@babel/polyfill', './js/index.js'],
 	output : {
 		path    : path.resolve(__dirname, 'dist'),
 		filename: 'bundle.js'

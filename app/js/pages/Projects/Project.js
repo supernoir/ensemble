@@ -1,42 +1,18 @@
 import React from 'react';
-import axios from 'axios';
 import { Link } from 'react-router-dom';
 import intl from 'react-intl-universal';
 import { Container, Breadcrumb, Segment, Header, Table, Divider, Button, Icon } from 'semantic-ui-react';
 
 export default class Project extends React.Component {
-	constructor(){
-		super();
-		this.state = {
-			project: [],
-			cast   : [],
-		};
-		this.getCharacter = this.getCharacter.bind(this);
-	}
 
 	componentDidMount(){
-		axios.get(`http://localhost:3030/project/${this.props.match.params.id}`)
-			.then(res => {
-				if (res.data.project.cast !== void 0) {
-					let rawCast = res.data.project.cast.split(',');
-					rawCast.map(member => this.getCharacter(member));
-				}
-				this.setState({ project: res.data.project });
-			}
-			);
+		this.props.getProjectById(this.props.match.params.id);
 	}
 
-	getCharacter(id) {
-		return axios.get(`http://localhost:3030/character/${id}`)
-			.then(res => {
-				this.setState({
-					cast: [
-						...this.state.cast,
-						res.data.character
-					]
-				});
-			}
-			);
+	componentWillReceiveProps(nextProps){
+		if(nextProps !== this.props) {
+			console.log(nextProps);
+		}
 	}
 
 	render(){
@@ -52,19 +28,19 @@ export default class Project extends React.Component {
 					</Breadcrumb.Section>
 					<Breadcrumb.Divider />
 					<Breadcrumb.Section active>
-						{this.state.project.title}
+						{this.props.project.title}
 					</Breadcrumb.Section>
 				</Breadcrumb>
 
 				<Segment>
 					<Header as='h2'>
-						{this.state.project.title}
-						<Header.Subheader>{this.state.project.series}</Header.Subheader>
+						{this.props.project.title}
+						<Header.Subheader>{this.props.project.series}</Header.Subheader>
 					</Header>
 					<Divider/>
 
 					<p>
-						<Icon name='info circle'/>{this.state.project.desc}
+						<Icon name='info circle'/>{this.props.project.desc}
 					</p>
 
 					<Divider/>
@@ -78,15 +54,15 @@ export default class Project extends React.Component {
 						</Table.Header>
 
 						<Table.Body>
-							{this.state.cast !== void 0 || this.state.cast.length > 0
-								? this.state.cast.map(member => {
+							{this.props.project.cast !== void 0
+								? this.props.project.cast.map(member => {
 									return <Table.Row>
 										<Table.Cell>
-											<Link to={`/character/${member._id}`}>{member.first_name} {member.last_name}</Link>
+											<Link to={`/character/${member.id}`}>{member.name}</Link>
 										</Table.Cell>
 									</Table.Row>;
 								})
-								: null
+								:null
 							}
 						</Table.Body>
 					</Table>

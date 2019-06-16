@@ -97,12 +97,22 @@ app.get('/projects', async(req, res) => {
 });
 
 app.get('/project/:id', async(req, res) => {
-	await Projects.findOne({ _id: req.params.id }, (error, project) => {
+	await Projects.findOne({ _id: req.params.id }, (error, rawProject) => {
 		if (error) {
 			res.json({ error });
 			throw error;
 		}
-		res.json({ project });
+		let cast = [];
+		if(rawProject.cast.length > 0) {
+			let rawCast = rawProject.cast.split(',');
+			for (let i = 0; i < rawCast.length; i++) {
+				cast.push({
+					id  : rawCast[i],
+					name: 'MyName' });
+			}
+		}
+		let project = Object.assign(rawProject, { cast: JSON.stringify(cast) });
+		res.json(project);
 	});
 });
 
@@ -242,9 +252,8 @@ app.post('/delete_character', function(request, response, next) {
 //  REST API -- GENRES
 // -----------------------------------------------------------------------------
 
-app.get('/genres/:lang', function(req, res) {
+app.get('/genres', function(req, res) {
 	res.json({
-		lang: req.params.lang,
 		data: genres_en
 	});
 });
