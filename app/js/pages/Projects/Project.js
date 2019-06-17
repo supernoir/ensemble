@@ -54,7 +54,7 @@ export default class Project extends React.Component {
 						</Table.Header>
 
 						<Table.Body>
-							{this.props.project.cast !== void 0
+							{/* 	{this.props.project.cast !== void 0
 								? this.props.project.cast.map(member => {
 									return <Table.Row>
 										<Table.Cell>
@@ -63,7 +63,7 @@ export default class Project extends React.Component {
 									</Table.Row>;
 								})
 								:null
-							}
+							} */}
 						</Table.Body>
 					</Table>
 					<Divider/>

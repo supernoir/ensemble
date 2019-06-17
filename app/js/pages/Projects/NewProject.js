@@ -2,7 +2,7 @@ import React from 'react';
 import axios from 'axios';
 import intl from 'react-intl-universal';
 import { Link } from 'react-router-dom';
-import { Container, Segment, Form, Button, Divider, Header, Breadcrumb, Dropdown } from 'semantic-ui-react';
+import { Container, Segment, Form, Button, Divider, Header, Breadcrumb } from 'semantic-ui-react';
 
 export default class NewProject extends React.Component {
 	constructor() {
@@ -41,7 +41,16 @@ export default class NewProject extends React.Component {
 
 	postNewProject(evt) {
 		evt.preventDefault();
-		axios
+
+		this.props.addProject({
+			title : this.state.title,
+			genre : this.state.genre,
+			series: this.state.series,
+			desc  : this.state.desc,
+			cast  : this.state.cast
+		});
+
+		/* axios
 			.post('http://localhost:3030/project', {
 				title : this.state.title,
 				genre : this.state.genre,
@@ -49,15 +58,15 @@ export default class NewProject extends React.Component {
 				desc  : this.state.desc,
 				cast  : this.state.cast
 			})
-			.catch(err => console.log(err));
-		axios
+			.catch(err => console.log(err)); */
+		/* 		axios
 			.post('http://localhost:3030/event', {
 				user  : 'testAdmin',
 				action: 'add_project',
 				ref   : '',
 
 			})
-			.catch(err => console.log(err));
+			.catch(err => console.log(err)); */
 		this.props.history.push('/projects');
 	}
 

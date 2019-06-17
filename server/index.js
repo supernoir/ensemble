@@ -96,24 +96,52 @@ app.get('/projects', async(req, res) => {
 	});
 });
 
-app.get('/project/:id', async(req, res) => {
-	await Projects.findOne({ _id: req.params.id }, (error, rawProject) => {
+app.get('/project/:id', (req, res) => {
+
+	Projects.findOne({ _id: req.params.id }, (error, project) => {
 		if (error) {
 			res.json({ error });
 			throw error;
 		}
-		let cast = [];
-		if(rawProject.cast.length > 0) {
-			let rawCast = rawProject.cast.split(',');
-			for (let i = 0; i < rawCast.length; i++) {
-				cast.push({
-					id  : rawCast[i],
-					name: 'MyName' });
-			}
-		}
-		let project = Object.assign(rawProject, { cast: JSON.stringify(cast) });
-		res.json(project);
+
+		let cast = project.cast.split(',');
+
+		Characters.findOne({ _id: cast[0] }, (error, member) => {
+			let fullName = member.first_name + ' ' + member.last_name;
+			return fullName;
+		});
+
+
+		let filteredDataSource = [project].filter((item) => {
+			item.cast = JSON.stringify([{
+				id  : 1,
+				name: 'Frances Ha'
+			}]);
+			return item;
+		});
+
+		res.send(project);
 	});
+
+	/* let cast = project.cast.split(',');
+		let newCast = [];
+
+		for (let member of cast) {
+			Characters.findOne({ _id: member }, (error, character)=> {
+				newCast.push({
+					id  : member,
+					name: character.first_name + ' ' + character.last_name
+				});
+				return newCast;
+			});
+			return newCast;
+		}
+		let assembledProject = Object.assign([{}], project, newCast);
+		console.log(assembledProject);
+
+
+		res.json(assembledProject); */
+
 });
 
 app.post('/project', function(request, response) {

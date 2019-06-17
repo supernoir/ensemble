@@ -86,8 +86,8 @@ export default class Ensemble extends React.Component {
 
 	sendApiRequest = (uri, action, resource, param, payload) => {
 		let targetUri = uri;
-		resource !== void 0 ? (targetUri += '/' + resource) : null;
-		param !== void 0 ? (targetUri += '/' + param) : null;
+		resource !== void 0 ? (targetUri += '/' + resource) : '';
+		param !== void 0 ? (targetUri += '/' + param) : '';
 
 		switch (action) {
 			case API_ACTIONS.GET:
@@ -106,6 +106,29 @@ export default class Ensemble extends React.Component {
 						});
 					});
 				break;
+			case API_ACTIONS.POST:
+				console.log(targetUri);
+				console.log(payload);
+				axios({
+					method      : API_ACTIONS.POST,
+					url         : targetUri,
+					responseType: 'json',
+					headers     : {
+						'content-type': 'application/json'
+					},
+					//params: param,
+					body: payload
+
+				})
+					.catch(err => console.error(err))
+					.then(res => {
+						this.setState({
+							[resource]: res.data
+						});
+
+					});
+				break;
+
 		}
 	};
 
@@ -137,7 +160,13 @@ export default class Ensemble extends React.Component {
 							/>
 							{/* BOOKS */}
 							<Route path="/projects" render={props => <ProjectsList {...props} />} />
-							<Route path="/addproject" render={props => <NewProject genres={this.state.genres} {...props} />} />
+							<Route path="/addproject"
+								render={props => <NewProject
+									genres={this.state.genres}
+									addProject={(data) => this.sendApiRequest(API_URI, API_ACTIONS.POST, 'project', '', data)}
+									{...props}
+								/>}
+							/>
 							<Route
 								path="/project/:id"
 								render={props => (
