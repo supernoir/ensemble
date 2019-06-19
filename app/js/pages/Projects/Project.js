@@ -9,12 +9,6 @@ export default class Project extends React.Component {
 		this.props.getProjectById(this.props.match.params.id);
 	}
 
-	componentWillReceiveProps(nextProps){
-		if(nextProps !== this.props) {
-			console.log(nextProps);
-		}
-	}
-
 	render(){
 		return(
 			<Container>

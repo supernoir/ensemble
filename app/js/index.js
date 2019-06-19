@@ -97,7 +97,7 @@ export default class Ensemble extends React.Component {
 					responseType: 'json',
 					headers     : {
 						'content-type': 'application/json'
-					},
+					}
 				})
 					.catch(err => console.error(err))
 					.then(res => {
@@ -107,8 +107,6 @@ export default class Ensemble extends React.Component {
 					});
 				break;
 			case API_ACTIONS.POST:
-				console.log(targetUri);
-				console.log(payload);
 				axios({
 					method      : API_ACTIONS.POST,
 					url         : targetUri,
@@ -116,19 +114,16 @@ export default class Ensemble extends React.Component {
 					headers     : {
 						'content-type': 'application/json'
 					},
-					//params: param,
-					body: payload
-
+					params: param,
+					data  : payload
 				})
 					.catch(err => console.error(err))
 					.then(res => {
 						this.setState({
 							[resource]: res.data
 						});
-
 					});
 				break;
-
 		}
 	};
 
@@ -159,13 +154,28 @@ export default class Ensemble extends React.Component {
 								render={() => <AdminPanel adminData={this.state.admin} getAdminData={() => this.sendApiRequest(API_URI, API_ACTIONS.GET, 'admin')} />}
 							/>
 							{/* BOOKS */}
-							<Route path="/projects" render={props => <ProjectsList {...props} />} />
-							<Route path="/addproject"
-								render={props => <NewProject
-									genres={this.state.genres}
-									addProject={(data) => this.sendApiRequest(API_URI, API_ACTIONS.POST, 'project', '', data)}
-									{...props}
-								/>}
+							<Route
+								path="/projects"
+								render={props => (
+									<ProjectsList
+										getProjects={() => this.sendApiRequest(API_URI, API_ACTIONS.GET, 'projects')}
+										projects={this.state.projects} {...props} />
+								)}
+							/>
+							<Route
+								path="/addproject"
+								render={props => (
+									<NewProject
+										genres={this.state.genres}
+										addProject={data => {
+											this.sendApiRequest(API_URI, API_ACTIONS.POST, 'project', '', data);
+										}}
+										addEvent={data => {
+											this.sendApiRequest(API_URI, API_ACTIONS.POST, 'event', '', data);
+										}}
+										{...props}
+									/>
+								)}
 							/>
 							<Route
 								path="/project/:id"

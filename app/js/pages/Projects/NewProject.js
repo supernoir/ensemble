@@ -1,5 +1,4 @@
 import React from 'react';
-import axios from 'axios';
 import intl from 'react-intl-universal';
 import { Link } from 'react-router-dom';
 import { Container, Segment, Form, Button, Divider, Header, Breadcrumb } from 'semantic-ui-react';
@@ -14,10 +13,9 @@ export default class NewProject extends React.Component {
 			cast  : '',
 			desc  : ''
 		};
-		this.handleInput = this.handleInput.bind(this);
 	}
 
-	handleInput(source, evt) {
+	handleInput = (source, evt) => {
 		switch (source) {
 			case 'title':
 				this.setState({ title: evt.currentTarget.value });
@@ -50,23 +48,12 @@ export default class NewProject extends React.Component {
 			cast  : this.state.cast
 		});
 
-		/* axios
-			.post('http://localhost:3030/project', {
-				title : this.state.title,
-				genre : this.state.genre,
-				series: this.state.series,
-				desc  : this.state.desc,
-				cast  : this.state.cast
-			})
-			.catch(err => console.log(err)); */
-		/* 		axios
-			.post('http://localhost:3030/event', {
-				user  : 'testAdmin',
-				action: 'add_project',
-				ref   : '',
+		this.props.addEvent({
+			user  : 'testAdmin',
+			action: 'add_project',
+			ref   : this.state.title,
+		});
 
-			})
-			.catch(err => console.log(err)); */
 		this.props.history.push('/projects');
 	}
 
