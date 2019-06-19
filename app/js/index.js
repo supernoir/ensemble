@@ -141,56 +141,75 @@ export default class Ensemble extends React.Component {
 					<React.Fragment>
 						<Navbar />
 						<main className="mx-0">
-							<Route
-								exact
-								path="/"
-								render={props => (
-									<Dashboard {...props} eventsData={this.state.events} getEvents={() => this.sendApiRequest(API_URI, API_ACTIONS.GET, 'events')} />
-								)}
+							<Route exact path="/" render={props => (
+								<Dashboard {...props}
+									eventsData={this.state.events}
+									getEvents={() => this.sendApiRequest(API_URI, API_ACTIONS.GET, 'events')}
+								/>)}
 							/>
 							<Route path="/login" render={props => <Login {...props} />} />
-							<Route
-								path="/admin"
-								render={() => <AdminPanel adminData={this.state.admin} getAdminData={() => this.sendApiRequest(API_URI, API_ACTIONS.GET, 'admin')} />}
+							<Route path="/admin" render={() => (
+								<AdminPanel
+									adminData={this.state.admin}
+									getAdminData={() => this.sendApiRequest(API_URI, API_ACTIONS.GET, 'admin')}
+								/>)}
 							/>
+
 							{/* BOOKS */}
-							<Route
-								path="/projects"
-								render={props => (
-									<ProjectsList
-										getProjects={() => this.sendApiRequest(API_URI, API_ACTIONS.GET, 'projects')}
-										projects={this.state.projects} {...props} />
-								)}
+							<Route path="/projects" render={props => (
+								<ProjectsList
+									getProjects={() => this.sendApiRequest(API_URI, API_ACTIONS.GET, 'projects')}
+									projects={this.state.projects}
+									{...props}
+								/>)}
 							/>
-							<Route
-								path="/addproject"
-								render={props => (
-									<NewProject
-										genres={this.state.genres}
-										addProject={data => {
-											this.sendApiRequest(API_URI, API_ACTIONS.POST, 'project', '', data);
-										}}
-										addEvent={data => {
-											this.sendApiRequest(API_URI, API_ACTIONS.POST, 'event', '', data);
-										}}
-										{...props}
-									/>
-								)}
+							<Route path="/addproject" render={props => (
+								<NewProject
+									genres={this.state.genres}
+									addProject={data => {
+										this.sendApiRequest(API_URI, API_ACTIONS.POST, 'project', '', data);
+									}}
+									addEvent={data => {
+										this.sendApiRequest(API_URI, API_ACTIONS.POST, 'event', '', data);
+									}}
+									{...props}
+								/>)}
 							/>
-							<Route
-								path="/project/:id"
-								render={props => (
-									<Project
-										match={props.match}
-										getProjectById={id => this.sendApiRequest(API_URI, API_ACTIONS.GET, 'project', id)}
-										project={this.state.project !== void 0 ? this.state.project : {}}
-									/>
-								)}
+							<Route path="/project/:id" render={props => (
+								<Project
+									match={props.match}
+									getProjectById={id => this.sendApiRequest(API_URI, API_ACTIONS.GET, 'project', id)}
+									project={this.state.project !== void 0 ? this.state.project : {}}
+								/>)}
 							/>
 							{/* CHARACTERS */}
-							<Route path="/characters" render={props => <CharactersList {...props} />} />
-							<Route path="/addcharacter" render={props => <NewCharacter {...props} />} />
-							<Route path="/character/:id" render={props => <Character {...props} />} />
+							<Route path="/characters" render={() => (
+								<CharactersList
+									getCharacters={() => this.sendApiRequest(API_URI, API_ACTIONS.GET, 'characters')}
+									characters={this.state.characters !== void 0 ? this.state.characters : []}
+								/>)}
+							/>
+							<Route path="/addcharacter" render={props => (
+								<NewCharacter
+									addCharacter={data => {
+										this.sendApiRequest(API_URI, API_ACTIONS.POST, 'character', '', data);
+									}}
+									addEvent={data => {
+										this.sendApiRequest(API_URI, API_ACTIONS.POST, 'event', '', data);
+									}}
+									{...props}
+								/>)}
+							/>
+							<Route
+								path="/character/:id"
+								render={props => (
+									<Character
+										getCharacterById={id => this.sendApiRequest(API_URI, API_ACTIONS.GET, 'character', id)}
+										character={this.state.character !== void 0 ? this.state.character : {}}
+										match={props.match}
+									/>
+								)}
+							/>
 						</main>
 					</React.Fragment>
 				</Router>

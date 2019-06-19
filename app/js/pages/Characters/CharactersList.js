@@ -1,22 +1,11 @@
 import React from 'react';
-import axios from 'axios';
 import intl from 'react-intl-universal';
 import { Link } from 'react-router-dom';
 import { Container, Breadcrumb, Segment, Header, Card, Divider, Button, Icon } from 'semantic-ui-react';
 
 export default class CharactersList extends React.Component {
-	constructor(){
-		super();
-		this.state = {
-			characters: []
-		};
-	}
 	componentDidMount(){
-		axios.get('http://localhost:3030/characters')
-			.then(res => {
-				this.setState({ characters: res.data });
-			}
-			);
+		this.props.getCharacters();
 	}
 
 	render(){
@@ -47,7 +36,7 @@ export default class CharactersList extends React.Component {
 				<Divider/>
 
 				<Card.Group>
-					{this.state.characters.map(character => {
+					{this.props.characters.map(character => {
 						return (
 							<Card>
 								<Card.Content>

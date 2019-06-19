@@ -104,44 +104,8 @@ app.get('/project/:id', (req, res) => {
 			throw error;
 		}
 
-		let cast = project.cast.split(',');
-
-		Characters.findOne({ _id: cast[0] }, (error, member) => {
-			let fullName = member.first_name + ' ' + member.last_name;
-			return fullName;
-		});
-
-
-		let filteredDataSource = [project].filter((item) => {
-			item.cast = JSON.stringify([{
-				id  : 1,
-				name: 'Frances Ha'
-			}]);
-			return item;
-		});
-
-		res.send(project);
+		res.json(project);
 	});
-
-	/* let cast = project.cast.split(',');
-		let newCast = [];
-
-		for (let member of cast) {
-			Characters.findOne({ _id: member }, (error, character)=> {
-				newCast.push({
-					id  : member,
-					name: character.first_name + ' ' + character.last_name
-				});
-				return newCast;
-			});
-			return newCast;
-		}
-		let assembledProject = Object.assign([{}], project, newCast);
-		console.log(assembledProject);
-
-
-		res.json(assembledProject); */
-
 });
 
 app.post('/project', function(request, response) {
@@ -213,7 +177,7 @@ app.get('/character/:id', async(req, res) => {
 			res.json({ error });
 			throw error;
 		}
-		res.json({ character });
+		res.json(character);
 	});
 });
 

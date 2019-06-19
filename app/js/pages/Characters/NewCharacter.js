@@ -1,5 +1,4 @@
 import React from 'react';
-import axios from 'axios';
 import intl from 'react-intl-universal';
 import { Link } from 'react-router-dom';
 import { Container, Segment, Form, Button, Divider, Header, Breadcrumb } from 'semantic-ui-react';
@@ -19,11 +18,9 @@ export default class NewCharacter extends React.Component {
 			series   : '',
 			imgurl   : ''
 		};
-
-		this.handleInput = this.handleInput.bind(this);
 	}
 
-	handleInput(source, evt) {
+	handleInput = (source, evt) => {
 		switch (source) {
 			case 'firstname':
 				this.setState({ firstname: evt.currentTarget.value });
@@ -44,24 +41,20 @@ export default class NewCharacter extends React.Component {
 
 	postnewCharacter(evt) {
 		evt.preventDefault();
-		axios
-			.post('http://localhost:3030/character', {
-				first_name: this.state.firstname,
-				last_name : this.state.lastname,
-				gender    : this.state.gender,
-				birthday  : this.state.age,
-				cast      : this.state.cast
-			})
-			.catch(err => console.log(err));
 
-		axios
-			.post('http://localhost:3030/event', {
-				user  : 'testAdmin',
-				action: 'add_character',
-				ref   : 'testCharacter',
+		this.props.addCharacter({
+			first_name: this.state.firstname,
+			last_name : this.state.lastname,
+			gender    : this.state.gender,
+			birthday  : this.state.age,
+			cast      : this.state.cast
+		});
 
-			})
-			.catch(err => console.log(err));
+		this.props.addEvent({
+			user  : 'testAdmin',
+			action: 'add_character',
+			ref   : this.state.firstname + ' ' + this.state.lastname
+		});
 
 		this.props.history.push('/characters');
 	}
