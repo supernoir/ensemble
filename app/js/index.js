@@ -41,6 +41,7 @@ import NewProject from './pages/Projects/NewProject';
 import CharactersList from './pages/Characters/CharactersList';
 import Character from './pages/Characters/Character';
 import NewCharacter from './pages/Characters/NewCharacter';
+import EditCharacter from './pages/Characters/EditCharacter';
 
 export default class Ensemble extends React.Component {
 	constructor(props) {
@@ -124,6 +125,24 @@ export default class Ensemble extends React.Component {
 						});
 					});
 				break;
+			case API_ACTIONS.PUT:
+				axios({
+					method      : API_ACTIONS.PUT,
+					url         : targetUri,
+					responseType: 'json',
+					headers     : {
+						'content-type': 'application/json'
+					},
+					params: param,
+					data  : payload
+				})
+					.catch(err => console.error(err))
+					.then(res => {
+						this.setState({
+							[resource]: res.data
+						});
+					});
+				break;
 		}
 	};
 
@@ -155,7 +174,7 @@ export default class Ensemble extends React.Component {
 								/>)}
 							/>
 
-							{/* BOOKS */}
+							{/* PROJECTS */}
 							<Route path="/projects" render={props => (
 								<ProjectsList
 									getProjects={() => this.sendApiRequest(API_URI, API_ACTIONS.GET, 'projects')}
@@ -187,6 +206,8 @@ export default class Ensemble extends React.Component {
 								<CharactersList
 									getCharacters={() => this.sendApiRequest(API_URI, API_ACTIONS.GET, 'characters')}
 									characters={this.state.characters !== void 0 ? this.state.characters : []}
+									getProjectById={id => this.sendApiRequest(API_URI, API_ACTIONS.GET, 'project', id)}
+									project={this.state.project}
 								/>)}
 							/>
 							<Route path="/addcharacter" render={props => (
@@ -197,6 +218,24 @@ export default class Ensemble extends React.Component {
 									addEvent={data => {
 										this.sendApiRequest(API_URI, API_ACTIONS.POST, 'event', '', data);
 									}}
+									getProjects={() => this.sendApiRequest(API_URI, API_ACTIONS.GET, 'projects')}
+									projects={this.state.projects}
+									{...props}
+								/>)}
+							/>
+							<Route path="/editcharacter/:id" render={props => (
+								<EditCharacter
+									editCharacter={(id, data) => {
+										this.sendApiRequest(API_URI, API_ACTIONS.PUT, 'character', id, data);
+									}}
+									getCharacterById={id => this.sendApiRequest(API_URI, API_ACTIONS.GET, 'character', id)}
+									character={this.state.character !== void 0 ? this.state.character : {}}
+									getProjects={() => this.sendApiRequest(API_URI, API_ACTIONS.GET, 'projects')}
+									projects={this.state.projects}
+									addEvent={data => {
+										this.sendApiRequest(API_URI, API_ACTIONS.POST, 'event', '', data);
+									}}
+									match={props.match}
 									{...props}
 								/>)}
 							/>

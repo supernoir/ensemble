@@ -85,6 +85,8 @@ const Characters = mongoose.model('Characters', {
 	// The project associated with the character
 	// TODO: project should be a ref!
 	project    : String,
+	// A Description of the character
+	desc       : String,
 	// The first name of the character
 	first_name : String,
 	// The potential middle name of the character
@@ -99,10 +101,9 @@ const Characters = mongoose.model('Characters', {
 	nationality: String,
 	// The origin of the character, if different from nationality
 	origin     : String,
-	// TODO: deprecate age in favor of birthday
-	age        : String,
 	// The birthday of the given character
-	birthday   : Date,
+	// TODO: convert to datestamp
+	birthday   : String,
 });
 
 
@@ -262,6 +263,7 @@ app.post('/character', (req, res, next) => {
 	character.gender = req.body.gender;
 	character.project = req.body.project;
 	character.series = req.body.series;
+	character.desc = req.body.desc;
 
 	character.save((error, character) => {
 		if (error) {
@@ -272,23 +274,27 @@ app.post('/character', (req, res, next) => {
 	});
 });
 
-app.put('/characters', (req, res) => {
-	Characters.findById(req.body._id, (error, character) => {
-		character.first_name = req.body.first_name;
-		character.middle_name = req.body.middle_name;
-		character.last_name = req.body.last_name;
-		character.full_name = req.body.full_name;
-		character.birthday = req.body.birthday;
-		character.nationality = req.body.nationality;
-		character.origin = req.body.origin;
-		character.gender = req.body.gender;
-		character.project = req.body.project;
-		character.series = req.body.series;
+app.put('/character/:id', (req, res) => {
+	const editedCharacter = new Characters();
+	editedCharacter._id = req.params.id;
+	editedCharacter.first_name = req.body.first_name;
+	editedCharacter.middle_name = req.body.middle_name;
+	editedCharacter.last_name = req.body.last_name;
+	editedCharacter.full_name = req.body.full_name;
+	editedCharacter.birthday = req.body.birthday;
+	editedCharacter.nationality = req.body.nationality;
+	editedCharacter.origin = req.body.origin;
+	editedCharacter.gender = req.body.gender;
+	editedCharacter.project = req.body.project;
+	editedCharacter.series = req.body.series;
+	editedCharacter.desc = req.body.desc;
 
-		character.save((err, character) => {
-			if (err) res.send(err);
-			res.json({ message: 'Character added!', data: character });
-		});
+	Characters.findByIdAndUpdate(req.params.id, editedCharacter,{ upsert: true }, (error, character) => {
+		if (error) {
+			res.json({ error });
+			throw error;
+		}
+		res.json(character);
 	});
 });
 
