@@ -6,7 +6,6 @@ const port = process.env.PORT || 3030;
 
 const express = require('express');
 const bodyParser = require('body-parser');
-// const cors = require('cors');
 const morgan = require('morgan');
 const fs = require('fs');
 const path = require('path');
@@ -30,10 +29,10 @@ app.use(
 	})
 );
 
-app.use(function(request, response, next) {
-	response.header('Access-Control-Allow-Origin', '*');
-	response.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept');
-	response.header('Access-Control-Allow-Methods', 'POST, GET, PUT, DELETE, OPTIONS');
+app.use((req, res, next) => {
+	res.header('Access-Control-Allow-Origin', '*');
+	res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept');
+	res.header('Access-Control-Allow-Methods', 'POST, GET, PUT, DELETE, OPTIONS');
 	next();
 });
 
@@ -67,12 +66,12 @@ const Projects = mongoose.model('Projects', {
 });
 
 const actions = {
-	'add_project'        : 'add_project',
-	'edit_project'       : 'edit_project',
-	'delete_project'     : 'delete_project',
-	'add_character'   : 'add_character',
-	'edit_character'  : 'edit_character',
-	'delete_character': 'delete_character'
+	add_project     : 'add_project',
+	edit_project    : 'edit_project',
+	delete_project  : 'delete_project',
+	add_character   : 'add_character',
+	edit_character  : 'edit_character',
+	delete_character: 'delete_character'
 };
 
 const Events = mongoose.model('Events', {
@@ -86,7 +85,7 @@ const Events = mongoose.model('Events', {
 //  REST API -- BOOKS
 // -----------------------------------------------------------------------------
 
-app.get('/projects', async(req, res) => {
+app.get('/projects', async (req, res) => {
 	await Projects.find((error, projects) => {
 		if (error) {
 			res.json({ error });
@@ -97,7 +96,6 @@ app.get('/projects', async(req, res) => {
 });
 
 app.get('/project/:id', (req, res) => {
-
 	Projects.findOne({ _id: req.params.id }, (error, project) => {
 		if (error) {
 			res.json({ error });
@@ -108,21 +106,21 @@ app.get('/project/:id', (req, res) => {
 	});
 });
 
-app.post('/project', function(request, response) {
+app.post('/project', (req, res) => {
 	const project = new Projects();
-	project.title = request.body.title;
-	project.author = request.body.author;
-	project.series = request.body.series;
-	project.cast = request.body.cast;
-	project.desc = request.body.desc;
-	project.genre = request.body.genre;
-	project.read = request.body.read;
+	project.title = req.body.title;
+	project.author = req.body.author;
+	project.series = req.body.series;
+	project.cast = req.body.cast;
+	project.desc = req.body.desc;
+	project.genre = req.body.genre;
+	project.read = req.body.read;
 
-	project.save(function(error, project) {
+	project.save((error, project) => {
 		if (error) {
-			response.json({ error: error });
+			res.json({ error: error });
 		}
-		response.json({ message: 'Project added!', data: project });
+		res.json({ message: 'Project added!', data: project });
 	});
 });
 
@@ -130,7 +128,7 @@ app.post('/project', function(request, response) {
  * Edit a single project
  */
 app.post('/project/:id', (req, res) => {
-	Projects.findOne({ _id: req.params.id }, function(err, project) {
+	Projects.findOne({ _id: req.params.id }, (err, project) => {
 		if (err) {
 			res.json({ error: err });
 		}
@@ -141,7 +139,7 @@ app.post('/project/:id', (req, res) => {
 		project.desc = req.body.desc;
 		project.genre = req.body.genre;
 
-		project.save(function(error, project) {
+		project.save((error, project) => {
 			if (error) {
 				res.json({ error: error });
 			}
@@ -150,10 +148,10 @@ app.post('/project/:id', (req, res) => {
 	});
 });
 
-app.delete('/project', function(request, response, next) {
-	Projects.findByIdAndRemove(request.body._id, function(error, project) {
-		if (error) response.send(error);
-		response.json({ message: 'Project deleted!', data: project });
+app.delete('/project', (req, res) => {
+	Projects.findByIdAndRemove(req.body._id, (error, project) => {
+		if (error) res.send(error);
+		res.json({ message: 'Project deleted!', data: project });
 	});
 });
 
@@ -171,7 +169,7 @@ app.get('/characters', async (req, res) => {
 	});
 });
 
-app.get('/character/:id', async(req, res) => {
+app.get('/character/:id', async (req, res) => {
 	await Characters.findOne({ _id: req.params.id }, (error, character) => {
 		if (error) {
 			res.json({ error });
@@ -181,62 +179,59 @@ app.get('/character/:id', async(req, res) => {
 	});
 });
 
-app.post('/character', function(request, response, next) {
+app.post('/character', (req, res, next) => {
 	const character = new Characters();
-	character.first_name = request.body.first_name;
-	character.last_name = request.body.last_name;
-	character.age = request.body.age;
-	character.origin = request.body.origin;
-	character.gender = request.body.gender;
-	character.project = request.body.project;
-	character.series = request.body.series;
-	character.family = request.body.family;
+	character.first_name = req.body.first_name;
+	character.last_name = req.body.last_name;
+	character.age = req.body.age;
+	character.origin = req.body.origin;
+	character.gender = req.body.gender;
+	character.project = req.body.project;
+	character.series = req.body.series;
+	character.family = req.body.family;
 
-	character.save(function(error, character) {
+	character.save((error, character) => {
 		if (error) {
 			return next(error);
 		}
 
-		response.json({ message: 'Character added!', data: character });
+		res.json({ message: 'Character added!', data: character });
 	});
 });
 
-app.put('/characters', function(request, response, next) {
-	Characters.findById(request.body._id, function(error, character) {
-		character.first_name = request.body.first_name;
-		character.last_name = request.body.last_name;
-		character.age = request.body.age;
-		character.origin = request.body.origin;
-		character.gender = request.body.gender;
+app.put('/characters', (req, res) => {
+	Characters.findById(req.body._id, (error, character) => {
+		character.first_name = req.body.first_name;
+		character.last_name = req.body.last_name;
+		character.age = req.body.age;
+		character.origin = req.body.origin;
+		character.gender = req.body.gender;
 
-		character.save(function(error, character) {
-			if (error) {
-				return next(error);
-			}
-
-			response.json({ message: 'Character added!', data: character });
+		character.save((err, character) => {
+			if (err) res.send(err);
+			res.json({ message: 'Character added!', data: character });
 		});
 	});
 });
 
-app.post('/view_character', function(request, response, next) {
-	Characters.findById(request.body._id, function(error, selection) {
-		if (error) response.send(error);
-		response.json(selection);
+app.post('/view_character', (req, res) => {
+	Characters.findById(req.body._id, (err, selection) => {
+		if (err) res.send(err);
+		res.json(selection);
 	});
 });
 
-app.post('/edit_character', function(request, response, next) {
-	Characters.findById(request.body._id, function(error, character) {
-		if (error) response.send(error);
-		response.json(character);
+app.post('/edit_character', (req, res) => {
+	Characters.findById(req.body._id, (err, character) => {
+		if (err) res.send(err);
+		res.json(character);
 	});
 });
 
-app.post('/delete_character', function(request, response, next) {
-	Characters.findByIdAndRemove(request.body._id, function(error, character) {
-		if (error) response.send(error);
-		response.json({ message: 'Character deleted!', data: character });
+app.post('/delete_character', (req, res) => {
+	Characters.findByIdAndRemove(req.body._id, (err, character) => {
+		if (err) res.send(err);
+		res.json({ message: 'Character deleted!', data: character });
 	});
 });
 
@@ -244,7 +239,7 @@ app.post('/delete_character', function(request, response, next) {
 //  REST API -- GENRES
 // -----------------------------------------------------------------------------
 
-app.get('/genres', function(req, res) {
+app.get('/genres', (req, res) => {
 	res.json({
 		data: genres_en
 	});
@@ -283,8 +278,7 @@ app.post('/event', (req, res) => {
 // -----------------------------------------------------------------------------
 //  REST API -- BOOKS
 // -----------------------------------------------------------------------------
-const logsFromFile = fs.readFileSync(path.join(__dirname, 'access.log'))
-	.toString()
+const logsFromFile = fs.readFileSync(path.join(__dirname, 'access.log')).toString()
 	.split('\n');
 
 const getDbReadyState = () => {
@@ -314,7 +308,7 @@ const getDbReadyState = () => {
 	return status;
 };
 
-app.get('/admin', function(req, res) {
+app.get('/admin', (req, res) => {
 	res.json({
 		api: [
 			{
@@ -325,17 +319,10 @@ app.get('/admin', function(req, res) {
 		],
 		db: [
 			{
-				status: getDbReadyState()
-				// models         : async() => await mongoose.connection.models,
-				// totalProjects     : async() => await Projects.countDocuments(),
-				// totalCharacters: async() => await Characters.countDocuments()
+				name       : 		mongoose.connection.db.databaseName,
+				status: getDbReadyState(),
 			}
 		]
-		/*
-		client: {
-					lang: req.params.lang
-				}
-		*/
 	});
 });
 
