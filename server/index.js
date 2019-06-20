@@ -46,43 +46,109 @@ app.use(morgan(loggingFormat, { stream: accessLogStream }));
 //  MONGOOSE MODELS
 // -----------------------------------------------------------------------------
 
+/**
+ * Users Model
+ * Defines user properties
+ */
+const Users = mongoose.model('Users', {
+	// The username given by the user
+	username : String,
+	// The fullname optionally provided
+	full_name: String,
+	// The email address to contact the user
+	email    : String,
+	// The creation date of the user account
+	createdAt: String,
+	// The projects associated with the user
+	projects : Array,
+	// Reference to the Role Model
+	role     : String
+});
+
+/**
+ * Roles Model
+ * used to define roles for users
+ * ex: Admin, Author, Editor, Reader
+ */
+const Roles = mongoose.model('Roles', {
+	// The type of role
+	type : String,
+	// The users associated with that role
+	users: Array
+});
+
+/**
+ * Characters Model
+ * Shapes character properties and aspects
+ */
 const Characters = mongoose.model('Characters', {
+	// The project associated with the character
+	// TODO: project should be a ref!
+	project    : String,
+	// The first name of the character
 	first_name : String,
+	// The potential middle name of the character
 	middle_name: String,
+	// The last name of the character
 	last_name  : String,
+	// The fullname compiled of the first, middle and last names
+	full_name  : String,
+	// The gender expression of the character
 	gender     : String,
+	// The nationality of the character
+	nationality: String,
+	// The origin of the character, if different from nationality
 	origin     : String,
-	age        : String
+	// TODO: deprecate age in favor of birthday
+	age        : String,
+	// The birthday of the given character
+	birthday   : Date,
 });
 
+
+/**
+ * Project Model
+ * Shapes project properties and aspects
+ */
 const Projects = mongoose.model('Projects', {
-	title : String,
-	author: String,
-	series: String,
-	cast  : String,
-	desc  : String,
-	genre : String,
-	read  : String
+	// The project title
+	title        : String,
+	// The project status => statuses are saved in PROJECT_STATUS
+	status       : String,
+	// The author of the Project
+	author       : String,
+	// Potential Collaborators on the project
+	collaborators: Array,
+	// If String given, Project will be grouped into the given series
+	// TODO: should be ref!
+	series       : String,
+	// The cast of characters associated with this project
+	cast         : String,
+	// A description for the project
+	desc         : String,
+	// The potential genre of the project
+	genre        : String,
 });
 
-const actions = {
-	add_project     : 'add_project',
-	edit_project    : 'edit_project',
-	delete_project  : 'delete_project',
-	add_character   : 'add_character',
-	edit_character  : 'edit_character',
-	delete_character: 'delete_character'
-};
-
+/**
+ * Events Model
+ * models the event object
+ */
 const Events = mongoose.model('Events', {
+	// The user associated with the event
+	// TODO: should be a ref to the user, not String!
 	user     : String,
+	// The action perpetrated
 	action   : String,
+	// The timestamp of the event action
 	timestamp: String,
+	// Reference to the item that triggered the event
+	// ex: Project Id
 	ref      : String
 });
 
 // -----------------------------------------------------------------------------
-//  REST API -- BOOKS
+//  REST API -- PROJECTS
 // -----------------------------------------------------------------------------
 
 app.get('/projects', async (req, res) => {
@@ -109,7 +175,10 @@ app.get('/project/:id', (req, res) => {
 app.post('/project', (req, res) => {
 	const project = new Projects();
 	project.title = req.body.title;
+	project.status = req.body.status;
 	project.author = req.body.author;
+	project.collaborators = req.body.collaborators;
+	//TODO: Series should be a ref!
 	project.series = req.body.series;
 	project.cast = req.body.cast;
 	project.desc = req.body.desc;
@@ -133,7 +202,9 @@ app.post('/project/:id', (req, res) => {
 			res.json({ error: err });
 		}
 		project.title = req.body.title;
+		project.status = req.body.status;
 		project.author = req.body.author;
+		project.collaborators = req.body.collaborators;
 		project.series = req.body.series;
 		project.cast = req.body.cast;
 		project.desc = req.body.desc;
@@ -182,13 +253,15 @@ app.get('/character/:id', async (req, res) => {
 app.post('/character', (req, res, next) => {
 	const character = new Characters();
 	character.first_name = req.body.first_name;
+	character.middle_name = req.body.middle_name;
 	character.last_name = req.body.last_name;
-	character.age = req.body.age;
+	character.full_name = req.body.full_name;
+	character.birthday = req.body.birthday;
+	character.nationality = req.body.nationality;
 	character.origin = req.body.origin;
 	character.gender = req.body.gender;
 	character.project = req.body.project;
 	character.series = req.body.series;
-	character.family = req.body.family;
 
 	character.save((error, character) => {
 		if (error) {
@@ -202,10 +275,15 @@ app.post('/character', (req, res, next) => {
 app.put('/characters', (req, res) => {
 	Characters.findById(req.body._id, (error, character) => {
 		character.first_name = req.body.first_name;
+		character.middle_name = req.body.middle_name;
 		character.last_name = req.body.last_name;
-		character.age = req.body.age;
+		character.full_name = req.body.full_name;
+		character.birthday = req.body.birthday;
+		character.nationality = req.body.nationality;
 		character.origin = req.body.origin;
 		character.gender = req.body.gender;
+		character.project = req.body.project;
+		character.series = req.body.series;
 
 		character.save((err, character) => {
 			if (err) res.send(err);
@@ -319,8 +397,8 @@ app.get('/admin', (req, res) => {
 		],
 		db: [
 			{
-				name       : 		mongoose.connection.db.databaseName,
-				status: getDbReadyState(),
+				name  : mongoose.connection.db.databaseName,
+				status: getDbReadyState()
 			}
 		]
 	});
