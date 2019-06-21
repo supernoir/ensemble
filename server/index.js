@@ -333,12 +333,31 @@ app.get('/genres', (req, res) => {
 //  REST API -- HISTORY
 // -----------------------------------------------------------------------------
 
+
 app.get('/events', (req, res) => {
 	Events.find((err, events) => {
 		if (err) {
 			res.json(err);
 		}
 		res.json(events);
+	});
+});
+
+app.get('/events/:filter', (req, res) => {
+	Events.find((err, events) => {
+		if (err) {
+			res.json(err);
+		}
+		let latestEvents = events;
+
+		switch(req.params.filter) {
+			case 'latest':
+				latestEvents = latestEvents.slice(0, 5);
+				res.json(latestEvents);
+				break;
+			default:
+				res.json(latestEvents);
+		}
 	});
 });
 

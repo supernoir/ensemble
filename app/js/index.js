@@ -42,6 +42,7 @@ import CharactersList from './pages/Characters/CharactersList';
 import Character from './pages/Characters/Character';
 import NewCharacter from './pages/Characters/NewCharacter';
 import EditCharacter from './pages/Characters/EditCharacter';
+import EventsList from './pages/Events/EventsList';
 
 export default class Ensemble extends React.Component {
 	constructor(props) {
@@ -163,7 +164,7 @@ export default class Ensemble extends React.Component {
 							<Route exact path="/" render={props => (
 								<Dashboard {...props}
 									eventsData={this.state.events}
-									getEvents={() => this.sendApiRequest(API_URI, API_ACTIONS.GET, 'events')}
+									getEvents={() => this.sendApiRequest(API_URI, API_ACTIONS.GET, 'events','latest')}
 								/>)}
 							/>
 							<Route path="/login" render={props => <Login {...props} />} />
@@ -249,6 +250,14 @@ export default class Ensemble extends React.Component {
 									/>
 								)}
 							/>
+							{/** Events */}
+							<Route exact path="/events" render={props => (
+								<EventsList
+									events={this.state.events}
+									getEvents={() => this.sendApiRequest(API_URI, API_ACTIONS.GET, 'events')}
+								/>)}
+							/>
+
 						</main>
 					</React.Fragment>
 				</Router>

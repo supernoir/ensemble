@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 import intl from 'react-intl-universal';
 import moment from 'moment';
 import { Container, Segment, Header, Divider, Card, Feed } from 'semantic-ui-react';
@@ -52,7 +53,7 @@ export default class Dashboard extends React.Component {
 						/>
 					</Card.Group>
 					<Header>
-						{'I18N: Recent Activity'}
+						<Link to="/events">{'I18N: Recent Activity'}</Link>
 						<Divider />
 
 						{this.props.eventsData
