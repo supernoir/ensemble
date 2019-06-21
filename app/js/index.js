@@ -17,6 +17,13 @@ const locales = {
 
 const API_URI = 'http://localhost:3030';
 
+// Initialize service worker
+if ('serviceWorker' in navigator) {
+	navigator.serviceWorker.register('sw.js')
+		.then(console.log('SW registered'))
+		.catch(console.error('An error occurred while registering the SW'));
+}
+
 // Import Constants
 import API_ACTIONS from './constants/apiActions';
 

@@ -4,6 +4,8 @@ const path = require('path');
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const BrowserSyncPlugin = require('browser-sync-webpack-plugin');
+const ServiceWorkerWebpackPlugin = require('serviceworker-webpack-plugin');
+
 const Dotenv = require('dotenv-webpack');
 
 module.exports = {
@@ -68,6 +70,10 @@ module.exports = {
 		}),
 		new Dotenv({
 			path: path.resolve(__dirname,'.env')
+		}),
+		new ServiceWorkerWebpackPlugin({
+			entry   : path.join(__dirname, 'sw.js'),
+			excludes: ['**/.*', '**/*.map', '*.html'],
 		})
 	]
 };
