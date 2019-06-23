@@ -21,7 +21,6 @@ build app:
   before_script:
   - cd app
   script:
-    - npm cache clean
     - npm install
     - npm run build
 
@@ -31,7 +30,6 @@ build server:
   before_script:
     - cd server
   script:
-    - npm cache clean
     - npm install
     - npm run build
 
