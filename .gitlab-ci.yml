@@ -1,0 +1,58 @@
+---
+image: node:8.16.0-jessie
+
+variables:
+  # use one of the following: https://hub.docker.com/r/kkarczmarczyk/node-yarn/
+  NODE_VERSION: "8.16.0"
+
+
+stages:
+  - build
+  - test
+#  - deploy
+
+# ----------------------------------
+# BUILD
+# ----------------------------------
+
+build app:
+  stage: build
+  image: node:$NODE_VERSION
+  before_script:
+  - cd app
+  script:
+    - npm cache clean
+    - npm install
+    - npm run build
+
+build server:
+  stage: build
+  image: node:$NODE_VERSION
+  before_script:
+    - cd server
+  script:
+    - npm cache clean
+    - npm install
+    - npm run build
+
+
+# ----------------------------------
+# TEST
+# ----------------------------------
+
+# install everything
+test app:
+  stage: test
+  image: node:$NODE_VERSION
+  before_script:
+  - cd app
+  script:
+    - npm run test
+
+test server:
+  stage: test
+  image: node:$NODE_VERSION
+  before_script:
+    - cd server
+  script:
+    - npm run test
