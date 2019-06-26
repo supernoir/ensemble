@@ -1,10 +1,12 @@
 {
   "brand": "Ensemble",
   "entity.projects": "Proyectos",
+  "entity.project": "Proyecto",
   "desc.projects":"Maneja tus proyectos",
   "desc.characters":"Maneja tus caracteres",
   "entity.projects.series": "Serie",
   "entity.characters": "Caracteres",
+  "entity.character": "Caracter",
   "entity.journeys": "Viajes",
   "entity.timeline": "Cronograma",
   "component.dashboard": "Dashboard",
