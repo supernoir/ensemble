@@ -19,7 +19,7 @@ test app:
   before_script:
   - cd app
   script:
-    - npm run test
+    - npm run test-app
 
 test server:
   stage: test
