@@ -8,12 +8,17 @@ export default class EventsList extends React.Component {
 	parseEvent = event => {
 		switch (event.action) {
 			case 'add_project':
-				return `You added ${event.ref} to your projects.`;
+				return intl.get('event.action-addproject', { ref: event.ref });
 			case 'add_character':
-				return `You added ${event.ref} to your Characters.`;
+				return intl.get('event.action-addcharacter', { ref: event.ref });
 			case 'edit_project':
+				return intl.get('event.action-editproject', { ref: event.ref });
 			case 'edit_character':
-				return `You edited ${event.ref}`;
+				return intl.get('event.action-editcharacter', { ref: event.ref });
+			case 'delete_project':
+				return intl.get('event.action-deletecharacter', { ref: event.ref });
+			case 'delete_character':
+				return intl.get('event.action-deletecharacter', { ref: event.ref });
 		}
 	};
 
@@ -37,7 +42,7 @@ export default class EventsList extends React.Component {
 				<Segment>
 					<Header as="h2">
 						{intl.get('entity.events')}
-						<Icon name="newspaper outline"></Icon>
+						<Icon name="newspaper outline" />
 						<Header.Subheader>{intl.get('desc.events')}</Header.Subheader>
 					</Header>
 				</Segment>
@@ -57,7 +62,7 @@ export default class EventsList extends React.Component {
 								</Feed.Event>
 							</Feed>
 						);
-					  })
+					})
 					: null}
 			</Container>
 		);
