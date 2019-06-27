@@ -15,20 +15,23 @@ export default class Dashboard extends React.Component {
 	parseEvent = event => {
 		switch (event.action) {
 			case 'add_project':
-				return `You added ${event.ref} to your projects.`;
+				return intl.get('event.action-addproject', { ref: event.ref });
 			case 'add_character':
-				return `You added ${event.ref} to your Characters.`;
+				return intl.get('event.action-addcharacter', { ref: event.ref });
 			case 'edit_project':
+				return intl.get('event.action-editproject', { ref: event.ref });
 			case 'edit_character':
-				return `You edited ${event.ref}`;
+				return intl.get('event.action-editcharacter', { ref: event.ref });
+			case 'delete_project':
+				return intl.get('event.action-deletecharacter', { ref: event.ref });
+			case 'delete_character':
+				return intl.get('event.action-deletecharacter', { ref: event.ref });
 		}
 	};
-
 
 	componentDidMount() {
 		this.props.getEvents();
 	}
-
 
 	render() {
 		return (
@@ -43,17 +46,17 @@ export default class Dashboard extends React.Component {
 							href="/projects"
 							image={'../../public/img/photo-1443188631128-a1b6b1c5c207.jpeg'}
 							header={intl.get('entity.projects')}
-							meta={`12 Projects available`}
+							meta={intl.get('project.count-available', { count: 12 })}
 						/>
 						<Card
 							href="/characters"
 							image={'../../public/img/photo-1427805371062-cacdd21273f1.jpeg'}
 							header={intl.get('entity.characters')}
-							meta={`4 Characters available`}
+							meta={intl.get('character.count-available', { count: 2 })}
 						/>
 					</Card.Group>
 					<Header>
-						<Link to="/events">{'I18N: Recent Activity'}</Link>
+						<Link to="/events">{intl.get('event.recent-activity')}</Link>
 						<Divider />
 
 						{this.props.eventsData

@@ -59,11 +59,10 @@ export default class EditCharacter extends React.Component {
 			fullName += middle !== void 0 && middle.length > 0 ? middle + ' ' : '';
 			fullName += last !== void 0 && last.length > 0 ? last : '';
 			return fullName.trim();
-		} catch(err) {
+		} catch (err) {
 			throw err;
 		}
 	};
-
 
 	postnewCharacter(evt) {
 		evt.preventDefault();
@@ -132,7 +131,7 @@ export default class EditCharacter extends React.Component {
 
 					<Form>
 						<Form.Field>
-							<label for="desc">I18N Description</label>
+							<label for="desc">{intl.get('character.label-desc')}</label>
 							<input
 								onChange={evt => this.handleInput('desc', evt)}
 								defaultValue={this.props.character.desc}
@@ -142,7 +141,7 @@ export default class EditCharacter extends React.Component {
 							/>
 						</Form.Field>
 						<Form.Field>
-							<label for="firstname">I18N First Name</label>
+							<label for="firstname">{intl.get('character.label-firstname')}</label>
 							<input
 								onChange={evt => this.handleInput('firstname', evt)}
 								defaultValue={this.props.character.first_name}
@@ -153,7 +152,9 @@ export default class EditCharacter extends React.Component {
 							/>
 						</Form.Field>
 						<Form.Field>
-							<label for="middlename">I18N Middle Name</label>
+							<label for="middlename">
+								{intl.get('character.label-middlename')}
+							</label>
 							<input
 								onChange={evt => this.handleInput('middlename', evt)}
 								defaultValue={this.props.character.middle_name}
@@ -163,12 +164,20 @@ export default class EditCharacter extends React.Component {
 							/>
 						</Form.Field>
 						<Form.Field>
-							<label for="lastname">I18N Last Name</label>
-							<input onChange={evt => this.handleInput('lastname', evt)} defaultValue={this.props.character.last_name} type="text" id="lastname" placeholder="Doe" />
+							<label for="lastname">
+								{intl.get('character.label-lastname')}
+							</label>
+							<input
+								onChange={evt => this.handleInput('lastname', evt)}
+								defaultValue={this.props.character.last_name}
+								type="text"
+								id="lastname"
+								placeholder="Doe"
+							/>
 						</Form.Field>
 						<Form.Field>
 							<label for="gender" className="col-sm-2 control-label">
-								I18N Gender
+								{intl.get('character.label-gender')}
 							</label>
 							<input
 								onChange={evt => this.handleInput('gender', evt)}
@@ -181,7 +190,7 @@ export default class EditCharacter extends React.Component {
 						</Form.Field>
 						<Form.Field>
 							<label for="origin" className="col-sm-2 control-label">
-								I18N Origin
+								{intl.get('character.label-origin')}
 							</label>
 							<input
 								onChange={evt => this.handleInput('origin', evt)}
@@ -194,7 +203,7 @@ export default class EditCharacter extends React.Component {
 						</Form.Field>
 						<Form.Field>
 							<label for="birthday" className="col-sm-2 control-label">
-								I18N Birthday
+								{intl.get('character.label-birthday')}
 							</label>
 							<input
 								onChange={evt => this.handleInput('birthday', evt)}
@@ -210,7 +219,7 @@ export default class EditCharacter extends React.Component {
 
 						<Form.Field>
 							<label for="project" className="col-sm-2 control-label">
-								I18N Project
+								{intl.get('entity.project')}
 							</label>
 							<select onChange={evt => this.handleInput('project', evt)}>
 								{this.props.projects !== void 0
@@ -220,7 +229,7 @@ export default class EditCharacter extends React.Component {
 												{project.title}
 											</option>
 										);
-									  })
+									})
 									: null}
 							</select>
 						</Form.Field>
