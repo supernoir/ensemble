@@ -2,7 +2,7 @@ import React from 'react';
 import intl from 'react-intl-universal';
 import { Link } from 'react-router-dom';
 import { Container, Segment, Form, Button, Divider, Header, Breadcrumb } from 'semantic-ui-react';
-
+import { addMessage } from '../../actions/addMessage';
 export default class EditCharacter extends React.Component {
 	constructor() {
 		super();
@@ -84,6 +84,13 @@ export default class EditCharacter extends React.Component {
 			action: 'add_character',
 			ref   : this.assembleFullName(this.state.firstname, this.state.middlename, this.state.lastname)
 		});
+
+		this.props.store.dispatch(
+			addMessage({
+				type   : 'success',
+				content: intl.get('event.action-editcharacter', { ref: this.assembleFullName(this.state.firstname, this.state.middlename, this.state.lastname) })
+			})
+		);
 
 		this.props.history.push('/characters');
 	}

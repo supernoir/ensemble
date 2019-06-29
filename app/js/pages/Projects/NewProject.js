@@ -2,6 +2,7 @@ import React from 'react';
 import intl from 'react-intl-universal';
 import { Link } from 'react-router-dom';
 import { Container, Segment, Form, Button, Divider, Header, Breadcrumb } from 'semantic-ui-react';
+import { addMessage } from '../../actions/addMessage';
 
 export default class NewProject extends React.Component {
 	constructor() {
@@ -53,6 +54,13 @@ export default class NewProject extends React.Component {
 			action: 'add_project',
 			ref   : this.state.title,
 		});
+
+		this.props.store.dispatch(
+			addMessage({
+				type   : 'success',
+				content: intl.get('event.action-newproject', { ref: this.state.title })
+			})
+		);
 
 		this.props.history.push('/projects');
 	}
