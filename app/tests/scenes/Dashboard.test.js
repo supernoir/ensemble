@@ -2,7 +2,7 @@ import React from 'react';
 import { shallow } from 'enzyme';
 
 // Import Components
-import Dashboard from './../../js/pages/Dashboard';
+import Dashboard from './../../js/scenes/Dashboard';
 
 // Import Mock Data
 //import * as mockData from './mocks/mockApiResponse.json';
