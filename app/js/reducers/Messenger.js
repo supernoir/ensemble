@@ -5,9 +5,7 @@ const Messenger = (state = [], action) => {
 		case ADD_MESSAGE:
 			return [
 				...state,
-				{
-					messages: action.Messenger
-				}
+				 action.message
 			];
 		default:
 			return state;
@@ -15,4 +13,4 @@ const Messenger = (state = [], action) => {
 };
 
 export default Messenger;
-;
+

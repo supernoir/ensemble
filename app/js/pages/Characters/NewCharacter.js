@@ -2,6 +2,7 @@ import React from 'react';
 import intl from 'react-intl-universal';
 import { Link } from 'react-router-dom';
 import { Container, Segment, Form, Button, Divider, Header, Breadcrumb } from 'semantic-ui-react';
+import { addMessage } from '../../actions/addMessage';
 
 export default class NewCharacter extends React.Component {
 	constructor() {
@@ -85,7 +86,14 @@ export default class NewCharacter extends React.Component {
 			ref   : this.assembleFullName(this.state.firstname, this.state.middlename, this.state.lastname)
 		});
 
+		this.props.store.dispatch(
+			addMessage({
+				type   : 'success',
+				content: 'I18N Successfully added the character ' + this.assembleFullName(this.state.firstname, this.state.middlename, this.state.lastname)
+			})
+		);
 		this.props.history.push('/characters');
+
 	}
 
 	componentDidMount() {

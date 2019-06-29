@@ -31,6 +31,7 @@ import Auth from './services/Auth';
 
 // Import Layouts
 import Navbar from './layout/Navbar';
+import Notification from './layout/Notification';
 
 // --- BASE
 import Dashboard from './pages/Dashboard';
@@ -53,6 +54,7 @@ import { createStore } from 'redux';
 import { Provider } from 'react-redux';
 import { rootReducer } from './reducers';
 import { addMessage } from './actions/addMessage';
+import MessengerContainer from './containers/MessengerContainer';
 
 const store = createStore(rootReducer, window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__());
 
@@ -102,64 +104,91 @@ export default class Ensemble extends React.Component {
 		resource !== void 0 ? (targetUri += '/' + resource) : '';
 		param !== void 0 ? (targetUri += '/' + param) : '';
 
-		switch (action) {
-			case API_ACTIONS.GET:
-				axios({
-					method      : API_ACTIONS.GET,
-					url         : targetUri,
-					responseType: 'json',
-					headers     : {
-						'content-type': 'application/json'
-					}
-				})
-					.catch(err => console.error(err))
-					.then(res => {
-						this.setState({
-							[resource]: res.data
+		try {
+			switch (action) {
+				case API_ACTIONS.GET:
+					axios({
+						method      : API_ACTIONS.GET,
+						url         : targetUri,
+						responseType: 'json',
+						headers     : {
+							'content-type': 'application/json'
+						}
+					})
+						.catch(err => {
+							store.dispatch(
+								addMessage({
+									type       : 'error',
+									content: err.message,
+								})
+							);
+						})
+						.then(res => {
+							this.setState({
+								[resource]: res.data
+							});
 						});
-					});
-				store.dispatch(addMessage({
-					type   : 'info',
-					message: `${action} - ${resource}`
-				}));
+					break;
+				case API_ACTIONS.POST:
+					axios({
+						method      : API_ACTIONS.POST,
+						url         : targetUri,
+						responseType: 'json',
+						headers     : {
+							'content-type': 'application/json'
+						},
+						params: param,
+						data  : payload
+					})
+						.catch(err => {
+							store.dispatch(
+								addMessage({
+									type   : 'error',
+									content: err.message
+								})
+							);
 
-				break;
-			case API_ACTIONS.POST:
-				axios({
-					method      : API_ACTIONS.POST,
-					url         : targetUri,
-					responseType: 'json',
-					headers     : {
-						'content-type': 'application/json'
-					},
-					params: param,
-					data  : payload
-				})
-					.catch(err => console.error(err))
-					.then(res => {
-						this.setState({
-							[resource]: res.data
+						})
+						.then(res => {
+							this.setState({
+								[resource]: res.data
+							});
 						});
-					});
-				break;
-			case API_ACTIONS.PUT:
-				axios({
-					method      : API_ACTIONS.PUT,
-					url         : targetUri,
-					responseType: 'json',
-					headers     : {
-						'content-type': 'application/json'
-					},
-					params: param,
-					data  : payload
-				})
-					.catch(err => console.error(err))
-					.then(res => {
-						this.setState({
-							[resource]: res.data
+					break;
+				case API_ACTIONS.PUT:
+					axios({
+						method      : API_ACTIONS.PUT,
+						url         : targetUri,
+						responseType: 'json',
+						headers     : {
+							'content-type': 'application/json'
+						},
+						params: param,
+						data  : payload
+					})
+						.catch(err => {
+							store.dispatch(
+								addMessage({
+									type   : 'error',
+									content: err.message
+								})
+							);
+						})
+						.then(res => {
+							this.setState({
+								[resource]: res.data
+							});
 						});
-					});
-				break;
+					break;
+			}
+		} catch (err) {
+			store.dispatch(
+				addMessage({
+					type   : 'error',
+					content: err.message
+				})
+			);
+
 		}
 	};
 
@@ -174,11 +203,11 @@ export default class Ensemble extends React.Component {
 		return (
 			<Container>
 				<Provider store={store}>
-
 					<Router>
 						<React.Fragment>
 							<Navbar />
 							<main className="mx-0">
+								<MessengerContainer/>
 								<Route
 									exact
 									path="/"

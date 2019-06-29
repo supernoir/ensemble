@@ -1,9 +1,9 @@
 import { connect } from 'react-redux';
-import Ensemble from '../index';
+import NotificationCenter from '../layout/NotificationCenter';
 
 const mapStateToProps = state => {
 	return {
-		message: state.Messenger,
+		messages: state.Messenger,
 	};
 };
 
@@ -13,4 +13,4 @@ const mapDispatchToProps = dispatch => {
 	};
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(Ensemble);
+export default connect(mapStateToProps, mapDispatchToProps)(NotificationCenter);
