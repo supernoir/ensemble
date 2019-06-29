@@ -31,7 +31,6 @@ import Auth from './services/Auth';
 
 // Import Layouts
 import Navbar from './layout/Navbar';
-import Notification from './layout/Notification';
 
 // --- BASE
 import Dashboard from './pages/Dashboard';
