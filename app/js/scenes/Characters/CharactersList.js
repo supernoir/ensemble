@@ -3,18 +3,19 @@ import intl from 'react-intl-universal';
 import { Link } from 'react-router-dom';
 import { Container, Breadcrumb, Segment, Header, Card, Divider, Button } from 'semantic-ui-react';
 import CharacterCard from '../../layout/CharacterCard';
+import { addMessage } from '../../actions/addMessage';
 
 export default class CharactersList extends React.Component {
-	componentDidMount(){
+	componentDidMount() {
 		this.props.getCharacters();
 	}
 
-	getProjectById = (id) => {
+	getProjectById = id => {
 		this.props.getProjectById(id);
-	}
+	};
 
-	render(){
-		return(
+	render() {
+		return (
 			<Container>
 				<Breadcrumb>
 					<Breadcrumb.Section link>
@@ -27,18 +28,18 @@ export default class CharactersList extends React.Component {
 				</Breadcrumb>
 
 				<Segment>
-					<Header as='h2'>
+					<Header as="h2">
 						{intl.get('entity.characters')}
 						<Header.Subheader>{intl.get('desc.characters')}</Header.Subheader>
 					</Header>
-					<Divider/>
-					<Button icon='add'>
+					<Divider />
+					<Button icon="add">
 						<Link to="/addcharacter">{intl.get('character.action-add')}</Link>
 					</Button>
 
 				</Segment>
 
-				<Divider/>
+				<Divider />
 
 				<Card.Group>
 					{this.props.characters.map(character => {
@@ -46,7 +47,7 @@ export default class CharactersList extends React.Component {
 							<CharacterCard
 								character={character}
 								projectTitle={this.props.project !== void 0 ? this.props.project.title : ''}
-								getProjectTitle={()=>this.getProjectById(character.project)}
+								getProjectTitle={() => this.getProjectById(character.project)}
 							/>
 						);
 					})}

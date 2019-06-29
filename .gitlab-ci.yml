@@ -19,6 +19,7 @@ test app:
   before_script:
   - cd app
   script:
+    - npm install
     - npm run test-app
 
 test server:
@@ -27,6 +28,7 @@ test server:
   before_script:
     - cd server
   script:
+    - npm install
     - npm run test
 
 

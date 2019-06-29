@@ -33,21 +33,21 @@ import Auth from './services/Auth';
 import Navbar from './layout/Navbar';
 
 // --- BASE
-import Dashboard from './pages/Dashboard';
-import Login from './pages/Base/Login';
-import AdminPanel from './pages/Admin/AdminPanel';
+import Dashboard from './scenes/Dashboard';
+import Login from './scenes/Base/Login';
+import AdminPanel from './scenes/Admin/AdminPanel';
 
 // --- BOOKS
-import ProjectsList from './pages/Projects/ProjectsList';
-import Project from './pages/Projects/Project';
-import NewProject from './pages/Projects/NewProject';
+import ProjectsList from './scenes/Projects/ProjectsList';
+import Project from './scenes/Projects/Project';
+import NewProject from './scenes/Projects/NewProject';
 
 // --- CHARACTERS
-import CharactersList from './pages/Characters/CharactersList';
-import Character from './pages/Characters/Character';
-import NewCharacter from './pages/Characters/NewCharacter';
-import EditCharacter from './pages/Characters/EditCharacter';
-import EventsList from './pages/Events/EventsList';
+import CharactersList from './scenes/Characters/CharactersList';
+import Character from './scenes/Characters/Character';
+import NewCharacter from './scenes/Characters/NewCharacter';
+import EditCharacter from './scenes/Characters/EditCharacter';
+import EventsList from './scenes/Events/EventsList';
 
 import { createStore } from 'redux';
 import { Provider } from 'react-redux';
