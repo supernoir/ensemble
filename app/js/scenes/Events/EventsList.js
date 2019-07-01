@@ -1,7 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import intl from 'react-intl-universal';
-import { Container, Breadcrumb, Segment, Header, Feed, Divider, Icon } from 'semantic-ui-react';
+import { Container, Breadcrumb, Segment, Header, Feed, Divider } from 'semantic-ui-react';
 import moment from 'moment';
 import Loader from '../../layout/Loader';
 

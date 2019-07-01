@@ -36,13 +36,6 @@ export default class Dashboard extends React.Component {
 		this.props.getDashboardData();
 	}
 
-	componentWillReceiveProps(nextProps) {
-		if (nextProps !== this.props) {
-			console.log(nextProps.dashboardData.projects);
-		}
-	}
-
-
 	render() {
 		return this.props.loading
 			? <Loader loading={this.props.loading} />
