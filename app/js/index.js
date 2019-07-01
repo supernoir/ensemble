@@ -66,7 +66,7 @@ export default class Ensemble extends React.Component {
 		// Initialize component state
 		this.state = {
 			currentLocale: DEFAULT_LOCALE,
-			loading      : true,
+			loading      : false,
 			genres       : [],
 			admin        : {},
 			events       : [],
