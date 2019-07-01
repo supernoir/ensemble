@@ -87,14 +87,6 @@ export default class NewCharacter extends React.Component {
 			ref   : this.assembleFullName(this.state.firstname, this.state.middlename, this.state.lastname)
 		});
 
-		this.props.store.dispatch(
-			addMessage({
-				type   : 'success',
-				content: intl.get(
-					'event.action-addcharacter',
-					{ ref: this.assembleFullName(this.state.firstname, this.state.middlename, this.state.lastname) }
-				)
-			}));
 		this.props.history.push('/characters');
 
 	}

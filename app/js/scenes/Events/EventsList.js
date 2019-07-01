@@ -44,7 +44,6 @@ export default class EventsList extends React.Component {
 				<Segment>
 					<Header as="h2">
 						{intl.get('entity.events')}
-						<Icon name="newspaper outline" />
 						<Header.Subheader>{intl.get('desc.events')}</Header.Subheader>
 					</Header>
 				</Segment>

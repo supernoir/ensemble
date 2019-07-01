@@ -73,7 +73,8 @@ export default class Ensemble extends React.Component {
 			projects     : [],
 			project      : {},
 			characters   : [],
-			character    : {}
+			character    : {},
+			dashboard    : []
 		};
 	}
 
@@ -229,6 +230,8 @@ export default class Ensemble extends React.Component {
 										<Dashboard
 											{...props}
 											loading={this.state.loading}
+											dashboardData={this.state.dashboard}
+											getDashboardData={() => this.sendApiRequest(API_URI, API_ACTIONS.GET, 'dashboard')}
 											eventsData={this.state.events}
 											getEvents={() => this.sendApiRequest(API_URI, API_ACTIONS.GET, 'events', 'latest')}
 										/>

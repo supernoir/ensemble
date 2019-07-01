@@ -83,16 +83,9 @@ export default class EditCharacter extends React.Component {
 
 		this.props.addEvent({
 			user  : 'testAdmin',
-			action: 'add_character',
+			action: 'edit_character',
 			ref   : this.assembleFullName(this.state.firstname, this.state.middlename, this.state.lastname)
 		});
-
-		this.props.store.dispatch(
-			addMessage({
-				type   : 'success',
-				content: intl.get('event.action-editcharacter', { ref: this.assembleFullName(this.state.firstname, this.state.middlename, this.state.lastname) })
-			})
-		);
 
 		this.props.history.push('/characters');
 	}

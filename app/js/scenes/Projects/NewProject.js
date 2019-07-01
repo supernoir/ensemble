@@ -56,14 +56,10 @@ export default class NewProject extends React.Component {
 			ref   : this.state.title,
 		});
 
-		this.props.store.dispatch(
-			addMessage({
-				type   : 'success',
-				content: intl.get('event.action-newproject', { ref: this.state.title })
-			})
-		);
-
 		this.props.history.push('/projects');
+	}
+
+	componentDidMount(){
 	}
 
 	render() {

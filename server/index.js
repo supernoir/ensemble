@@ -103,9 +103,8 @@ const Characters = mongoose.model('Characters', {
 	origin     : String,
 	// The birthday of the given character
 	// TODO: convert to datestamp
-	birthday   : String,
+	birthday   : String
 });
-
 
 /**
  * Project Model
@@ -128,7 +127,7 @@ const Projects = mongoose.model('Projects', {
 	// A description for the project
 	desc         : String,
 	// The potential genre of the project
-	genre        : String,
+	genre        : String
 });
 
 /**
@@ -289,7 +288,7 @@ app.put('/character/:id', (req, res) => {
 	editedCharacter.series = req.body.series;
 	editedCharacter.desc = req.body.desc;
 
-	Characters.findByIdAndUpdate(req.params.id, editedCharacter,{ upsert: true }, (error, character) => {
+	Characters.findByIdAndUpdate(req.params.id, editedCharacter, { upsert: true }, (error, character) => {
 		if (error) {
 			res.json({ error });
 			throw error;
@@ -333,7 +332,6 @@ app.get('/genres', (req, res) => {
 //  REST API -- HISTORY
 // -----------------------------------------------------------------------------
 
-
 app.get('/events', (req, res) => {
 	Events.find((err, events) => {
 		if (err) {
@@ -350,7 +348,7 @@ app.get('/events/:filter', (req, res) => {
 		}
 		let latestEvents = events;
 
-		switch(req.params.filter) {
+		switch (req.params.filter) {
 			case 'latest':
 				latestEvents = latestEvents.slice(0, 5);
 				res.json(latestEvents);
@@ -379,7 +377,28 @@ app.post('/event', (req, res) => {
 });
 
 // -----------------------------------------------------------------------------
-//  REST API -- BOOKS
+//  REST API -- DASHBOARD
+// -----------------------------------------------------------------------------
+
+app.get('/dashboard', (req, res) => {
+	Projects.count((err, projectCount) => {
+		if (err) {
+			res.json(err);
+		}
+		Characters.count((err, characterCount) => {
+			if (err) {
+				res.json(err);
+			}
+			res.json({
+				projects  : projectCount || 0,
+				characters: characterCount || 0
+			});
+		});
+	});
+});
+
+// -----------------------------------------------------------------------------
+//  REST API -- ADMIN
 // -----------------------------------------------------------------------------
 const logsFromFile = fs.readFileSync(path.join(__dirname, 'access.log')).toString()
 	.split('\n');
