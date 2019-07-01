@@ -2,6 +2,7 @@ import React from 'react';
 import intl from 'react-intl-universal';
 import { Link } from 'react-router-dom';
 import { Container, Breadcrumb, Segment, Divider, Header, Button, Icon } from 'semantic-ui-react';
+import Loader from '../../layout/Loader';
 
 export default class Character extends React.Component {
 	constructor(){
@@ -15,8 +16,9 @@ export default class Character extends React.Component {
 	}
 
 	render(){
-		return(
-			<Container>
+		return this.props.loading
+			? <Loader loading={this.props.loading} />
+			:	<Container>
 				<Breadcrumb>
 					<Breadcrumb.Section link>
 						<Link to="/">{intl.get('component.dashboard')}</Link>
@@ -49,8 +51,6 @@ export default class Character extends React.Component {
 						{intl.get('character.action-delete')}
 					</Button>
 				</Segment>
-
-			</Container>
-		);
+			</Container>;
 	}
 }

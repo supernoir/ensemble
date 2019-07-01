@@ -57,7 +57,6 @@ import MessengerContainer from './containers/MessengerContainer';
 
 const store = createStore(rootReducer, window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__());
 
-
 export default class Ensemble extends React.Component {
 	constructor(props) {
 		super(props);
@@ -67,7 +66,7 @@ export default class Ensemble extends React.Component {
 		// Initialize component state
 		this.state = {
 			currentLocale: DEFAULT_LOCALE,
-			loading      : false,
+			loading      : true,
 			genres       : [],
 			admin        : {},
 			events       : [],
@@ -99,6 +98,9 @@ export default class Ensemble extends React.Component {
 	};
 
 	sendApiRequest = (uri, action, resource, param, payload) => {
+		this.setState({
+			loading: true
+		});
 		let targetUri = uri;
 		resource !== void 0 ? (targetUri += '/' + resource) : '';
 		param !== void 0 ? (targetUri += '/' + param) : '';
@@ -117,14 +119,18 @@ export default class Ensemble extends React.Component {
 						.catch(err => {
 							store.dispatch(
 								addMessage({
-									type       : 'error',
-									content: err.message,
+									type   : 'error',
+									content: err.message
 								})
 							);
+							this.setState({
+								loading: false
+							});
 						})
 						.then(res => {
 							this.setState({
-								[resource]: res.data
+								[resource]: res.data,
+								loading   : false
 							});
 						});
 					break;
@@ -146,11 +152,14 @@ export default class Ensemble extends React.Component {
 									content: err.message
 								})
 							);
-
+							this.setState({
+								loading: false
+							});
 						})
 						.then(res => {
 							this.setState({
-								[resource]: res.data
+								[resource]: res.data,
+								loading   : false
 							});
 						});
 					break;
@@ -172,10 +181,14 @@ export default class Ensemble extends React.Component {
 									content: err.message
 								})
 							);
+							this.setState({
+								loading: false
+							});
 						})
 						.then(res => {
 							this.setState({
-								[resource]: res.data
+								[resource]: res.data,
+								loading   : false
 							});
 						});
 					break;
@@ -187,15 +200,17 @@ export default class Ensemble extends React.Component {
 					content: err.message
 				})
 			);
-
+			this.setState({
+				loading: false
+			});
 		}
+		this.setState({
+			loading: false
+		});
 	};
 
 	componentWillMount() {
 		this.loadLocales(this.state.currentLocale);
-		this.setState({
-			loading: true
-		});
 	}
 
 	render() {
@@ -206,31 +221,48 @@ export default class Ensemble extends React.Component {
 						<React.Fragment>
 							<Navbar />
 							<main className="mx-0">
-								<MessengerContainer/>
+								<MessengerContainer />
 								<Route
 									exact
 									path="/"
 									render={props => (
-										<Dashboard {...props} eventsData={this.state.events} getEvents={() => this.sendApiRequest(API_URI, API_ACTIONS.GET, 'events', 'latest')} />
+										<Dashboard
+											{...props}
+											loading={this.state.loading}
+											eventsData={this.state.events}
+											getEvents={() => this.sendApiRequest(API_URI, API_ACTIONS.GET, 'events', 'latest')}
+										/>
 									)}
 								/>
 								<Route path="/login" render={props => <Login {...props} />} />
 								<Route
 									path="/admin"
-									render={() => <AdminPanel adminData={this.state.admin} getAdminData={() => this.sendApiRequest(API_URI, API_ACTIONS.GET, 'admin')} />}
+									render={() => (
+										<AdminPanel
+											loading={this.state.loading}
+											adminData={this.state.admin}
+											getAdminData={() => this.sendApiRequest(API_URI, API_ACTIONS.GET, 'admin')}
+										/>
+									)}
 								/>
 
 								{/* PROJECTS */}
 								<Route
 									path="/projects"
 									render={props => (
-										<ProjectsList getProjects={() => this.sendApiRequest(API_URI, API_ACTIONS.GET, 'projects')} projects={this.state.projects} {...props} />
+										<ProjectsList
+											loading={this.state.loading}
+											getProjects={() => this.sendApiRequest(API_URI, API_ACTIONS.GET, 'projects')}
+											projects={this.state.projects}
+											{...props}
+										/>
 									)}
 								/>
 								<Route
 									path="/addproject"
 									render={props => (
 										<NewProject
+											loading={this.state.loading}
 											genres={this.state.genres}
 											addProject={data => {
 												this.sendApiRequest(API_URI, API_ACTIONS.POST, 'project', '', data);
@@ -246,6 +278,7 @@ export default class Ensemble extends React.Component {
 									path="/project/:id"
 									render={props => (
 										<Project
+											loading={this.state.loading}
 											match={props.match}
 											getProjectById={id => this.sendApiRequest(API_URI, API_ACTIONS.GET, 'project', id)}
 											project={this.state.project !== void 0 ? this.state.project : {}}
@@ -257,6 +290,7 @@ export default class Ensemble extends React.Component {
 									path="/characters"
 									render={() => (
 										<CharactersList
+											loading={this.state.loading}
 											getCharacters={() => this.sendApiRequest(API_URI, API_ACTIONS.GET, 'characters')}
 											characters={this.state.characters !== void 0 ? this.state.characters : []}
 											getProjectById={id => this.sendApiRequest(API_URI, API_ACTIONS.GET, 'project', id)}
@@ -268,6 +302,7 @@ export default class Ensemble extends React.Component {
 									path="/addcharacter"
 									render={props => (
 										<NewCharacter
+											loading={this.state.loading}
 											addCharacter={data => {
 												this.sendApiRequest(API_URI, API_ACTIONS.POST, 'character', '', data);
 											}}
@@ -284,6 +319,7 @@ export default class Ensemble extends React.Component {
 									path="/editcharacter/:id"
 									render={props => (
 										<EditCharacter
+											loading={this.state.loading}
 											editCharacter={(id, data) => {
 												this.sendApiRequest(API_URI, API_ACTIONS.PUT, 'character', id, data);
 											}}
@@ -303,6 +339,7 @@ export default class Ensemble extends React.Component {
 									path="/character/:id"
 									render={props => (
 										<Character
+											loading={this.state.loading}
 											getCharacterById={id => this.sendApiRequest(API_URI, API_ACTIONS.GET, 'character', id)}
 											character={this.state.character !== void 0 ? this.state.character : {}}
 											match={props.match}
@@ -313,9 +350,14 @@ export default class Ensemble extends React.Component {
 								<Route
 									exact
 									path="/events"
-									render={props => <EventsList events={this.state.events} getEvents={() => this.sendApiRequest(API_URI, API_ACTIONS.GET, 'events')} />}
+									render={props => (
+										<EventsList
+											loading={this.state.loading}
+											events={this.state.events}
+											getEvents={() => this.sendApiRequest(API_URI, API_ACTIONS.GET, 'events')}
+										/>
+									)}
 								/>
-
 							</main>
 						</React.Fragment>
 					</Router>

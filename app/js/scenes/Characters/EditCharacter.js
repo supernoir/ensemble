@@ -3,6 +3,8 @@ import intl from 'react-intl-universal';
 import { Link } from 'react-router-dom';
 import { Container, Segment, Form, Button, Divider, Header, Breadcrumb } from 'semantic-ui-react';
 import { addMessage } from '../../actions/addMessage';
+import Loader from '../../layout/Loader';
+
 export default class EditCharacter extends React.Component {
 	constructor() {
 		super();
@@ -117,8 +119,9 @@ export default class EditCharacter extends React.Component {
 	}
 
 	render() {
-		return (
-			<Container>
+		return this.props.loading
+			? <Loader loading={this.props.loading} />
+			:	<Container>
 				<Breadcrumb>
 					<Breadcrumb.Section link>
 						<Link to="/">{intl.get('component.dashboard')}</Link>
@@ -246,7 +249,6 @@ export default class EditCharacter extends React.Component {
 						</Button>
 					</Form>
 				</Segment>
-			</Container>
-		);
+			</Container>;
 	}
 }

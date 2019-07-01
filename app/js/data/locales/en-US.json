@@ -1,5 +1,6 @@
 {
   "brand": "Ensemble",
+  "app.loading": "Loading...",
   "entity.projects": "Projects",
   "entity.project": "Project",
   "desc.projects": "Manage your projects",

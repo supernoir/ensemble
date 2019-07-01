@@ -2,6 +2,7 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import intl from 'react-intl-universal';
 import { Container, Breadcrumb, Segment, Header, Card, Divider, Button, Icon } from 'semantic-ui-react';
+import Loader from '../../layout/Loader';
 
 export default class Projects extends React.Component {
 	componentDidMount(){
@@ -9,8 +10,9 @@ export default class Projects extends React.Component {
 	}
 
 	render(){
-		return(
-			<Container>
+		return this.props.loading
+			? <Loader loading={this.props.loading} />
+			: <Container>
 				<Breadcrumb>
 					<Breadcrumb.Section link>
 						<Link to="/">{intl.get('component.dashboard')}</Link>
@@ -64,7 +66,6 @@ export default class Projects extends React.Component {
 						: null
 					}
 				</Card.Group>
-			</Container>
-		);
+			</Container>;
 	}
 }
