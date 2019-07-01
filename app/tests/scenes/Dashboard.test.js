@@ -3,17 +3,18 @@ import { shallow } from 'enzyme';
 
 // Import Components
 import Dashboard from './../../js/scenes/Dashboard';
+import Loader from '../../js/basics/Loader';
 
 // Import Mock Data
 //import * as mockData from './mocks/mockApiResponse.json';
 
 test('Dashboard -- Snapshot Test', () => {
-	const wrapper = shallow(<Dashboard getEvents={() => true} />);
+	const wrapper = shallow(<Dashboard getEvents={() => true} getDashboardData={() => true} />);
 	expect(wrapper).toMatchSnapshot();
 });
-
-/* describe('Dashboard', function() {
+/*
+describe('Dashboard', function() {
 	it('should render a loader', function() {
-		expect(shallow(<Dashboard data={[{ data: mockData }]} loading={true} />).contains(<Loader />)).toBe(true);
+		expect(shallow(<Dashboard getEvents={() => true} getDashboardData={() => true} loading={true} />).contains(<Loader />)).toBe(true);
 	});
 }); */

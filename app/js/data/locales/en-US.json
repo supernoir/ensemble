@@ -1,9 +1,11 @@
 {
   "brand": "Ensemble",
+  "app.loading": "Loading...",
   "entity.projects": "Projects",
   "entity.project": "Project",
   "desc.projects": "Manage your projects",
   "desc.characters": "Manage your characters",
+  "desc.events": "An overview of your recent activity",
   "entity.projects.series": "Series",
   "entity.characters": "Characters",
   "entity.character": "Character",

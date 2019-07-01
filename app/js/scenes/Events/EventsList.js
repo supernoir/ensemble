@@ -1,8 +1,9 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import intl from 'react-intl-universal';
-import { Container, Breadcrumb, Segment, Header, Feed, Divider, Icon } from 'semantic-ui-react';
+import { Container, Breadcrumb, Segment, Header, Feed, Divider } from 'semantic-ui-react';
 import moment from 'moment';
+import Loader from '../../basics/Loader';
 
 export default class EventsList extends React.Component {
 	parseEvent = event => {
@@ -27,8 +28,9 @@ export default class EventsList extends React.Component {
 	}
 
 	render() {
-		return (
-			<Container>
+		return this.props.loading
+			? <Loader loading={this.props.loading} />
+			:	<Container>
 				<Breadcrumb>
 					<Breadcrumb.Section link>
 						<Link to="/">{intl.get('component.dashboard')}</Link>
@@ -42,7 +44,6 @@ export default class EventsList extends React.Component {
 				<Segment>
 					<Header as="h2">
 						{intl.get('entity.events')}
-						<Icon name="newspaper outline" />
 						<Header.Subheader>{intl.get('desc.events')}</Header.Subheader>
 					</Header>
 				</Segment>
@@ -64,7 +65,6 @@ export default class EventsList extends React.Component {
 						);
 					})
 					: null}
-			</Container>
-		);
+			</Container>;
 	}
 }

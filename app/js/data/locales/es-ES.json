@@ -1,9 +1,11 @@
 {
   "brand": "Ensemble",
+  "app.loading": "Cargando...",
   "entity.projects": "Proyectos",
   "entity.project": "Proyecto",
   "desc.projects":"Maneja tus proyectos",
   "desc.characters":"Maneja tus caracteres",
+  "desc.events": "Un resumen de tu actividad reciente",
   "entity.projects.series": "Serie",
   "entity.characters": "Caracteres",
   "entity.character": "Caracter",

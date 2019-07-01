@@ -3,12 +3,14 @@ import { Link } from 'react-router-dom';
 import intl from 'react-intl-universal';
 import moment from 'moment';
 import { Container, Segment, Header, Divider, Card, Feed } from 'semantic-ui-react';
+import Loader from '../basics/Loader';
 
 export default class Dashboard extends React.Component {
 	constructor() {
 		super();
 		this.state = {
-			eventsData: []
+			eventsData   : [],
+			dashboardData: []
 		};
 	}
 
@@ -31,11 +33,13 @@ export default class Dashboard extends React.Component {
 
 	componentDidMount() {
 		this.props.getEvents();
+		this.props.getDashboardData();
 	}
 
 	render() {
-		return (
-			<Container>
+		return this.props.loading
+			? <Loader loading={this.props.loading} />
+			: <Container>
 				<Segment>
 					<Header>
 						{intl.get('component.dashboard')}
@@ -43,16 +47,20 @@ export default class Dashboard extends React.Component {
 					<Divider />
 					<Card.Group>
 						<Card
-							href="/projects"
+							onClick={() => this.props.history.push('/projects')}
 							image={'../../public/img/photo-1443188631128-a1b6b1c5c207.jpeg'}
 							header={intl.get('entity.projects')}
-							meta={intl.get('project.count-available', { count: 12 })}
+							meta={intl.get('project.count-available', {
+								count: this.props.dashboardData ? this.props.dashboardData.projects : 0
+							 })}
 						/>
 						<Card
-							href="/characters"
+							onClick={() => this.props.history.push('/characters')}
 							image={'../../public/img/photo-1427805371062-cacdd21273f1.jpeg'}
 							header={intl.get('entity.characters')}
-							meta={intl.get('character.count-available', { count: 2 })}
+							meta={intl.get('character.count-available', {
+								count: this.props.dashboardData ? this.props.dashboardData.characters : 0
+							})}
 						/>
 					</Card.Group>
 					<Header>
@@ -79,7 +87,6 @@ export default class Dashboard extends React.Component {
 
 					</Header>
 				</Segment>
-			</Container>
-		);
+			</Container>;
 	}
 }

@@ -8,15 +8,15 @@ exports[`Dashboard -- Snapshot Test 1`] = `
     <CardGroup>
       <Card
         header=""
-        href="/projects"
         image="../../public/img/photo-1443188631128-a1b6b1c5c207.jpeg"
         meta=""
+        onClick={[Function]}
       />
       <Card
         header=""
-        href="/characters"
         image="../../public/img/photo-1427805371062-cacdd21273f1.jpeg"
         meta=""
+        onClick={[Function]}
       />
     </CardGroup>
     <Header>

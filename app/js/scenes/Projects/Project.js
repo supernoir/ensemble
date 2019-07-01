@@ -2,16 +2,17 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import intl from 'react-intl-universal';
 import { Container, Breadcrumb, Segment, Header, Table, Divider, Button, Icon } from 'semantic-ui-react';
+import Loader from '../../basics/Loader';
 
 export default class Project extends React.Component {
-
-	componentDidMount(){
+	componentDidMount() {
 		this.props.getProjectById(this.props.match.params.id);
 	}
 
-	render(){
-		return(
-			<Container>
+	render() {
+		return this.props.loading
+			? <Loader loading={this.props.loading} />
+			: <Container>
 				<Breadcrumb>
 					<Breadcrumb.Section link>
 						<Link to="/">{intl.get('component.dashboard')}</Link>
@@ -27,40 +28,29 @@ export default class Project extends React.Component {
 				</Breadcrumb>
 
 				<Segment>
-					<Header as='h2'>
+					<Header as="h2">
 						{this.props.project.title}
 						<Header.Subheader>{this.props.project.series}</Header.Subheader>
 					</Header>
-					<Divider/>
+					<Divider />
 
 					<p>
-						<Icon name='info circle'/>{this.props.project.desc}
+						<Icon name="info circle" />{this.props.project.desc}
 					</p>
 
-					<Divider/>
-
+					<Divider />
 
 					<Table celled striped>
 						<Table.Header>
 							<Table.Row>
-								<Table.HeaderCell colSpan='3'>{intl.get('entity.characters')}</Table.HeaderCell>
+								<Table.HeaderCell colSpan="3">{intl.get('entity.characters')}</Table.HeaderCell>
 							</Table.Row>
 						</Table.Header>
-
 						<Table.Body>
-							{/* 	{this.props.project.cast !== void 0
-								? this.props.project.cast.map(member => {
-									return <Table.Row>
-										<Table.Cell>
-											<Link to={`/character/${member.id}`}>{member.name}</Link>
-										</Table.Cell>
-									</Table.Row>;
-								})
-								:null
-							} */}
+
 						</Table.Body>
 					</Table>
-					<Divider/>
+					<Divider />
 					<Button>
 						{intl.get('project.action-edit')}
 					</Button>
@@ -69,7 +59,6 @@ export default class Project extends React.Component {
 					</Button>
 				</Segment>
 
-			</Container>
-		);
+			</Container>;
 	}
 }

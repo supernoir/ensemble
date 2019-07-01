@@ -1,7 +1,8 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import intl from 'react-intl-universal';
-import { Container, Breadcrumb, Segment, Header, Card, Divider, Button, Icon } from 'semantic-ui-react';
+import { Container, Breadcrumb, Segment, Header, Card, Divider, Button } from 'semantic-ui-react';
+import Loader from '../../basics/Loader';
 
 export default class Projects extends React.Component {
 	componentDidMount(){
@@ -9,8 +10,9 @@ export default class Projects extends React.Component {
 	}
 
 	render(){
-		return(
-			<Container>
+		return this.props.loading
+			? <Loader loading={this.props.loading} />
+			: <Container>
 				<Breadcrumb>
 					<Breadcrumb.Section link>
 						<Link to="/">{intl.get('component.dashboard')}</Link>
@@ -24,7 +26,7 @@ export default class Projects extends React.Component {
 				<Segment>
 					<Header as='h2'>
 						{intl.get('entity.projects')}
-						<Icon name='books'></Icon><Header.Subheader>{intl.get('desc.projects')}</Header.Subheader>
+						<Header.Subheader>{intl.get('desc.projects')}</Header.Subheader>
 					</Header>
 					<Divider/>
 					<Button icon='add'>
@@ -64,7 +66,6 @@ export default class Projects extends React.Component {
 						: null
 					}
 				</Card.Group>
-			</Container>
-		);
+			</Container>;
 	}
 }
