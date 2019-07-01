@@ -2,7 +2,7 @@ import React from 'react';
 import intl from 'react-intl-universal';
 import { Link } from 'react-router-dom';
 import { Container, Segment, Form, Button, Divider, Header, Breadcrumb } from 'semantic-ui-react';
-import Loader from '../../layout/Loader';
+import Loader from '../../basics/Loader';
 
 export default class NewProject extends React.Component {
 	constructor() {

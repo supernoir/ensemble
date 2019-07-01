@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import intl from 'react-intl-universal';
 import { Container, Breadcrumb, Segment, Header, Feed, Divider } from 'semantic-ui-react';
 import moment from 'moment';
-import Loader from '../../layout/Loader';
+import Loader from '../../basics/Loader';
 
 export default class EventsList extends React.Component {
 	parseEvent = event => {

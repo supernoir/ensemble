@@ -3,7 +3,7 @@ import intl from 'react-intl-universal';
 import { Link } from 'react-router-dom';
 import { Container, Breadcrumb, Segment, Header, Card, Divider, Button } from 'semantic-ui-react';
 import CharacterCard from '../../layout/CharacterCard';
-import Loader from '../../layout/Loader';
+import Loader from '../../basics/Loader';
 
 export default class CharactersList extends React.Component {
 	componentDidMount() {

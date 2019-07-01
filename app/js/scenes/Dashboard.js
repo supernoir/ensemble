@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import intl from 'react-intl-universal';
 import moment from 'moment';
 import { Container, Segment, Header, Divider, Card, Feed } from 'semantic-ui-react';
-import Loader from '../layout/Loader';
+import Loader from '../basics/Loader';
 
 export default class Dashboard extends React.Component {
 	constructor() {

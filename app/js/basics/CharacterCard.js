@@ -1,6 +1,6 @@
-import React from './node_modules/react';
-import { Link } from './node_modules/react-router-dom';
-import { Card, Icon, Button } from './node_modules/semantic-ui-react';
+import React from 'react';
+import { Link } from 'react-router-dom';
+import { Card, Icon, Button } from 'semantic-ui-react';
 
 export default class CharacterCard extends React.Component {
 	componentDidMount() {

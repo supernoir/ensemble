@@ -2,7 +2,7 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import intl from 'react-intl-universal';
 import { Container, Breadcrumb, Segment, Header, Table, Divider, Button, Icon } from 'semantic-ui-react';
-import Loader from '../../layout/Loader';
+import Loader from '../../basics/Loader';
 
 export default class Project extends React.Component {
 	componentDidMount() {
