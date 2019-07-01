@@ -30,7 +30,7 @@ import API_ACTIONS from './constants/apiActions';
 import Auth from './services/Auth';
 
 // Import Layouts
-import Navbar from './layout/Navbar';
+import Navbar from './basics/Navbar';
 
 // --- BASE
 import Dashboard from './scenes/Dashboard';

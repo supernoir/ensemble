@@ -1,5 +1,5 @@
 import { connect } from 'react-redux';
-import NotificationCenter from '../layout/NotificationCenter';
+import NotificationCenter from '../basics/NotificationCenter';
 
 const mapStateToProps = state => {
 	return {
