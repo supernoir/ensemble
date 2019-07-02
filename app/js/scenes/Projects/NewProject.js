@@ -58,8 +58,6 @@ export default class NewProject extends React.Component {
 		this.props.history.push('/projects');
 	}
 
-	componentDidMount(){
-	}
 
 	render() {
 		return this.props.loading

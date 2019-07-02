@@ -256,6 +256,9 @@ export default class Ensemble extends React.Component {
 										<ProjectsList
 											loading={this.state.loading}
 											getProjects={() => this.sendApiRequest(API_URI, API_ACTIONS.GET, 'projects')}
+											deleteSpecificProject={id => {
+												this.sendApiRequest(API_URI, API_ACTIONS.DELETE, 'project', id);
+											}}
 											projects={this.state.projects}
 											{...props}
 										/>

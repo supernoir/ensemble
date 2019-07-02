@@ -87,7 +87,6 @@ export default class NewCharacter extends React.Component {
 		});
 
 		this.props.history.push('/characters');
-
 	}
 
 	componentDidMount() {

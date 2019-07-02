@@ -3,16 +3,58 @@ import { Link } from 'react-router-dom';
 import intl from 'react-intl-universal';
 import { Container, Breadcrumb, Segment, Header, Card, Divider, Button } from 'semantic-ui-react';
 import Loader from '../../basics/Loader';
+import DeleteModal from '../../basics/DeleteModal';
 
 export default class Projects extends React.Component {
+	constructor(){
+		super();
+		this.state = {
+			showDeleteModal: false,
+			projectId      : null
+		};
+	}
+
 	componentDidMount(){
 		this.props.getProjects();
+	}
+
+	/**
+	 * deleteSpecificProject method
+	 * triggers deleteSpecificProject with the given id
+	 * @param {*} id The id of the specific project
+	 */
+	deleteSpecificProject(id) {
+		this.props.deleteSpecificProject(id);
+	}
+
+	/**
+	 * toggleDeleteModal method
+	 * toggles showing/hiding the modal
+	 */
+	toggleDeleteModal = (id) => {
+		this.setState({
+			showDeleteModal: !this.state.showDeleteModal,
+			projectId      : id
+		});
 	}
 
 	render(){
 		return this.props.loading
 			? <Loader loading={this.props.loading} />
 			: <Container>
+				{
+					this.state.showDeleteModal
+						? <DeleteModal
+							open={this.state.showDeleteModal}
+							close={this.toggleDeleteModal}
+							entity={intl.get('entity.project')}
+							ref={'testProject'}
+							target={'/projects'}
+							item={this.state.projectId}
+							confirmDelete={(id) => this.props.deleteSpecificProject(id)}
+						/>
+						: null
+				}
 				<Breadcrumb>
 					<Breadcrumb.Section link>
 						<Link to="/">{intl.get('component.dashboard')}</Link>
@@ -58,7 +100,7 @@ export default class Projects extends React.Component {
 									</Card.Content>
 									<Card.Content extra>
 										<Button circular icon='edit' color='green'/>
-										<Button circular icon='delete' color='red'/>
+										<Button circular icon='delete' color='red' onClick={() => this.toggleDeleteModal(project._id)} />
 									</Card.Content>
 								</Card>
 							);
