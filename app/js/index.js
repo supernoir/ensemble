@@ -193,6 +193,28 @@ export default class Ensemble extends React.Component {
 							});
 						});
 					break;
+				case API_ACTIONS.DELETE:
+					axios({
+						method      : API_ACTIONS.DELETE,
+						url         : targetUri,
+						responseType: 'json',
+						headers     : {
+							'content-type': 'application/json'
+						},
+						params: param
+					})
+						.catch(err => {
+							store.dispatch(
+								addMessage({
+									type   : 'error',
+									content: err.message
+								})
+							);
+							this.setState({
+								loading: false
+							});
+						});
+					break;
 			}
 		} catch (err) {
 			store.dispatch(

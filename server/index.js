@@ -435,7 +435,8 @@ app.get('/admin', (req, res) => {
 		api: [
 			{
 				version: apiVersion,
-				logs   : logsFromFile,
+				//logs   : logsFromFile,
+				logs   : [],
 				uptime : process.uptime()
 			}
 		],
