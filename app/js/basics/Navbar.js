@@ -2,6 +2,7 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import intl from 'react-intl-universal';
 import { Menu, Container, Dropdown, Icon } from 'semantic-ui-react';
+import LanguageSwitcherContainer from '../containers/LanguageSwitcherContainer';
 
 export default class Navbar extends React.Component {
 
@@ -20,6 +21,7 @@ export default class Navbar extends React.Component {
 					<Menu.Item disabled header><Link to="/events"><Icon circular inverted name="time" /> {intl.get('entity.timeline')}</Link></Menu.Item>
 					<Menu.Item as="a" header><Link to="/admin"><Icon circular inverted name="cogs" /> {'Admin Panel'}</Link></Menu.Item>
 
+					<LanguageSwitcherContainer/>
 					<Dropdown
 						item
 						simple
