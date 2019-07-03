@@ -40,7 +40,7 @@ import EventsList from './scenes/Events/EventsList';
 
 import { addMessage } from './actions/addMessage';
 import MessengerContainer from './containers/MessengerContainer';
-import { setLocale } from './actions/setLocale';
+import { setLocale, SET_LOCALE } from './actions/setLocale';
 
 export default class App extends React.Component {
 	constructor(props) {
@@ -65,10 +65,14 @@ export default class App extends React.Component {
 
 setCurrentLocale = (locale) => {
 	this.setState({
+		loading      : true,
 		currentLocale: locale || DEFAULT_LOCALE
 	});
-	//this.props.store.dispatch(setLocale(locale));
+	this.props.setLocale({ type: SET_LOCALE, locale });
 	this.loadLocales(locale);
+	this.setState({
+		loading: false
+	});
 }
 
 

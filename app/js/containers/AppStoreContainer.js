@@ -3,7 +3,7 @@ import App from '../App';
 
 const mapStateToProps = state => {
 	return {
-		locale  : state.switchLocale || 'en_US',
+		locale  : state.switchLocale || 'en-US',
 		messages: state.Messenger
 	};
 };
