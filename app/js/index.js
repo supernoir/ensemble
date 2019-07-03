@@ -242,7 +242,7 @@ export default class Ensemble extends React.Component {
 				<Provider store={store}>
 					<Router>
 						<React.Fragment>
-							<Navbar />
+							<Navbar {...this.props}/>
 							<main className="mx-0">
 								<MessengerContainer />
 								<Route

@@ -1,5 +1,7 @@
 {
   "brand": "Ensemble",
+  "lang.en_US": "Ingles",
+  "lang.es_ES": "Español",
   "app.loading": "Cargando...",
   "app.confirm": "Confirmar",
   "app.cancel": "Cancelar",

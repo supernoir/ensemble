@@ -2,9 +2,9 @@
 export const SET_LOCALE = 'SET_LOCALE';
 
 /* ACTION CREATORS*/
-export const setLocale = message => {
+export const setLocale = locale => {
 	return {
 		type: SET_LOCALE,
-		message
+		locale
 	};
 };

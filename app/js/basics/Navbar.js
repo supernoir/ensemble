@@ -21,7 +21,6 @@ export default class Navbar extends React.Component {
 					<Menu.Item disabled header><Link to="/events"><Icon circular inverted name="time" /> {intl.get('entity.timeline')}</Link></Menu.Item>
 					<Menu.Item as="a" header><Link to="/admin"><Icon circular inverted name="cogs" /> {'Admin Panel'}</Link></Menu.Item>
 
-					<LanguageSwitcherContainer/>
 					<Dropdown
 						item
 						simple
@@ -36,6 +35,7 @@ export default class Navbar extends React.Component {
 							</Dropdown.Item>
 						</Dropdown.Menu>
 					</Dropdown>
+					<LanguageSwitcherContainer {...this.props}/>
 				</Container>
 			</Menu>
 		);

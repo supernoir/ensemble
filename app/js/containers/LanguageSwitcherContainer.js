@@ -9,7 +9,7 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
 	return {
-		addMessage: locale => dispatch(locale)
+		setLocale: locale => dispatch(locale)
 	};
 };
 
