@@ -2,7 +2,7 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import intl from 'react-intl-universal';
 import { Menu, Container, Dropdown, Icon } from 'semantic-ui-react';
-import LanguageSwitcherContainer from '../containers/LanguageSwitcherContainer';
+import LanguageSwitcher from './LanguageSwitcher';
 
 export default class Navbar extends React.Component {
 
@@ -35,7 +35,7 @@ export default class Navbar extends React.Component {
 							</Dropdown.Item>
 						</Dropdown.Menu>
 					</Dropdown>
-					<LanguageSwitcherContainer {...this.props}/>
+					<LanguageSwitcher setCurrentLocale={(locale)=>{this.props.setCurrentLocale(locale);}} {...this.props}/>
 				</Container>
 			</Menu>
 		);

@@ -1,23 +1,15 @@
 import React from 'react';
 
-import { Dropdown, Flag, Menu } from 'semantic-ui-react';
+import { Dropdown, Flag } from 'semantic-ui-react';
 import intl from 'react-intl-universal';
 import LOCALES from '../constants/locales';
-import { setLocale } from '../actions/setLocale';
 
 export default class LanguageSwitcher extends React.Component {
 
 	handleLocaleChange = (evt, locale) => {
 		evt.preventDefault();
-		console.log(this.props);
-		this.props.setLocale(locale);
-		//this.props.dispatch(setLocale(locale));
-		//his.props.store.dispatch(setLocale(locale));
-
-
-
+		this.props.setCurrentLocale(locale);
 	}
-
 
 	render(){
 		return (

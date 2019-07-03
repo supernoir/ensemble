@@ -2,8 +2,6 @@ import React from 'react';
 import { BrowserRouter as Router, Route } from 'react-router-dom';
 import intl from 'react-intl-universal';
 import axios from 'axios';
-import { Container } from 'semantic-ui-react';
-
 
 // Constants
 const DEFAULT_LOCALE = 'es-ES';
@@ -13,12 +11,6 @@ const locales = {
 };
 
 const API_URI = 'http://localhost:3030';
-
-// Initialize service worker
-if ('serviceWorker' in navigator) {
-	navigator.serviceWorker.register('sw.js').then(console.log('SW registered'))
-		.catch(console.error('An error occurred while registering the SW'));
-}
 
 // Import Constants
 import API_ACTIONS from './constants/apiActions';
@@ -48,6 +40,7 @@ import EventsList from './scenes/Events/EventsList';
 
 import { addMessage } from './actions/addMessage';
 import MessengerContainer from './containers/MessengerContainer';
+import { setLocale } from './actions/setLocale';
 
 export default class App extends React.Component {
 	constructor(props) {
@@ -70,16 +63,25 @@ export default class App extends React.Component {
 		};
 	}
 
-	loadLocales(lang) {
-		intl
-			.init({
-				currentLocale: lang,
-				locales
-			})
-			.then(() => {
-				this.setState({ loading: false });
-			});
-	}
+setCurrentLocale = (locale) => {
+	this.setState({
+		currentLocale: locale || DEFAULT_LOCALE
+	});
+	//this.props.store.dispatch(setLocale(locale));
+	this.loadLocales(locale);
+}
+
+
+loadLocales(lang) {
+	intl
+		.init({
+			currentLocale: lang,
+			locales
+		})
+		.then(() => {
+			this.setState({ loading: false });
+		});
+}
 
 	retrieveGenres = lang => {
 		axios.get(`http://localhost:3030/genres/${lang}`).catch(err => console.error(err))
@@ -95,6 +97,7 @@ export default class App extends React.Component {
 			loading: true
 		});
 		let targetUri = uri;
+		const { store } = this.props;
 		resource !== void 0 ? (targetUri += '/' + resource) : '';
 		param !== void 0 ? (targetUri += '/' + param) : '';
 
@@ -231,7 +234,9 @@ export default class App extends React.Component {
 		return (
 			<Router>
 				<React.Fragment>
-					<Navbar {...this.props} />
+					<Navbar
+						setCurrentLocale={(locale)=>this.setCurrentLocale(locale)}
+						{...this.props} />
 					<main className="mx-0">
 						<MessengerContainer />
 						<Route
@@ -368,11 +373,7 @@ export default class App extends React.Component {
 							exact
 							path="/events"
 							render={props => (
-								<EventsList
-									loading={this.state.loading}
-									events={this.state.events}
-									getEvents={() => this.sendApiRequest(API_URI, API_ACTIONS.GET, 'events')}
-								/>
+								<EventsList loading={this.state.loading} events={this.state.events} getEvents={() => this.sendApiRequest(API_URI, API_ACTIONS.GET, 'events')} />
 							)}
 						/>
 					</main>
@@ -381,5 +382,3 @@ export default class App extends React.Component {
 		);
 	}
 }
-
-
