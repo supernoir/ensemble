@@ -127,7 +127,9 @@ const Projects = mongoose.model('Projects', {
 	// A description for the project
 	desc         : String,
 	// The potential genre of the project
-	genre        : String
+	genre        : String,
+	// A set of tags to describe the given project
+	tags         : Array,
 });
 
 /**
@@ -184,6 +186,7 @@ app.post('/project', (req, res) => {
 	project.desc = req.body.desc;
 	project.genre = req.body.genre;
 	project.read = req.body.read;
+	project.tags = req.body.tags;
 
 	project.save((error, project) => {
 		if (error) {
@@ -209,6 +212,8 @@ app.post('/project/:id', (req, res) => {
 		project.cast = req.body.cast;
 		project.desc = req.body.desc;
 		project.genre = req.body.genre;
+		project.tags = req.body.tags;
+
 
 		project.save((error, project) => {
 			if (error) {
