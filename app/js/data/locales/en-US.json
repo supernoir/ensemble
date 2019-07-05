@@ -32,6 +32,7 @@
   "project.label-cast": "Cast",
   "project.label-connectcharacters": "Connect Characters",
   "project.label-description": "Description",
+  "project.label-tags": "Project tags",
   "character.action-view": "View Character",
   "character.action-add": "Add Character",
   "character.action-edit": "Edit Character",

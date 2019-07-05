@@ -30,6 +30,7 @@
   "project.label-genre":"Género",
   "project.label-series":"Serie",
   "project.label-cast":"Elenco",
+  "project.label-tags": "Etiqueta(s) de proyecto",
   "project.label-connectcharacters":"Conectar Caracteres",
   "project.label-description":"Descripción",
   "character.action-view": "Ver Caracter",

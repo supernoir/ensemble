@@ -12,7 +12,8 @@ export default class NewProject extends React.Component {
 			genre : '',
 			series: '',
 			cast  : '',
-			desc  : ''
+			desc  : '',
+			tags  : []
 		};
 	}
 
@@ -33,6 +34,11 @@ export default class NewProject extends React.Component {
 			case 'cast':
 				this.setState({ cast: evt.currentTarget.value });
 				break;
+			case 'tags':
+				this.setState({
+					tags: evt.currentTarget.value.split(',').map(item => item.trim())
+				});
+				break;
 			default:
 				break;
 		}
@@ -46,7 +52,8 @@ export default class NewProject extends React.Component {
 			genre : this.state.genre,
 			series: this.state.series,
 			desc  : this.state.desc,
-			cast  : this.state.cast
+			cast  : this.state.cast,
+			tags  : this.state.tags
 		});
 
 		this.props.addEvent({
@@ -126,16 +133,7 @@ export default class NewProject extends React.Component {
 								placeholder="Sherlock Holmes, James Watson"
 							/>
 						</Form.Field>
-						{/**
-						// TODO: implement Input Select with Characters
-												<label for="project" className="col-sm-2 control-label"><code>{intl.get('project.label-connectcharacters')}</code></label>
-
-												<select className="form-control">
-							<option ng-repeat="character in characters">{'character.first_name'} {'character.last_name'}</option>
-						</select>
-						*/}
 						<Form.Field>
-
 							<label for="project" className="col-sm-2 control-label">{intl.get('project.label-description')}</label>
 							<input
 								onChange={evt => this.handleInput('desc', evt)}
@@ -145,8 +143,12 @@ export default class NewProject extends React.Component {
 								placeholder="The Adventures of Sherlock Holmes"
 								required
 							/>
-
 						</Form.Field>
+						<Form.Field>
+							<label for="project" className="col-sm-2 control-label">{intl.get('project.label-tags')}</label>
+							<input onChange={evt => this.handleInput('tags', evt)} type="text" className="form-control" id="tags" placeholder="crime, noir" />
+						</Form.Field>
+
 						<Button onClick={evt => this.postNewProject(evt)} type="submit" className="btn btn-default">{intl.get('project.action-add')}</Button>
 					</Form>
 

@@ -1,7 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import intl from 'react-intl-universal';
-import { Container, Breadcrumb, Segment, Header, Table, Divider, Button, Icon } from 'semantic-ui-react';
+import { Container, Breadcrumb, Segment, Header, Table, Divider, Button, Icon, Label } from 'semantic-ui-react';
 import Loader from '../../basics/Loader';
 
 export default class Project extends React.Component {
@@ -38,6 +38,17 @@ export default class Project extends React.Component {
 						<Icon name="info circle" />{this.props.project.desc}
 					</p>
 
+					{
+						this.props.project.tags !== void 0
+							? <Label.Group tag>
+								{
+									this.props.project.tags.map((tag,index) => {
+										return <Label key={`${tag}-${index}`}>{tag}</Label>;
+									})
+								}
+							</Label.Group>
+							: null
+					}
 					<Divider />
 
 					<Table celled striped>
