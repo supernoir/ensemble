@@ -1,7 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import intl from 'react-intl-universal';
-import { Container, Breadcrumb, Segment, Header, Card, Divider, Button } from 'semantic-ui-react';
+import { Container, Breadcrumb, Segment, Header, Card, Divider, Button, Label } from 'semantic-ui-react';
 import Loader from '../../basics/Loader';
 import DeleteModal from '../../basics/DeleteModal';
 
@@ -88,19 +88,36 @@ export default class Projects extends React.Component {
 										<Card.Header>
 											<Link to={`/project/${project._id}`}>{project.title}</Link>
 										</Card.Header>
-										<Card.Meta>
-											{project.series !== void 0
-												? <h4>
-													<b>{intl.get('entity.projects.series')}</b>{' '}<Link to='/projects/series/id'>{project.series}</Link>
-												</h4>
-												: null
-											}
-										</Card.Meta>
-										<Card.Description>{project.desc}</Card.Description>
 									</Card.Content>
+
+									{project.series !== void 0 && project.series.length > 0
+										? <Card.Content extra>
+											<h4>
+												<b>{intl.get('entity.projects.series')}</b>{' '}<Link to='/projects/series/id'>{project.series}</Link>
+											</h4>
+										</Card.Content>
+										: null
+									}
+									{project.desc !== void 0 && project.desc.length > 0
+										? <Card.Content extra>
+											<Card.Description>{project.desc}</Card.Description>
+										</Card.Content>
+										: null
+									}
+
+									{
+										project.tags !== void 0 && project.tags.length > 0
+											? <Card.Content extra><Label.Group tag>
+												{project.tags.map((tag, index) => {
+													return <Label key={`${tag}-${index}`}>{tag}</Label>;
+												})}
+											</Label.Group></Card.Content>
+											: null
+									}
+
 									<Card.Content extra>
-										<Button circular icon='edit' color='green'/>
-										<Button circular icon='delete' color='red' onClick={() => this.toggleDeleteModal(project._id)} />
+										<Button circular basic icon='edit' color='blue' content={intl.get('app.edit')}/>
+										<Button circular basic icon='delete' color='red' onClick={() => this.toggleDeleteModal(project._id)} content={intl.get('app.delete')} />
 									</Card.Content>
 								</Card>
 							);

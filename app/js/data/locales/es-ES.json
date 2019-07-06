@@ -5,6 +5,8 @@
   "app.loading": "Cargando...",
   "app.confirm": "Confirmar",
   "app.cancel": "Cancelar",
+  "app.edit": "Editar",
+  "app.delete": "Borrar",
   "entity.projects": "Proyectos",
   "entity.project": "Proyecto",
   "desc.projects":"Maneja tus proyectos",
