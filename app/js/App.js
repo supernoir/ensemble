@@ -36,7 +36,12 @@ import CharactersList from './scenes/Characters/CharactersList';
 import Character from './scenes/Characters/Character';
 import NewCharacter from './scenes/Characters/NewCharacter';
 import EditCharacter from './scenes/Characters/EditCharacter';
+
+// --- EVENTS
 import EventsList from './scenes/Events/EventsList';
+
+// --- TAGS
+import TagsList from './scenes/Tags/TagsList';
 
 import { addMessage } from './actions/addMessage';
 import MessengerContainer from './containers/MessengerContainer';
@@ -59,7 +64,8 @@ export default class App extends React.Component {
 			project      : {},
 			characters   : [],
 			character    : {},
-			dashboard    : []
+			dashboard    : [],
+			tags         : []
 		};
 	}
 
@@ -293,6 +299,9 @@ loadLocales(lang) {
 									addProject={data => {
 										this.sendApiRequest(API_URI, API_ACTIONS.POST, 'project', '', data);
 									}}
+									addTag={data => {
+										this.sendApiRequest(API_URI, API_ACTIONS.POST, 'tag', '', data);
+									}}
 									addEvent={data => {
 										this.sendApiRequest(API_URI, API_ACTIONS.POST, 'event', '', data);
 									}}
@@ -376,8 +385,19 @@ loadLocales(lang) {
 						<Route
 							exact
 							path="/events"
-							render={props => (
+							render={() => (
 								<EventsList loading={this.state.loading} events={this.state.events} getEvents={() => this.sendApiRequest(API_URI, API_ACTIONS.GET, 'events')} />
+							)}
+						/>
+						{/** Tags */}
+						<Route
+							exact
+							path="/tags"
+							render={() => (
+								<TagsList
+									loading={this.state.loading}
+									tags={this.state.tags}
+									getTags={() => this.sendApiRequest(API_URI, API_ACTIONS.GET, 'tags')} />
 							)}
 						/>
 					</main>

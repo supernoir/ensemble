@@ -3,6 +3,7 @@ import intl from 'react-intl-universal';
 import { Link } from 'react-router-dom';
 import { Container, Segment, Form, Button, Divider, Header, Breadcrumb } from 'semantic-ui-react';
 import Loader from '../../basics/Loader';
+import { tagTypes } from '../../constants/tagTypes';
 
 export default class NewProject extends React.Component {
 	constructor() {
@@ -55,6 +56,17 @@ export default class NewProject extends React.Component {
 			cast  : this.state.cast,
 			tags  : this.state.tags
 		});
+
+		if(this.state.tags !== void 0) {
+			this.state.tags.forEach(tag => {
+				this.props.addTag({
+					type: tagTypes.PROJECT,
+					name: tag,
+					ref : this.state.title
+				});
+
+			});
+		}
 
 		this.props.addEvent({
 			user  : 'testAdmin',
