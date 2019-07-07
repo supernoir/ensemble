@@ -77,6 +77,12 @@ const Roles = mongoose.model('Roles', {
 	users: Array
 });
 
+const Tags = mongoose.model('Tags', {
+	type: String,
+	name: String,
+	ref : String
+});
+
 /**
  * Characters Model
  * Shapes character properties and aspects
@@ -111,6 +117,8 @@ const Characters = mongoose.model('Characters', {
  * Shapes project properties and aspects
  */
 const Projects = mongoose.model('Projects', {
+	// The type of project
+	type         : String,
 	// The project title
 	title        : String,
 	// The project status => statuses are saved in PROJECT_STATUS
@@ -127,7 +135,9 @@ const Projects = mongoose.model('Projects', {
 	// A description for the project
 	desc         : String,
 	// The potential genre of the project
-	genre        : String
+	genre        : String,
+	// A set of tags to describe the given project
+	tags         : Array,
 });
 
 /**
@@ -174,6 +184,7 @@ app.get('/project/:id', (req, res) => {
 
 app.post('/project', (req, res) => {
 	const project = new Projects();
+	project.type = req.body.type;
 	project.title = req.body.title;
 	project.status = req.body.status;
 	project.author = req.body.author;
@@ -184,6 +195,7 @@ app.post('/project', (req, res) => {
 	project.desc = req.body.desc;
 	project.genre = req.body.genre;
 	project.read = req.body.read;
+	project.tags = req.body.tags;
 
 	project.save((error, project) => {
 		if (error) {
@@ -201,6 +213,7 @@ app.post('/project/:id', (req, res) => {
 		if (err) {
 			res.json({ error: err });
 		}
+		project.type = req.body.type;
 		project.title = req.body.title;
 		project.status = req.body.status;
 		project.author = req.body.author;
@@ -209,6 +222,8 @@ app.post('/project/:id', (req, res) => {
 		project.cast = req.body.cast;
 		project.desc = req.body.desc;
 		project.genre = req.body.genre;
+		project.tags = req.body.tags;
+
 
 		project.save((error, project) => {
 			if (error) {
@@ -373,6 +388,45 @@ app.post('/event', (req, res) => {
 			});
 		}
 		res.json({ message: 'Event added!', data: event });
+	});
+});
+
+// -----------------------------------------------------------------------------
+//  REST API -- TAGS
+// -----------------------------------------------------------------------------
+
+app.get('/tags', (req, res) => {
+	Tags.find((err, tags) => {
+		if (err) {
+			res.json(err);
+		}
+		res.json(tags);
+	});
+});
+
+app.get('/tag/:id', (req, res) => {
+	Tags.findOne({ _id: req.params.id }, (error, tag) => {
+		if (error) {
+			res.json({ error });
+			throw error;
+		}
+		res.json(tag);
+	});
+});
+
+app.post('/tag', (req, res) => {
+	const tag = new Tags();
+	tag.type = req.body.type;
+	tag.name = req.body.name.toLowerCase();
+	tag.ref = req.body.ref;
+
+	tag.save((error, tag) => {
+		if (error) {
+			res.json({
+				error: error
+			});
+		}
+		res.json({ message: 'Tag added!', data: tag });
 	});
 });
 

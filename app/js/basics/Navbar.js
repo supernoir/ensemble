@@ -17,8 +17,11 @@ export default class Navbar extends React.Component {
 					</Menu.Item>
 					<Menu.Item as="a" header><Link to="/projects"><Icon circular inverted name="book" /> {intl.get('entity.projects')}</Link></Menu.Item>
 					<Menu.Item as="a" header><Link to="/characters"><Icon circular inverted name="address card" /> {intl.get('entity.characters')}</Link></Menu.Item>
-					<Menu.Item disabled header><Link to="/journeys"><Icon circular inverted name="map signs" /> {intl.get('entity.journeys')}</Link></Menu.Item>
-					<Menu.Item disabled header><Link to="/events"><Icon circular inverted name="time" /> {intl.get('entity.timeline')}</Link></Menu.Item>
+					<Menu.Item as="a" header><Link to="/tags"><Icon circular inverted name="tags" /> {intl.get('entity.tags')}</Link></Menu.Item>
+					{/**
+						<Menu.Item disabled header><Link to="/journeys"><Icon circular inverted name="map signs" /> {intl.get('entity.journeys')}</Link></Menu.Item>
+						<Menu.Item disabled header><Link to="/events"><Icon circular inverted name="time" /> {intl.get('entity.timeline')}</Link></Menu.Item>
+					*/}
 					<Menu.Item as="a" header><Link to="/admin"><Icon circular inverted name="cogs" /> {'Admin Panel'}</Link></Menu.Item>
 
 					<Dropdown
