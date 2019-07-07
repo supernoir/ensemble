@@ -1,25 +1,30 @@
 import React from 'react';
 import intl from 'react-intl-universal';
 import { Link } from 'react-router-dom';
-import { Container, Segment, Form, Button, Divider, Header, Breadcrumb } from 'semantic-ui-react';
+import { Container, Segment, Form, Button, Divider, Header, Breadcrumb, Dropdown } from 'semantic-ui-react';
 import Loader from '../../basics/Loader';
 import { tagTypes } from '../../constants/tagTypes';
+import { projectTypes } from '../../constants/projectTypes';
 
 export default class NewProject extends React.Component {
 	constructor() {
 		super();
 		this.state = {
-			title : '',
-			genre : '',
-			series: '',
-			cast  : '',
-			desc  : '',
-			tags  : []
+			title       : '',
+			genre       : '',
+			series      : '',
+			cast        : '',
+			desc        : '',
+			tags        : [],
+			projectTypes: []
 		};
 	}
 
 	handleInput = (source, evt) => {
 		switch (source) {
+			case 'type':
+				this.setState({ type: evt.currentTarget.value });
+				break;
 			case 'title':
 				this.setState({ title: evt.currentTarget.value });
 				break;
@@ -49,12 +54,13 @@ export default class NewProject extends React.Component {
 		evt.preventDefault();
 
 		this.props.addProject({
+			type  : this.state.type,
 			title : this.state.title,
 			genre : this.state.genre,
 			series: this.state.series,
 			desc  : this.state.desc,
 			cast  : this.state.cast,
-			tags  : this.state.tags
+			tags  : this.state.tags,
 		});
 
 		if(this.state.tags !== void 0) {
@@ -68,6 +74,12 @@ export default class NewProject extends React.Component {
 			});
 		}
 
+		this.props.addTag({
+			type: tagTypes.PROJECT_TYPE,
+			name: 	this.state.type,
+			ref   : this.state.title
+		});
+
 		this.props.addEvent({
 			user  : 'testAdmin',
 			action: 'add_project',
@@ -77,6 +89,16 @@ export default class NewProject extends React.Component {
 		this.props.history.push('/projects');
 	}
 
+	componentWillMount = () => {
+		let types = [];
+		for (let type in projectTypes) {
+			types.push(projectTypes[type]);
+		}
+		this.setState({
+			projectTypes: types
+		});
+
+	}
 
 	render() {
 		return this.props.loading
@@ -105,6 +127,24 @@ export default class NewProject extends React.Component {
 
 					<Form>
 						<Form.Field>
+							<label htmlFor="type" className="col-sm-2 control-label">{intl.get('project.label-type')}</label>
+							<select name="type"
+								className={'ui search selection dropdown'}
+								onChange={evt => this.handleInput('type', evt)}>
+								{this.state.projectTypes !== void 0 && this.state.projectTypes.length > 0
+									? this.state.projectTypes.map((type, index) => {
+										return <option
+											key={`${type}-${index}`}
+											value={type}
+										>
+											{intl.get(`project.select-type-${type}`)}
+										</option>;
+									})
+									: null
+								}
+							</select>
+						</Form.Field>
+						<Form.Field>
 							<label for="project" className="col-sm-2 control-label">{intl.get('project.label-title')}</label>
 							<input
 								onChange={evt => this.handleInput('title', evt)}
@@ -114,15 +154,9 @@ export default class NewProject extends React.Component {
 								placeholder="The Final Problem"
 								required
 							/>
-
 						</Form.Field>
 						<Form.Field>
 							<label for="project" className="col-sm-2 control-label">{intl.get('project.label-genre')}</label>
-							<select>
-								{this.props.genres !== void 0 ? this.props.genres.map((genre,index) => {
-									return <option key={`${genre}-${index}`}>{genre}</option>;
-								}) : null}
-							</select>
 							<input onChange={evt => this.handleInput('genre', evt)} type="text" className="form-control" id="genre" placeholder="Crime, Suspense" />
 						</Form.Field>
 						<Form.Field>

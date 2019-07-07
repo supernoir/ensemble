@@ -87,6 +87,12 @@ export default class Projects extends React.Component {
 									<Card.Content>
 										<Card.Header>
 											<Link to={`/project/${project._id}`}>{project.title}</Link>
+											<Card.Meta>
+												{project.type !== void 0
+													? intl.get(`project.select-type-${project.type}`)
+													: null
+												}
+											</Card.Meta>
 										</Card.Header>
 									</Card.Content>
 

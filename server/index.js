@@ -117,6 +117,8 @@ const Characters = mongoose.model('Characters', {
  * Shapes project properties and aspects
  */
 const Projects = mongoose.model('Projects', {
+	// The type of project
+	type         : String,
 	// The project title
 	title        : String,
 	// The project status => statuses are saved in PROJECT_STATUS
@@ -182,6 +184,7 @@ app.get('/project/:id', (req, res) => {
 
 app.post('/project', (req, res) => {
 	const project = new Projects();
+	project.type = req.body.type;
 	project.title = req.body.title;
 	project.status = req.body.status;
 	project.author = req.body.author;
@@ -210,6 +213,7 @@ app.post('/project/:id', (req, res) => {
 		if (err) {
 			res.json({ error: err });
 		}
+		project.type = req.body.type;
 		project.title = req.body.title;
 		project.status = req.body.status;
 		project.author = req.body.author;
