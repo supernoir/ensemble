@@ -7,7 +7,8 @@ import axios from 'axios';
 const DEFAULT_LOCALE = 'es-ES';
 const locales = {
 	'en-US': require('./data/locales/en-US.json'),
-	'es-ES': require('./data/locales/es-ES.json')
+	'es-ES': require('./data/locales/es-ES.json'),
+	'de-DE': require('./data/locales/de-DE.json')
 };
 
 const API_URI = 'http://localhost:3030';
