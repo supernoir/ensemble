@@ -44,6 +44,8 @@
   "project.select-type-novel": "Novela",
   "project.select-type-essay": "Relato",
   "project.select-type-poem": "Poema",
+  "project.tab-overview": "Resumen",
+  "project.tab-board": "Tablero",
   "character.action-view": "Ver Caracter",
   "character.action-add": "Añadir Caracter",
   "character.action-edit": "Editar Caracter",

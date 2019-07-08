@@ -171,6 +171,16 @@ app.get('/projects', async (req, res) => {
 	});
 });
 
+app.get('/projects/status', async (req, res) => {
+	await Projects.find({ 'status': 'draft' },(error, projects) => {
+		if (error) {
+			res.json({ error });
+			throw error;
+		}
+		res.json(projects);
+	});
+});
+
 app.get('/project/:id', (req, res) => {
 	Projects.findOne({ _id: req.params.id }, (error, project) => {
 		if (error) {

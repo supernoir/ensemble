@@ -5,6 +5,7 @@ import { Container, Segment, Form, Button, Divider, Header, Breadcrumb, Dropdown
 import Loader from '../../basics/Loader';
 import { tagTypes } from '../../constants/tagTypes';
 import { projectTypes } from '../../constants/projectTypes';
+import { projectStatus } from '../../constants/projectStatus';
 
 export default class NewProject extends React.Component {
 	constructor() {
@@ -55,6 +56,7 @@ export default class NewProject extends React.Component {
 
 		this.props.addProject({
 			type  : this.state.type,
+			status: projectStatus.DRAFT,
 			title : this.state.title,
 			genre : this.state.genre,
 			series: this.state.series,

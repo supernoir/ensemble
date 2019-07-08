@@ -1,12 +1,13 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import intl from 'react-intl-universal';
-import { Container, Breadcrumb, Segment, Header, Card, Divider, Button, Label } from 'semantic-ui-react';
+import { Container, Breadcrumb, Segment, Header, Card, Divider, Button, Label, Tab, Item } from 'semantic-ui-react';
 import Loader from '../../basics/Loader';
 import DeleteModal from '../../basics/DeleteModal';
+import { projectStatus } from '../../constants/projectStatus';
 
 export default class Projects extends React.Component {
-	constructor(){
+	constructor() {
 		super();
 		this.state = {
 			showDeleteModal: false,
@@ -14,7 +15,7 @@ export default class Projects extends React.Component {
 		};
 	}
 
-	componentDidMount(){
+	componentDidMount() {
 		this.props.getProjects();
 	}
 
@@ -31,30 +32,179 @@ export default class Projects extends React.Component {
 	 * toggleDeleteModal method
 	 * toggles showing/hiding the modal
 	 */
-	toggleDeleteModal = (id) => {
+	toggleDeleteModal = id => {
 		this.setState({
 			showDeleteModal: !this.state.showDeleteModal,
 			projectId      : id
 		});
-	}
+	};
 
-	render(){
+	getProjectPanes = props => {
+		return [
+			{
+				menuItem: { key: 'overview', icon: 'th', content: intl.get('project.tab-overview') },
+				render  : () => <Tab.Pane>{this.displayProjectOverview(props)}</Tab.Pane>
+			},
+			{
+				menuItem: { key: 'board', icon: 'columns', content: intl.get('project.tab-board') },
+				render  : () => <Tab.Pane>{this.displayProjectBoard(props)}</Tab.Pane>
+			}
+		];
+	};
+
+	displayProjectOverview = props => {
+		return (
+			<Card.Group>
+				{props.projects !== void 0
+					? props.projects.map(project => {
+						return (
+							<Card>
+								<Card.Content>
+									<Card.Header>
+										<Link to={`/project/${project._id}`}>{project.title}</Link>
+										<Card.Meta>
+											{project.type !== void 0 ? intl.get(`project.select-type-${project.type}`) : null}
+										</Card.Meta>
+									</Card.Header>
+								</Card.Content>
+
+								{project.series !== void 0 && project.series.length > 0
+									? <Card.Content extra>
+										<h4>
+											<b>{intl.get('entity.projects.series')}</b>{' '}<Link to="/projects/series/id">{project.series}</Link>
+										</h4>
+									</Card.Content>
+									: null}
+								{project.desc !== void 0 && project.desc.length > 0
+									? <Card.Content extra>
+										<Card.Description>{project.desc}</Card.Description>
+									</Card.Content>
+									: null}
+
+								{project.tags !== void 0 && project.tags.length > 0
+									? <Card.Content extra>
+										<Label.Group tag>
+											{project.tags.map((tag, index) => {
+												return <Label key={`${tag}-${index}`}>{tag}</Label>;
+											})}
+										</Label.Group>
+									</Card.Content>
+									: null}
+
+								<Card.Content extra>
+									<Button circular basic icon="edit" color="blue" content={intl.get('app.edit')} />
+									<Button circular basic icon="delete" color="red" onClick={() => this.toggleDeleteModal(project._id)} content={intl.get('app.delete')} />
+								</Card.Content>
+							</Card>
+						);
+					})
+					: null}
+			</Card.Group>
+		);
+	};
+
+	displayProjectBoard = props => {
+		return (
+			<Segment.Group horizontal>
+				<Segment padded textAlign={'center'}>
+					<Header>Draft</Header>
+					<Divider />
+
+					{props.projects !== void 0
+						? <Item.Group divided>
+							{props.projects.map((project, index) => {
+								return project.status === projectStatus.DRAFT
+									? <Item key={`${project}-${index}`}>
+										<Item.Content>
+											<Item.Header as="a">{project.title}</Item.Header>
+											<Item.Meta>
+												<span>{project.type}</span>
+											</Item.Meta>
+											<Item.Description>{project.desc}</Item.Description>
+											{
+												project.tags !== void 0 && project.tags.length > 0
+													? <Item.Extra>
+														{project.tags.map((tag, index) => {
+															return <Label key={`${tag}-${index}`}>{tag}</Label>;
+														})}
+													</Item.Extra>
+													: null
+											}
+										</Item.Content>
+									</Item>
+									: null;
+							})}
+						</Item.Group>
+						: null
+					}
+				</Segment>
+
+				<Segment padded textAlign={'center'}>
+					<Header>In Progress</Header>
+					<Divider />
+					{props.projects !== void 0
+						? <Item.Group divided>
+							{props.projects.map((project, index) => {
+								return project.status === projectStatus.IN_PROGRESS
+									? <Item key={`${project}-${index}`}>
+										<Item.Content>
+											<Item.Header as="a">{project.title}</Item.Header>
+											<Item.Meta>
+												<span>{project.type}</span>
+											</Item.Meta>
+											<Item.Description>{project.desc}</Item.Description>
+											{project.tags !== void 0 && project.tags.length > 0
+												? <Item.Extra>
+													{project.tags.map((tag, index) => {
+														return <Label key={`${tag}-${index}`}>{tag}</Label>;
+													})}
+												</Item.Extra>
+												: null
+											}
+										</Item.Content>
+									</Item>
+									: null;
+							})}
+						</Item.Group>
+						: null
+					}
+
+				</Segment>
+
+				<Segment padded textAlign={'center'}>
+					<Header>In Review</Header>
+					<Divider />
+				</Segment>
+
+				<Segment padded textAlign={'center'}>
+					<Header>Editing</Header>
+					<Divider />
+				</Segment>
+
+				<Segment padded textAlign={'center'}>
+					<Header>Published</Header>
+					<Divider />
+				</Segment>
+
+			</Segment.Group>
+		);
+	};
+
+	render() {
 		return this.props.loading
 			? <Loader loading={this.props.loading} />
 			: <Container>
-				{
-					this.state.showDeleteModal
-						? <DeleteModal
-							open={this.state.showDeleteModal}
-							close={this.toggleDeleteModal}
-							entity={intl.get('entity.project')}
-							ref={'testProject'}
-							target={'/projects'}
-							item={this.state.projectId}
-							confirmDelete={(id) => this.props.deleteSpecificProject(id)}
-						/>
-						: null
-				}
+				{this.state.showDeleteModal
+					? <DeleteModal
+						open={this.state.showDeleteModal}
+						close={this.toggleDeleteModal}
+						entity={intl.get('entity.project')}
+						ref={'testProject'}
+						target={'/projects'}
+						item={this.state.projectId}
+						confirmDelete={id => this.props.deleteSpecificProject(id)}
+					/>
+					: null}
 				<Breadcrumb>
 					<Breadcrumb.Section link>
 						<Link to="/">{intl.get('component.dashboard')}</Link>
@@ -66,71 +216,20 @@ export default class Projects extends React.Component {
 				</Breadcrumb>
 
 				<Segment>
-					<Header as='h2'>
+					<Header as="h2">
 						{intl.get('entity.projects')}
 						<Header.Subheader>{intl.get('desc.projects')}</Header.Subheader>
 					</Header>
-					<Divider/>
-					<Button icon='add'>
+					<Divider />
+					<Button icon="add">
 						<Link to="/addproject">{intl.get('project.action-add')}</Link>
 					</Button>
 
 				</Segment>
 
-				<Divider/>
+				<Divider />
+				<Tab panes={this.getProjectPanes(this.props)} />
 
-				<Card.Group>
-					{this.props.projects !== void 0
-						? this.props.projects.map(project => {
-							return (
-								<Card>
-									<Card.Content>
-										<Card.Header>
-											<Link to={`/project/${project._id}`}>{project.title}</Link>
-											<Card.Meta>
-												{project.type !== void 0
-													? intl.get(`project.select-type-${project.type}`)
-													: null
-												}
-											</Card.Meta>
-										</Card.Header>
-									</Card.Content>
-
-									{project.series !== void 0 && project.series.length > 0
-										? <Card.Content extra>
-											<h4>
-												<b>{intl.get('entity.projects.series')}</b>{' '}<Link to='/projects/series/id'>{project.series}</Link>
-											</h4>
-										</Card.Content>
-										: null
-									}
-									{project.desc !== void 0 && project.desc.length > 0
-										? <Card.Content extra>
-											<Card.Description>{project.desc}</Card.Description>
-										</Card.Content>
-										: null
-									}
-
-									{
-										project.tags !== void 0 && project.tags.length > 0
-											? <Card.Content extra><Label.Group tag>
-												{project.tags.map((tag, index) => {
-													return <Label key={`${tag}-${index}`}>{tag}</Label>;
-												})}
-											</Label.Group></Card.Content>
-											: null
-									}
-
-									<Card.Content extra>
-										<Button circular basic icon='edit' color='blue' content={intl.get('app.edit')}/>
-										<Button circular basic icon='delete' color='red' onClick={() => this.toggleDeleteModal(project._id)} content={intl.get('app.delete')} />
-									</Card.Content>
-								</Card>
-							);
-						})
-						: null
-					}
-				</Card.Group>
 			</Container>;
 	}
 }

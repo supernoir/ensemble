@@ -44,6 +44,8 @@
   "project.select-type-novel": "Novel",
   "project.select-type-essay": "Essay",
   "project.select-type-poem": "Poem",
+  "project.tab-overview": "Overview",
+  "project.tab-board": "Board",
   "character.action-view": "View Character",
   "character.action-add": "Add Character",
   "character.action-edit": "Edit Character",
