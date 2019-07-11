@@ -1,7 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import intl from 'react-intl-universal';
-import { Container, Breadcrumb, Segment, Header, Card, Divider, Button, Label, Tab, Item } from 'semantic-ui-react';
+import { Container, Breadcrumb, Segment, Header, Card, Divider, Button, Label, Tab, Grid } from 'semantic-ui-react';
 import Loader from '../../basics/Loader';
 import DeleteModal from '../../basics/DeleteModal';
 import { projectStatus } from '../../constants/projectStatus';
@@ -105,88 +105,146 @@ export default class Projects extends React.Component {
 
 	displayProjectBoard = props => {
 		return (
-			<Segment.Group horizontal>
-				<Segment padded textAlign={'center'}>
-					<Header>Draft</Header>
-					<Divider />
-
-					{props.projects !== void 0
-						? <Item.Group divided>
-							{props.projects.map((project, index) => {
-								return project.status === projectStatus.DRAFT
-									? <Item key={`${project}-${index}`}>
-										<Item.Content>
-											<Item.Header as="a">{project.title}</Item.Header>
-											<Item.Meta>
-												<span>{project.type}</span>
-											</Item.Meta>
-											<Item.Description>{project.desc}</Item.Description>
+			<Grid columns='equal' divided relaxed>
+			 <Grid.Row>
+					<Grid.Column textAlign="center">
+						<Header>{intl.get('project.status-draft')}</Header>
+						<Divider />
+						{props.projects !== void 0
+							? <Card.Group>
+								{props.projects.map((project, index) => {
+									return project.status === projectStatus.DRAFT
+										?
+										  <Card key={`${project}-${index}`}>
+											<Card.Content>
+												<Card.Header>{project.title}</Card.Header>
+											</Card.Content>
 											{
-												project.tags !== void 0 && project.tags.length > 0
-													? <Item.Extra>
-														{project.tags.map((tag, index) => {
-															return <Label key={`${tag}-${index}`}>{tag}</Label>;
-														})}
-													</Item.Extra>
+												project.type !== void 0
+													? <Card.Content>
+														<Card.Meta>
+															{project.type !== void 0 ? intl.get(`project.select-type-${project.type}`) : null}
+														</Card.Meta>
+													</Card.Content>
 													: null
 											}
-										</Item.Content>
-									</Item>
-									: null;
-							})}
-						</Item.Group>
-						: null
-					}
-				</Segment>
+										</Card>
+										: null;
+								})}
+							</Card.Group>
+							: null
+						}
+					</Grid.Column>
 
-				<Segment padded textAlign={'center'}>
-					<Header>In Progress</Header>
-					<Divider />
-					{props.projects !== void 0
-						? <Item.Group divided>
-							{props.projects.map((project, index) => {
-								return project.status === projectStatus.IN_PROGRESS
-									? <Item key={`${project}-${index}`}>
-										<Item.Content>
-											<Item.Header as="a">{project.title}</Item.Header>
-											<Item.Meta>
-												<span>{project.type}</span>
-											</Item.Meta>
-											<Item.Description>{project.desc}</Item.Description>
-											{project.tags !== void 0 && project.tags.length > 0
-												? <Item.Extra>
-													{project.tags.map((tag, index) => {
-														return <Label key={`${tag}-${index}`}>{tag}</Label>;
-													})}
-												</Item.Extra>
+					<Grid.Column textAlign="center">
+						<Header>{intl.get('project.status-inprogress')}</Header>
+						<Divider />
+						{props.projects !== void 0
+							? <Card.Group>
+								{props.projects.map((project, index) => {
+									return project.status === projectStatus.IN_PROGRESS
+										? <Card key={`${project}-${index}`}>
+											<Card.Content>
+												<Card.Header>{project.title}</Card.Header>
+											</Card.Content>
+											{project.type !== void 0
+												? <Card.Content>
+													<Card.Meta>
+														{project.type !== void 0 ? intl.get(`project.select-type-${project.type}`) : null}
+													</Card.Meta>
+												</Card.Content>
 												: null
 											}
-										</Item.Content>
-									</Item>
-									: null;
-							})}
-						</Item.Group>
-						: null
-					}
+										</Card>
+										: null;
+								})}
+							</Card.Group>
+							: null}
+					</Grid.Column>
 
-				</Segment>
+					<Grid.Column textAlign="center">
+						<Header>{intl.get('project.status-inreview')}</Header>
+						<Divider />
+						{props.projects !== void 0
+							? <Card.Group>
+								{props.projects.map((project, index) => {
+									return project.status === projectStatus.IN_REVIEW
+										? <Card key={`${project}-${index}`}>
+											<Card.Content>
+												<Card.Header>{project.title}</Card.Header>
+											</Card.Content>
+											{
+												project.type !== void 0
+													? <Card.Content>
+														<Card.Meta>
+															{project.type !== void 0 ? intl.get(`project.select-type-${project.type}`) : null}
+														</Card.Meta>
+													</Card.Content>
+													: null
+											}
+										</Card>
+										: null;
+								})}
+							</Card.Group>
+							: null}
+					</Grid.Column>
 
-				<Segment padded textAlign={'center'}>
-					<Header>In Review</Header>
-					<Divider />
-				</Segment>
+					<Grid.Column textAlign="center">
+						<Header>{intl.get('project.status-editing')}</Header>
+						<Divider />
+						{props.projects !== void 0
+							? <Card.Group>
+								{props.projects.map((project, index) => {
+									return project.status === projectStatus.EDITING
+										? <Card key={`${project}-${index}`}>
+											<Card.Content>
+												<Card.Header>{project.title}</Card.Header>
+											</Card.Content>
+											{
+												project.type !== void 0
+													? <Card.Content>
+														<Card.Meta>
+															{project.type !== void 0 ? intl.get(`project.select-type-${project.type}`) : null}
+														</Card.Meta>
+													</Card.Content>
+													: null
+											}
+										</Card>
+										: null;
+								})}
+							</Card.Group>
+							: null}
+					</Grid.Column>
 
-				<Segment padded textAlign={'center'}>
-					<Header>Editing</Header>
-					<Divider />
-				</Segment>
+					<Grid.Column textAlign="center">
+						<Header>{intl.get('project.status-published')}</Header>
+						<Divider />
+						{props.projects !== void 0
+							? <Card.Group>
+								{props.projects.map((project, index) => {
+									return project.status === projectStatus.PUBLISHED
+										? <Card key={`${project}-${index}`}>
+											<Card.Content>
+												<Card.Header>{project.title}</Card.Header>
+											</Card.Content>
+											{
+												project.type !== void 0
+													? <Card.Content>
+														<Card.Meta>
+															{project.type !== void 0 ? intl.get(`project.select-type-${project.type}`) : null}
+														</Card.Meta>
+													</Card.Content>
+													: null
+											}
+										</Card>
+										: null;
+								})}
+							</Card.Group>
+							: null}
+					</Grid.Column>
 
-				<Segment padded textAlign={'center'}>
-					<Header>Published</Header>
-					<Divider />
-				</Segment>
-
-			</Segment.Group>
+				</Grid.Row>
+			</Grid>
 		);
 	};
 
