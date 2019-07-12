@@ -4,7 +4,10 @@ import intl from 'react-intl-universal';
 import { Container, Breadcrumb, Segment, Header, Table, Divider, Button, Icon, Label } from 'semantic-ui-react';
 import Loader from '../../basics/Loader';
 
-export default class Project extends React.Component {
+/**
+ * Class EditProject
+ */
+export default class EditProject extends React.Component {
 	componentDidMount() {
 		this.props.getProjectById(this.props.match.params.id);
 	}
@@ -38,17 +41,13 @@ export default class Project extends React.Component {
 						<Icon name="info circle" />{this.props.project.desc}
 					</p>
 
-					{
-						this.props.project.tags !== void 0
-							? <Label.Group tag>
-								{
-									this.props.project.tags.map((tag,index) => {
-										return <Label key={`${tag}-${index}`}>{tag}</Label>;
-									})
-								}
-							</Label.Group>
-							: null
-					}
+					{this.props.project.tags !== void 0
+						? <Label.Group tag>
+							{this.props.project.tags.map((tag, index) => {
+								return <Label key={`${tag}-${index}`}>{tag}</Label>;
+							})}
+						</Label.Group>
+						: null}
 					<Divider />
 
 					<Table celled striped>
@@ -57,13 +56,11 @@ export default class Project extends React.Component {
 								<Table.HeaderCell colSpan="3">{intl.get('entity.characters')}</Table.HeaderCell>
 							</Table.Row>
 						</Table.Header>
-						<Table.Body>
-
-						</Table.Body>
+						<Table.Body />
 					</Table>
 					<Divider />
 					<Button>
-						{intl.get('project.action-edit')}
+						<Link to={`/editproject/${this.props.project._id}`}>{intl.get('project.action-edit')}</Link>
 					</Button>
 					<Button>
 						{intl.get('project.action-delete')}
