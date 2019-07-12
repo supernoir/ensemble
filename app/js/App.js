@@ -4,10 +4,11 @@ import intl from 'react-intl-universal';
 import axios from 'axios';
 
 // Constants
-const DEFAULT_LOCALE = 'es-ES';
+const DEFAULT_LOCALE = 'en-US';
 const locales = {
 	'en-US': require('./data/locales/en-US.json'),
-	'es-ES': require('./data/locales/es-ES.json')
+	'es-ES': require('./data/locales/es-ES.json'),
+	'de-DE': require('./data/locales/de-DE.json')
 };
 
 const API_URI = 'http://localhost:3030';
