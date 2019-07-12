@@ -137,7 +137,7 @@ const Projects = mongoose.model('Projects', {
 	// The potential genre of the project
 	genre        : String,
 	// A set of tags to describe the given project
-	tags         : Array,
+	tags         : Array
 });
 
 /**
@@ -172,7 +172,7 @@ app.get('/projects', async (req, res) => {
 });
 
 app.get('/projects/status', async (req, res) => {
-	await Projects.find({ 'status': 'draft' },(error, projects) => {
+	await Projects.find({ status: 'draft' }, (error, projects) => {
 		if (error) {
 			res.json({ error });
 			throw error;
@@ -216,31 +216,28 @@ app.post('/project', (req, res) => {
 });
 
 /**
- * Edit a single project
+ * PUT single project
  */
-app.post('/project/:id', (req, res) => {
-	Projects.findOne({ _id: req.params.id }, (err, project) => {
-		if (err) {
-			res.json({ error: err });
+app.put('/project/:id', (req, res) => {
+	const editedProject = new Projects();
+	editedProject._id = req.params.id;
+	editedProject.type = req.body.type;
+	editedProject.title = req.body.title;
+	editedProject.status = req.body.status;
+	editedProject.author = req.body.author;
+	editedProject.collaborators = req.body.collaborators;
+	editedProject.series = req.body.series;
+	editedProject.cast = req.body.cast;
+	editedProject.desc = req.body.desc;
+	editedProject.genre = req.body.genre;
+	editedProject.tags = req.body.tags;
+
+	Projects.findByIdAndUpdate(req.params.id, editedProject, { upsert: true }, (error, project) => {
+		if (error) {
+			res.json({ error });
+			throw error;
 		}
-		project.type = req.body.type;
-		project.title = req.body.title;
-		project.status = req.body.status;
-		project.author = req.body.author;
-		project.collaborators = req.body.collaborators;
-		project.series = req.body.series;
-		project.cast = req.body.cast;
-		project.desc = req.body.desc;
-		project.genre = req.body.genre;
-		project.tags = req.body.tags;
-
-
-		project.save((error, project) => {
-			if (error) {
-				res.json({ error: error });
-			}
-			res.json({ message: `Project ${req.params.id} edited`, data: project });
-		});
+		res.json(project);
 	});
 });
 
@@ -464,8 +461,8 @@ app.get('/dashboard', (req, res) => {
 // -----------------------------------------------------------------------------
 //  REST API -- ADMIN
 // -----------------------------------------------------------------------------
-const logsFromFile = fs.readFileSync(path.join(__dirname, 'access.log')).toString()
-	.split('\n');
+/* const logsFromFile = fs.readFileSync(path.join(__dirname, 'access.log')).toString()
+.split('\n'); */
 
 const getDbReadyState = () => {
 	let dbState = mongoose.connection.readyState;

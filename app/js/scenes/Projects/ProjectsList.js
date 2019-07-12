@@ -6,6 +6,9 @@ import Loader from '../../basics/Loader';
 import DeleteModal from '../../basics/DeleteModal';
 import { projectStatus } from '../../constants/projectStatus';
 
+/**
+ * Class ProjectsList
+ */
 export default class Projects extends React.Component {
 	constructor() {
 		super();
@@ -37,8 +40,12 @@ export default class Projects extends React.Component {
 			showDeleteModal: !this.state.showDeleteModal,
 			projectId      : id
 		});
-	};
+	}
 
+	/**
+ * Method getProjectPanes
+ * @param {object} props
+ */
 	getProjectPanes = props => {
 		return [
 			{
@@ -50,7 +57,7 @@ export default class Projects extends React.Component {
 				render  : () => <Tab.Pane>{this.displayProjectBoard(props)}</Tab.Pane>
 			}
 		];
-	};
+	}
 
 	displayProjectOverview = props => {
 		return (
@@ -92,8 +99,13 @@ export default class Projects extends React.Component {
 									: null}
 
 								<Card.Content extra>
-									<Button circular basic icon="edit" color="blue" content={intl.get('app.edit')} />
-									<Button circular basic icon="delete" color="red" onClick={() => this.toggleDeleteModal(project._id)} content={intl.get('app.delete')} />
+									<Link to={`/editproject/${project._id}`}>
+										<Button circular basic icon="edit" color="blue" content={intl.get('app.edit')} />
+									</Link>
+									<Button circular basic
+										icon="delete"
+										color="red"
+										onClick={() => this.toggleDeleteModal(project._id)} content={intl.get('app.delete')} />
 								</Card.Content>
 							</Card>
 						);
@@ -101,12 +113,16 @@ export default class Projects extends React.Component {
 					: null}
 			</Card.Group>
 		);
-	};
+	}
 
-	displayProjectBoard = props => {
+	/**
+	 * Method displayProjectBoard
+	 * @param {string} props
+	 */
+	displayProjectBoard = (props) => {
 		return (
-			<Grid columns='equal' divided relaxed>
-			 <Grid.Row>
+			<Grid columns="equal" divided relaxed>
+				<Grid.Row>
 					<Grid.Column textAlign="center">
 						<Header>{intl.get('project.status-draft')}</Header>
 						<Divider />
@@ -114,26 +130,24 @@ export default class Projects extends React.Component {
 							? <Card.Group>
 								{props.projects.map((project, index) => {
 									return project.status === projectStatus.DRAFT
-										?
-										  <Card key={`${project}-${index}`}>
+										? <Card key={`${project}-${index}`}>
 											<Card.Content>
-												<Card.Header>{project.title}</Card.Header>
+												<Card.Header>
+													<Link to={`/project/${project._id}`}>{project.title}</Link>
+												</Card.Header>
 											</Card.Content>
-											{
-												project.type !== void 0
-													? <Card.Content>
-														<Card.Meta>
-															{project.type !== void 0 ? intl.get(`project.select-type-${project.type}`) : null}
-														</Card.Meta>
-													</Card.Content>
-													: null
-											}
+											{project.type !== void 0
+												? <Card.Content>
+													<Card.Meta>
+														{project.type !== void 0 ? intl.get(`project.select-type-${project.type}`) : null}
+													</Card.Meta>
+												</Card.Content>
+												: null}
 										</Card>
 										: null;
 								})}
 							</Card.Group>
-							: null
-						}
+							: null}
 					</Grid.Column>
 
 					<Grid.Column textAlign="center">
@@ -145,7 +159,9 @@ export default class Projects extends React.Component {
 									return project.status === projectStatus.IN_PROGRESS
 										? <Card key={`${project}-${index}`}>
 											<Card.Content>
-												<Card.Header>{project.title}</Card.Header>
+												<Card.Header>
+													<Link to={`/project/${project._id}`}>{project.title}</Link>
+												</Card.Header>
 											</Card.Content>
 											{project.type !== void 0
 												? <Card.Content>
@@ -153,8 +169,7 @@ export default class Projects extends React.Component {
 														{project.type !== void 0 ? intl.get(`project.select-type-${project.type}`) : null}
 													</Card.Meta>
 												</Card.Content>
-												: null
-											}
+												: null}
 										</Card>
 										: null;
 								})}
@@ -171,17 +186,17 @@ export default class Projects extends React.Component {
 									return project.status === projectStatus.IN_REVIEW
 										? <Card key={`${project}-${index}`}>
 											<Card.Content>
-												<Card.Header>{project.title}</Card.Header>
+												<Card.Header>
+													<Link to={`/project/${project._id}`}>{project.title}</Link>
+												</Card.Header>
 											</Card.Content>
-											{
-												project.type !== void 0
-													? <Card.Content>
-														<Card.Meta>
-															{project.type !== void 0 ? intl.get(`project.select-type-${project.type}`) : null}
-														</Card.Meta>
-													</Card.Content>
-													: null
-											}
+											{project.type !== void 0
+												? <Card.Content>
+													<Card.Meta>
+														{project.type !== void 0 ? intl.get(`project.select-type-${project.type}`) : null}
+													</Card.Meta>
+												</Card.Content>
+												: null}
 										</Card>
 										: null;
 								})}
@@ -198,17 +213,17 @@ export default class Projects extends React.Component {
 									return project.status === projectStatus.EDITING
 										? <Card key={`${project}-${index}`}>
 											<Card.Content>
-												<Card.Header>{project.title}</Card.Header>
+												<Card.Header>
+													<Link to={`/project/${project._id}`}>{project.title}</Link>
+												</Card.Header>
 											</Card.Content>
-											{
-												project.type !== void 0
-													? <Card.Content>
-														<Card.Meta>
-															{project.type !== void 0 ? intl.get(`project.select-type-${project.type}`) : null}
-														</Card.Meta>
-													</Card.Content>
-													: null
-											}
+											{project.type !== void 0
+												? <Card.Content>
+													<Card.Meta>
+														{project.type !== void 0 ? intl.get(`project.select-type-${project.type}`) : null}
+													</Card.Meta>
+												</Card.Content>
+												: null}
 										</Card>
 										: null;
 								})}
@@ -225,17 +240,17 @@ export default class Projects extends React.Component {
 									return project.status === projectStatus.PUBLISHED
 										? <Card key={`${project}-${index}`}>
 											<Card.Content>
-												<Card.Header>{project.title}</Card.Header>
+												<Card.Header>
+													<Link to={`/project/${project._id}`}>{project.title}</Link>
+												</Card.Header>
 											</Card.Content>
-											{
-												project.type !== void 0
-													? <Card.Content>
-														<Card.Meta>
-															{project.type !== void 0 ? intl.get(`project.select-type-${project.type}`) : null}
-														</Card.Meta>
-													</Card.Content>
-													: null
-											}
+											{project.type !== void 0
+												? <Card.Content>
+													<Card.Meta>
+														{project.type !== void 0 ? intl.get(`project.select-type-${project.type}`) : null}
+													</Card.Meta>
+												</Card.Content>
+												: null}
 										</Card>
 										: null;
 								})}
@@ -246,7 +261,7 @@ export default class Projects extends React.Component {
 				</Grid.Row>
 			</Grid>
 		);
-	};
+	}
 
 	render() {
 		return this.props.loading
@@ -287,7 +302,6 @@ export default class Projects extends React.Component {
 
 				<Divider />
 				<Tab panes={this.getProjectPanes(this.props)} />
-
 			</Container>;
 	}
 }

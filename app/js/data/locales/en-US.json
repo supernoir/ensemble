@@ -33,6 +33,7 @@
   "project.action-delete": "Delete Project",
   "project.label-type": "Type",
   "project.label-title": "Title",
+  "project.label-status": "Status",
   "project.label-genre": "Genre",
   "project.label-series": "Series",
   "project.label-cast": "Cast",

@@ -30,6 +30,7 @@ import AdminPanel from './scenes/Admin/AdminPanel';
 import ProjectsList from './scenes/Projects/ProjectsList';
 import Project from './scenes/Projects/Project';
 import NewProject from './scenes/Projects/NewProject';
+import EditProject from './scenes/Projects/EditProject';
 
 // --- CHARACTERS
 import CharactersList from './scenes/Characters/CharactersList';
@@ -43,11 +44,17 @@ import EventsList from './scenes/Events/EventsList';
 // --- TAGS
 import TagsList from './scenes/Tags/TagsList';
 
-import { addMessage } from './actions/addMessage';
 import MessengerContainer from './containers/MessengerContainer';
-import { setLocale, SET_LOCALE } from './actions/setLocale';
+import { SET_LOCALE } from './actions/setLocale';
 
+/**
+ * Class App
+ */
 export default class App extends React.Component {
+	/**
+	 * Constructor
+	 * @param {*} props
+	 */
 	constructor(props) {
 		super(props);
 		// Initialize Auth
@@ -69,45 +76,57 @@ export default class App extends React.Component {
 		};
 	}
 
-setCurrentLocale = (locale) => {
-	this.setState({
-		loading      : true,
-		currentLocale: locale || DEFAULT_LOCALE
-	});
-	this.props.setLocale({ type: SET_LOCALE, locale });
-	this.loadLocales(locale);
-	this.setState({
-		loading: false
-	});
-}
-
-
-loadLocales(lang) {
-	intl
-		.init({
-			currentLocale: lang,
-			locales
-		})
-		.then(() => {
-			this.setState({ loading: false });
+	/**
+	 * Method SetCurrentLocale
+	 * @param {string} locale
+	 */
+	setCurrentLocale = locale => {
+		this.setState({
+			loading      : true,
+			currentLocale: locale || DEFAULT_LOCALE
 		});
-}
+		this.props.setLocale({ type: SET_LOCALE, locale });
+		this.loadLocales(locale);
+		this.setState({
+			loading: false
+		});
+	}
+
+	/**
+	 * Method loadLocales
+	 * @param {string} lang
+	 */
+	loadLocales(lang) {
+		intl
+			.init({
+				currentLocale: lang,
+				locales
+			})
+			.then(() => {
+				this.setState({ loading: false });
+			});
+	}
 
 	retrieveGenres = lang => {
-		axios.get(`http://localhost:3030/genres/${lang}`).catch(err => console.error(err))
+		axios.get(`http://localhost:3030/genres/${lang}`)
+			.catch(err => {
+				this.props.addMessage({
+					type   : 'error',
+					content: err.message
+				});
+			})
 			.then(res => {
 				this.setState({
 					genres: res.data.data
 				});
 			});
-	};
+	}
 
 	sendApiRequest = (uri, action, resource, param, payload) => {
 		this.setState({
 			loading: true
 		});
 		let targetUri = uri;
-		const { store } = this.props;
 		resource !== void 0 ? (targetUri += '/' + resource) : '';
 		param !== void 0 ? (targetUri += '/' + param) : '';
 
@@ -123,12 +142,11 @@ loadLocales(lang) {
 						}
 					})
 						.catch(err => {
-							store.dispatch(
-								addMessage({
-									type   : 'error',
-									content: err.message
-								})
-							);
+							this.props.addMessage({
+								type   : 'error',
+								content: err.message
+							});
+
 							this.setState({
 								loading: false
 							});
@@ -152,12 +170,11 @@ loadLocales(lang) {
 						data  : payload
 					})
 						.catch(err => {
-							store.dispatch(
-								addMessage({
-									type   : 'error',
-									content: err.message
-								})
-							);
+							this.props.addMessage({
+								type   : 'error',
+								content: err.message
+							});
+
 							this.setState({
 								loading: false
 							});
@@ -181,12 +198,11 @@ loadLocales(lang) {
 						data  : payload
 					})
 						.catch(err => {
-							store.dispatch(
-								addMessage({
-									type   : 'error',
-									content: err.message
-								})
-							);
+							this.props.addMessage({
+								type   : 'error',
+								content: err.message
+							});
+
 							this.setState({
 								loading: false
 							});
@@ -208,25 +224,25 @@ loadLocales(lang) {
 						},
 						params: param
 					}).catch(err => {
-						store.dispatch(
-							addMessage({
-								type   : 'error',
-								content: err.message
-							})
-						);
+						this.props.addMessage({
+							type   : 'error',
+							content: err.message
+						});
+
 						this.setState({
 							loading: false
 						});
 					});
 					break;
+				default:
+					break;
 			}
 		} catch (err) {
-			store.dispatch(
-				addMessage({
-					type   : 'error',
-					content: err.message
-				})
-			);
+			this.props.addMessage({
+				type   : 'error',
+				content: err.message
+			});
+
 			this.setState({
 				loading: false
 			});
@@ -234,19 +250,22 @@ loadLocales(lang) {
 		this.setState({
 			loading: false
 		});
-	};
-
+	}
+	/**
+ 	 * Method componentWillMount
+ 	 */
 	componentWillMount() {
 		this.loadLocales(this.state.currentLocale);
 	}
 
+	/**
+   * Method render
+   */
 	render() {
 		return (
 			<Router>
 				<React.Fragment>
-					<Navbar
-						setCurrentLocale={(locale)=>this.setCurrentLocale(locale)}
-						{...this.props} />
+					<Navbar setCurrentLocale={locale => this.setCurrentLocale(locale)} {...this.props} />
 					<main className="mx-0">
 						<MessengerContainer />
 						<Route
@@ -320,6 +339,28 @@ loadLocales(lang) {
 								/>
 							)}
 						/>
+						<Route
+							path="/editproject/:id"
+							render={props => (
+								<EditProject
+									loading={this.state.loading}
+									editProject={(id, data) => {
+										this.sendApiRequest(API_URI, API_ACTIONS.PUT, 'project', id, data);
+									}}
+									getProjectById={id => this.sendApiRequest(API_URI, API_ACTIONS.GET, 'project', id)}
+									project={this.state.project !== void 0 ? this.state.project : {}}
+									addEvent={data => {
+										this.sendApiRequest(API_URI, API_ACTIONS.POST, 'event', '', data);
+									}}
+									addTag={data => {
+										this.sendApiRequest(API_URI, API_ACTIONS.POST, 'tag', '', data);
+									}}
+									match={props.match}
+									{...props}
+								/>
+							)}
+						/>
+
 						{/* CHARACTERS */}
 						<Route
 							path="/characters"
@@ -386,7 +427,10 @@ loadLocales(lang) {
 							exact
 							path="/events"
 							render={() => (
-								<EventsList loading={this.state.loading} events={this.state.events} getEvents={() => this.sendApiRequest(API_URI, API_ACTIONS.GET, 'events')} />
+								<EventsList
+									loading={this.state.loading}
+									events={this.state.events}
+									getEvents={() => this.sendApiRequest(API_URI, API_ACTIONS.GET, 'events')} />
 							)}
 						/>
 						{/** Tags */}
