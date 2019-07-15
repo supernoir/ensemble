@@ -1,0 +1,121 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Navbar -- Snapshot Test 1`] = `
+<Menu
+  fixed="top"
+  inverted={true}
+>
+  <Container>
+    <MenuItem
+      header={true}
+    >
+      <Link
+        replace={false}
+        to="/"
+      />
+    </MenuItem>
+    <MenuItem
+      header={true}
+    >
+      <Link
+        replace={false}
+        to="/projects"
+      >
+        <Icon
+          as="i"
+          circular={true}
+          inverted={true}
+          name="book"
+        />
+         
+      </Link>
+    </MenuItem>
+    <MenuItem
+      header={true}
+    >
+      <Link
+        replace={false}
+        to="/characters"
+      >
+        <Icon
+          as="i"
+          circular={true}
+          inverted={true}
+          name="address card"
+        />
+         
+      </Link>
+    </MenuItem>
+    <MenuItem
+      header={true}
+    >
+      <Link
+        replace={false}
+        to="/tags"
+      >
+        <Icon
+          as="i"
+          circular={true}
+          inverted={true}
+          name="tags"
+        />
+         
+      </Link>
+    </MenuItem>
+    <MenuItem
+      header={true}
+    >
+      <Link
+        replace={false}
+        to="/admin"
+      >
+        <Icon
+          as="i"
+          circular={true}
+          inverted={true}
+          name="cogs"
+        />
+         
+        Admin Panel
+      </Link>
+    </MenuItem>
+    <Dropdown
+      additionLabel="Add "
+      additionPosition="top"
+      closeOnBlur={true}
+      closeOnEscape={true}
+      deburr={false}
+      icon="user"
+      item={true}
+      minCharacters={1}
+      noResultsMessage="No results found."
+      openOnFocus={true}
+      renderLabel={[Function]}
+      searchInput="text"
+      selectOnBlur={true}
+      selectOnNavigation={true}
+      simple={true}
+      text="supernoir"
+      wrapSelection={true}
+    >
+      <DropdownMenu>
+        <DropdownItem
+          href="/profile"
+        >
+          My Profile
+        </DropdownItem>
+        <DropdownDivider />
+        <DropdownItem
+          href="/login"
+        >
+          Log out
+        </DropdownItem>
+      </DropdownMenu>
+    </Dropdown>
+    <LanguageSwitcher
+      close={[Function]}
+      setCurrentLocale={[Function]}
+    />
+  </Container>
+</Menu>
+`;

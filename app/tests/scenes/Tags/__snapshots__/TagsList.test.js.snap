@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`EventsList -- Snapshot Test 1`] = `
+exports[`TagsList -- Snapshot Test 1`] = `
 <Container>
   <Breadcrumb>
     <BreadcrumbSection>
@@ -27,5 +27,10 @@ exports[`EventsList -- Snapshot Test 1`] = `
     </Header>
   </Segment>
   <Divider />
+  <Segment>
+    <LabelGroup
+      tag={true}
+    />
+  </Segment>
 </Container>
 `;

@@ -1,0 +1,67 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`CharacterCard -- Snapshot Test 1`] = `
+<Card>
+  <CardContent>
+    <CardHeader>
+      <Link
+        replace={false}
+        to="/character/1"
+      >
+        TestName
+      </Link>
+    </CardHeader>
+    <CardMeta>
+      <Icon
+        as="i"
+        name="birthday cake"
+      />
+       
+      01/01/1990
+    </CardMeta>
+    <CardMeta>
+      <Icon
+        as="i"
+        name="transgender alternate"
+      />
+       
+      TestGender
+    </CardMeta>
+    <CardDescription>
+      TestDescription
+    </CardDescription>
+  </CardContent>
+  <CardContent>
+    <Icon
+      as="i"
+      name="book"
+    />
+     
+    <Link
+      replace={false}
+      to="/project/TestTitle"
+    />
+  </CardContent>
+  <CardContent
+    extra={true}
+  >
+    <Link
+      replace={false}
+      to="/editcharacter/1"
+    >
+      <Button
+        as="button"
+        circular={true}
+        color="green"
+        icon="edit"
+      />
+    </Link>
+    <Button
+      as="button"
+      circular={true}
+      color="red"
+      icon="delete"
+    />
+  </CardContent>
+</Card>
+`;

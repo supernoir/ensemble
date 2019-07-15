@@ -1,0 +1,112 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`NotificationCenter -- Snapshot Test 1`] = `
+<ContextProvider
+  value={
+    Object {
+      "store": Object {
+        "dispatch": [MockFunction],
+        "getState": [MockFunction] {
+          "calls": Array [
+            Array [],
+            Array [],
+          ],
+          "results": Array [
+            Object {
+              "type": "return",
+              "value": undefined,
+            },
+            Object {
+              "type": "return",
+              "value": undefined,
+            },
+          ],
+        },
+        "subscribe": [MockFunction] {
+          "calls": Array [
+            Array [
+              [Function],
+            ],
+          ],
+          "results": Array [
+            Object {
+              "type": "return",
+              "value": undefined,
+            },
+          ],
+        },
+      },
+      "subscription": Subscription {
+        "handleChangeWrapper": [Function],
+        "listeners": Object {
+          "clear": [Function],
+          "get": [Function],
+          "notify": [Function],
+          "subscribe": [Function],
+        },
+        "onStateChange": [Function],
+        "parentSub": undefined,
+        "store": Object {
+          "dispatch": [MockFunction],
+          "getState": [MockFunction] {
+            "calls": Array [
+              Array [],
+              Array [],
+            ],
+            "results": Array [
+              Object {
+                "type": "return",
+                "value": undefined,
+              },
+              Object {
+                "type": "return",
+                "value": undefined,
+              },
+            ],
+          },
+          "subscribe": [MockFunction] {
+            "calls": Array [
+              Array [
+                [Function],
+              ],
+            ],
+            "results": Array [
+              Object {
+                "type": "return",
+                "value": undefined,
+              },
+            ],
+          },
+        },
+        "unsubscribe": undefined,
+      },
+    }
+  }
+>
+  <Connect(NotificationCenter)
+    messages={
+      Array [
+        Object {
+          "content": "A test error occurred",
+          "description": "Something went wrong",
+          "type": "error",
+        },
+        Object {
+          "content": "A test warning occurred",
+          "description": "Something went wrong",
+          "type": "warning",
+        },
+        Object {
+          "content": "Here be dragons",
+          "type": "info",
+        },
+        Object {
+          "content": "Yay you did it!",
+          "description": "A job well done",
+          "type": "success",
+        },
+      ]
+    }
+  />
+</ContextProvider>
+`;
