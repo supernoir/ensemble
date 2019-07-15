@@ -1,6 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import intl from 'react-intl-universal';
+import PropTypes from 'prop-types';
 import { Container, Breadcrumb, Segment, Header, Card, Divider, Button, Label, Tab, Grid } from 'semantic-ui-react';
 import Loader from '../../basics/Loader';
 import DeleteModal from '../../basics/DeleteModal';
@@ -8,8 +9,9 @@ import { projectStatus } from '../../constants/projectStatus';
 
 /**
  * Class ProjectsList
+ * List of Projects
  */
-export default class Projects extends React.Component {
+export default class ProjectsList extends React.Component {
 	constructor() {
 		super();
 		this.state = {
@@ -305,3 +307,23 @@ export default class Projects extends React.Component {
 			</Container>;
 	}
 }
+
+ProjectsList.propTypes = {
+	loading              : PropTypes.bool,
+	getProjects          : PropTypes.func,
+	deleteSpecificProject: PropTypes.func
+};
+
+
+// Project PropTypes
+/*
+	projects             : PropTypes.shape({
+		_id   : PropTypes.number,
+		title : PropTypes.string,
+		type  : PropTypes.string,
+		status: PropTypes.string,
+		series: PropTypes.string,
+		desc  : PropTypes.string,
+		tags  : PropTypes.array
+	})
+*/

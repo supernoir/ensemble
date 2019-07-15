@@ -1,9 +1,13 @@
 import React from 'react';
-
 import { Dropdown, Flag } from 'semantic-ui-react';
 import intl from 'react-intl-universal';
 import LOCALES from '../constants/locales';
+import PropTypes from 'prop-types';
 
+/**
+ * Class LanguageSwitcher
+ * handles the switching of languages
+ */
 export default class LanguageSwitcher extends React.Component {
 
 	handleLocaleChange = (evt, locale) => {
@@ -31,3 +35,7 @@ export default class LanguageSwitcher extends React.Component {
 		);
 	}
 }
+
+LanguageSwitcher.propTypes = {
+	setCurrentLocale: PropTypes.func
+};

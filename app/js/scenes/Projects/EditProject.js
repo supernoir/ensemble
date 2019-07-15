@@ -6,9 +6,11 @@ import Loader from '../../basics/Loader';
 import { tagTypes } from '../../constants/tagTypes';
 import { projectTypes } from '../../constants/projectTypes';
 import { projectStatus } from '../../constants/projectStatus';
+import PropTypes from 'prop-types';
 
 /**
  * Class EditProject
+ * View for Editing a single project
  */
 export default class EditProject extends React.Component {
 	constructor() {
@@ -249,3 +251,22 @@ export default class EditProject extends React.Component {
 			</Container>;
 	}
 }
+
+EditProject.propTypes = {
+	loading    : PropTypes.bool,
+	history    : PropTypes.object,
+	match      : PropTypes.object,
+	editProject: PropTypes.func,
+	addTag     : PropTypes.func,
+	project    : PropTypes.shape({
+		type  : PropTypes.string,
+		status: PropTypes.string,
+		title : PropTypes.string,
+		genre : PropTypes.genre,
+		series: PropTypes.series,
+		desc  : PropTypes.desc,
+		cast  : PropTypes.cast,
+		tags  : PropTypes.array
+	})
+
+};

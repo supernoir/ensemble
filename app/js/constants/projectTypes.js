@@ -1,3 +1,6 @@
+/**
+ * Project Types Constant
+ */
 export const projectTypes = {
 	SHORTSTORY: 'shortstory',
 	SCRIPT    : 'script',

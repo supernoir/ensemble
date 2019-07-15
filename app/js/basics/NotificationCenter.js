@@ -1,14 +1,19 @@
 import React from 'react';
 import Notification from './Notification';
+import PropTypes from 'prop-types';
 
 const MESSAGES_LIMIT = 5;
 
+/**
+ * Class NotificationCenter
+ * Wrapping component to handle a set of notifications
+ */
 export default class NotificationCenter extends React.Component {
 	renderNotifications = messages => {
 		return (
 			<div className="app_notification-container">
-				{messages.map(message => {
-					return <Notification type={message.type} content={message.content} description={message.description} />;
+				{messages.map((message, index) => {
+					return <Notification key={`${message.type}-${index}`} type={message.type} content={message.content} description={message.description} />;
 				})}
 			</div>
 		);
@@ -27,3 +32,11 @@ export default class NotificationCenter extends React.Component {
 		}
 	}
 }
+
+NotificationCenter.propTypes = {
+	messages: PropTypes.shape({
+		type       : PropTypes.string,
+		content    : PropTypes.string,
+		description: PropTypes.string
+	})
+};

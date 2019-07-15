@@ -1,3 +1,6 @@
+/**
+ * Tag Types Constant
+ */
 export const tagTypes = {
 	// Specific tag for only one project
 	PROJECT      : 'project',

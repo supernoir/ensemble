@@ -21,6 +21,10 @@ import AppStoreContainer from './containers/AppStoreContainer';
 
 const store = createStore(rootReducer, window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__());
 
+/**
+ * Class Ensemble
+ * Root component
+ */
 export default class Ensemble extends React.Component {
 
 	render() {

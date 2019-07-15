@@ -2,6 +2,10 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import { Container, Segment, Header, Divider, Form, Button } from 'semantic-ui-react';
 
+/**
+ * Class Login
+ * Login Component for the App
+ */
 export default class Login extends React.Component {
 	constructor() {
 		super();
@@ -31,11 +35,13 @@ export default class Login extends React.Component {
 					}
 				});
 				break;
+			default:
+				break;
 		}
 	};
 
 	handleLogin = () => {
-		console.log(this.state.login);
+		//console.log(this.state.login);
 	};
 
 	render() {

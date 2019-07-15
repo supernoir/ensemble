@@ -1,5 +1,9 @@
 import auth0 from 'auth0-js';
 
+/**
+ * Class Auth
+ * Client Authentication
+ */
 export default class Auth {
 
 	constructor(history) {

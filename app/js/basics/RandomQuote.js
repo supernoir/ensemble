@@ -20,6 +20,10 @@ const testQuotes = [
 	}
 ];
 
+/**
+ * Class RandomQuote
+ * returns a random quote
+ */
 export default class RandomQuote extends React.Component {
 	constructor() {
 		super();

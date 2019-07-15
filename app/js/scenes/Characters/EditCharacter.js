@@ -3,7 +3,12 @@ import intl from 'react-intl-universal';
 import { Link } from 'react-router-dom';
 import { Container, Segment, Form, Button, Divider, Header, Breadcrumb } from 'semantic-ui-react';
 import Loader from '../../basics/Loader';
+import PropTypes from 'prop-types';
 
+/**
+ * Class EditCharacter
+ * Edit Single Character
+ */
 export default class EditCharacter extends React.Component {
 	constructor() {
 		super();
@@ -227,7 +232,10 @@ export default class EditCharacter extends React.Component {
 								{this.props.projects !== void 0
 									? this.props.projects.map(project => {
 										return (
-											<option selected={this.props.character.project === project.id} value={project._id} key={`charoption-${project._id}`}>
+											<option
+												selected={this.props.character.project === project.id}
+												value={project._id}
+												key={`charoption-${project._id}`}>
 												{project.title}
 											</option>
 										);
@@ -244,3 +252,21 @@ export default class EditCharacter extends React.Component {
 			</Container>;
 	}
 }
+
+EditCharacter.propTypes = {
+	loading      : PropTypes.bool,
+	editCharacter: PropTypes.func,
+	addEvent     : PropTypes.func,
+	history      : PropTypes.object,
+	match        : PropTypes.object,
+	character    : PropTypes.shape({
+		firstname : PropTypes.string,
+		middlename: PropTypes.string,
+		lastname  : PropTypes.string,
+		fullname  : PropTypes.string,
+		gender     : PropTypes.string,
+		birthday   : PropTypes.string,
+		origin     : PropTypes.string,
+		project    : PropTypes.number
+	})
+};

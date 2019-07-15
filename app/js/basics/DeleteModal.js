@@ -2,6 +2,7 @@ import React from 'react';
 import { Button, Header, Modal } from 'semantic-ui-react';
 import { withRouter } from 'react-router-dom';
 import intl from 'react-intl-universal';
+import PropTypes from 'prop-types';
 
 /**
  * DeleteModal Class
@@ -40,3 +41,13 @@ class DeleteModal extends React.Component {
 }
 
 export default withRouter(DeleteModal);
+
+DeleteModal.propTypes = {
+	close        : PropTypes.func,
+	open         : PropTypes.func,
+	history      : PropTypes.object,
+	confirmDelete: PropTypes.func,
+	entity       : PropTypes.string,
+	item         : PropTypes.string,
+	target       : PropTypes.string
+};

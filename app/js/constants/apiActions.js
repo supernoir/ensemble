@@ -1,3 +1,6 @@
+/**
+ * API Actions Constant
+ */
 const API_ACTIONS = {
 	GET   : 'get',
 	POST  : 'post',

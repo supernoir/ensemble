@@ -1,7 +1,10 @@
 import React from 'react';
-import intl from 'react-intl-universal';
 import { Container, Breadcrumb, Segment, Header, Divider, Table, List } from 'semantic-ui-react';
-
+import PropTypes from 'prop-types';
+/**
+ * Class AdminPanel
+ * Administrative Panel to Overview the App's modules, entities and components
+ */
 export default class AdminPanel extends React.Component {
 
 	constructor(){
@@ -150,3 +153,16 @@ export default class AdminPanel extends React.Component {
 		);
 	}
 }
+
+AdminPanel.propTypes = {
+	getAdminData: PropTypes.func,
+	adminData   : PropTypes.shape({
+		api: PropTypes.shape({
+			version: PropTypes.string,
+			uptime : PropTypes.string
+		}),
+		db: PropTypes.shape({
+			status: PropTypes.string
+		})
+	})
+};

@@ -1,7 +1,12 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { Card, Icon, Button } from 'semantic-ui-react';
+import PropTypes from 'prop-types';
 
+/**
+ * Class CharacterCard
+ * Displays Characters in a Card View
+ */
 export default class CharacterCard extends React.Component {
 	componentDidMount() {
 		this.props.getProjectTitle(this.props.character.project);
@@ -37,3 +42,16 @@ export default class CharacterCard extends React.Component {
 		);
 	}
 }
+
+CharacterCard.propTypes = {
+	projectTitle   : PropTypes.string,
+	getProjectTitle: PropTypes.func,
+	character      : PropTypes.shape({
+		_id      : PropTypes.Number,
+		project  : PropTypes.Number,
+		desc     : PropTypes.string,
+		gender   : PropTypes.string,
+		birthday : PropTypes.string,
+		full_name: PropTypes.string
+	})
+};
