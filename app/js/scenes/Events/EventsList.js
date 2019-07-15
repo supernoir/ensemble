@@ -38,7 +38,7 @@ export default class EventsList extends React.Component {
 			? <Loader loading={this.props.loading} />
 			:	<Container>
 				<Breadcrumb>
-					<Breadcrumb.Section link>
+					<Breadcrumb.Section>
 						<Link to="/">{intl.get('component.dashboard')}</Link>
 					</Breadcrumb.Section>
 					<Breadcrumb.Divider />
@@ -78,9 +78,11 @@ export default class EventsList extends React.Component {
 EventsList.propTypes = {
 	loading  : PropTypes.bool,
 	getEvents: PropTypes.func,
-	events   : PropTypes.shape({
-		timestamp: PropTypes.timestamp,
-		action   : PropTypes.string,
-		ref      : PropTypes.string
-	})
+	events   : PropTypes.arrayOf(
+		PropTypes.shape({
+			timestamp: PropTypes.timestamp,
+			action   : PropTypes.string,
+			ref      : PropTypes.string
+		})
+	)
 };

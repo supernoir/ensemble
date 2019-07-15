@@ -2,7 +2,7 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import intl from 'react-intl-universal';
 import PropTypes from 'prop-types';
-import { Container, Breadcrumb, Segment, Header, Card, Divider, Button, Label, Tab, Grid } from 'semantic-ui-react';
+import { Container, Breadcrumb, Segment, Header, Card, Divider, Button, Label, Tab, Grid, Icon } from 'semantic-ui-react';
 import Loader from '../../basics/Loader';
 import DeleteModal from '../../basics/DeleteModal';
 import { projectStatus } from '../../constants/projectStatus';
@@ -65,9 +65,9 @@ export default class ProjectsList extends React.Component {
 		return (
 			<Card.Group>
 				{props.projects !== void 0
-					? props.projects.map(project => {
+					? props.projects.map((project, index) => {
 						return (
-							<Card>
+							<Card key={`${project}-${index}`}>
 								<Card.Content>
 									<Card.Header>
 										<Link to={`/project/${project._id}`}>{project.title}</Link>
@@ -281,7 +281,7 @@ export default class ProjectsList extends React.Component {
 					/>
 					: null}
 				<Breadcrumb>
-					<Breadcrumb.Section link>
+					<Breadcrumb.Section>
 						<Link to="/">{intl.get('component.dashboard')}</Link>
 					</Breadcrumb.Section>
 					<Breadcrumb.Divider />
@@ -296,8 +296,8 @@ export default class ProjectsList extends React.Component {
 						<Header.Subheader>{intl.get('desc.projects')}</Header.Subheader>
 					</Header>
 					<Divider />
-					<Button icon="add">
-						<Link to="/addproject">{intl.get('project.action-add')}</Link>
+					<Button>
+						<Icon name='add'/> <Link to="/addproject">{intl.get('project.action-add')}</Link>
 					</Button>
 
 				</Segment>

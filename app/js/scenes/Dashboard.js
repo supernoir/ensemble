@@ -4,7 +4,12 @@ import intl from 'react-intl-universal';
 import moment from 'moment';
 import { Container, Segment, Header, Divider, Card, Feed } from 'semantic-ui-react';
 import Loader from '../basics/Loader';
+import PropTypes from 'prop-types';
 
+/**
+ * Class Dashboard
+ * Dashboard of the Ensemble App
+ */
 export default class Dashboard extends React.Component {
 	constructor() {
 		super();
@@ -28,6 +33,7 @@ export default class Dashboard extends React.Component {
 				return intl.get('event.action-deletecharacter', { ref: event.ref });
 			case 'delete_character':
 				return intl.get('event.action-deletecharacter', { ref: event.ref });
+			default: break;
 		}
 	};
 
@@ -52,7 +58,7 @@ export default class Dashboard extends React.Component {
 							header={intl.get('entity.projects')}
 							meta={intl.get('project.count-available', {
 								count: this.props.dashboardData ? this.props.dashboardData.projects : 0
-							 })}
+							})}
 						/>
 						<Card
 							onClick={() => this.props.history.push('/characters')}
@@ -68,9 +74,9 @@ export default class Dashboard extends React.Component {
 						<Divider />
 
 						{this.props.eventsData
-							? this.props.eventsData.map(event => {
+							? this.props.eventsData.map((event, index) => {
 								return (
-									<Feed>
+									<Feed key={`${event}-${index}`}>
 										<Feed.Event>
 											<Feed.Label image={'../../public/img/protouser.png'} />
 											<Feed.Content>
@@ -90,3 +96,16 @@ export default class Dashboard extends React.Component {
 			</Container>;
 	}
 }
+
+Dashboard.propTypes = {
+	loading         : PropTypes.bool,
+	history         : PropTypes.object,
+	getEvents       : PropTypes.func,
+	getDashboardData: PropTypes.func,
+	dashboardData   : PropTypes.any,
+	eventsData      : PropTypes.arrayOf(PropTypes.shape({
+		timestamp: PropTypes.string,
+		action   : PropTypes.string,
+		ref      : PropTypes.string
+	}))
+};

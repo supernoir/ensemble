@@ -11,7 +11,6 @@ if ('serviceWorker' in navigator) {
 	//.catch(console.error('An error occurred while registering the SW'));
 }
 
-import App from './App';
 import { Container } from 'semantic-ui-react';
 
 import { createStore } from 'redux';

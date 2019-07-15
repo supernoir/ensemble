@@ -1,7 +1,7 @@
 import React from 'react';
 import intl from 'react-intl-universal';
 import { Link } from 'react-router-dom';
-import { Container, Breadcrumb, Segment, Header, Card, Divider, Button } from 'semantic-ui-react';
+import { Container, Breadcrumb, Segment, Header, Card, Divider, Button, Icon } from 'semantic-ui-react';
 import CharacterCard from '../../basics/CharacterCard';
 import Loader from '../../basics/Loader';
 import PropTypes from 'prop-types';
@@ -24,7 +24,7 @@ export default class CharactersList extends React.Component {
 			? <Loader loading={this.props.loading} />
 			:	<Container>
 				<Breadcrumb>
-					<Breadcrumb.Section link>
+					<Breadcrumb.Section>
 						<Link to="/">{intl.get('component.dashboard')}</Link>
 					</Breadcrumb.Section>
 					<Breadcrumb.Divider />
@@ -39,8 +39,8 @@ export default class CharactersList extends React.Component {
 						<Header.Subheader>{intl.get('desc.characters')}</Header.Subheader>
 					</Header>
 					<Divider />
-					<Button icon="add">
-						<Link to="/addcharacter">{intl.get('character.action-add')}</Link>
+					<Button>
+						<Icon name={'add'}/> <Link to="/addcharacter">{intl.get('character.action-add')}</Link>
 					</Button>
 				</Segment>
 
@@ -66,9 +66,11 @@ CharactersList.propTypes = {
 	loading       : PropTypes.bool,
 	getCharacters : PropTypes.func,
 	getProjectById: PropTypes.func,
-	characters    : PropTypes.shape({
-		project: PropTypes.string,
-	}),
+	characters    : PropTypes.arrayOf(
+		PropTypes.shape({
+			project: PropTypes.string,
+		})
+	),
 	project: PropTypes.shape({
 		title: PropTypes.string
 	})

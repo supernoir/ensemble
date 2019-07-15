@@ -120,11 +120,11 @@ export default class EditCharacter extends React.Component {
 			? <Loader loading={this.props.loading} />
 			:	<Container>
 				<Breadcrumb>
-					<Breadcrumb.Section link>
+					<Breadcrumb.Section>
 						<Link to="/">{intl.get('component.dashboard')}</Link>
 					</Breadcrumb.Section>
 					<Breadcrumb.Divider />
-					<Breadcrumb.Section link>
+					<Breadcrumb.Section>
 						<Link to="/characters">{intl.get('entity.characters')}</Link>
 					</Breadcrumb.Section>
 					<Breadcrumb.Divider />
@@ -138,7 +138,7 @@ export default class EditCharacter extends React.Component {
 
 					<Form>
 						<Form.Field>
-							<label for="desc">{intl.get('character.label-desc')}</label>
+							<label htmlFor="desc">{intl.get('character.label-desc')}</label>
 							<input
 								onChange={evt => this.handleInput('desc', evt)}
 								defaultValue={this.props.character.desc}
@@ -148,7 +148,7 @@ export default class EditCharacter extends React.Component {
 							/>
 						</Form.Field>
 						<Form.Field>
-							<label for="firstname">{intl.get('character.label-firstname')}</label>
+							<label htmlFor="firstname">{intl.get('character.label-firstname')}</label>
 							<input
 								onChange={evt => this.handleInput('firstname', evt)}
 								defaultValue={this.props.character.first_name}
@@ -159,7 +159,7 @@ export default class EditCharacter extends React.Component {
 							/>
 						</Form.Field>
 						<Form.Field>
-							<label for="middlename">
+							<label htmlFor="middlename">
 								{intl.get('character.label-middlename')}
 							</label>
 							<input
@@ -171,7 +171,7 @@ export default class EditCharacter extends React.Component {
 							/>
 						</Form.Field>
 						<Form.Field>
-							<label for="lastname">
+							<label htmlFor="lastname">
 								{intl.get('character.label-lastname')}
 							</label>
 							<input
@@ -183,7 +183,7 @@ export default class EditCharacter extends React.Component {
 							/>
 						</Form.Field>
 						<Form.Field>
-							<label for="gender" className="col-sm-2 control-label">
+							<label htmlFor="gender" className="col-sm-2 control-label">
 								{intl.get('character.label-gender')}
 							</label>
 							<input
@@ -196,7 +196,7 @@ export default class EditCharacter extends React.Component {
 							/>
 						</Form.Field>
 						<Form.Field>
-							<label for="origin" className="col-sm-2 control-label">
+							<label htmlFor="origin" className="col-sm-2 control-label">
 								{intl.get('character.label-origin')}
 							</label>
 							<input
@@ -209,7 +209,7 @@ export default class EditCharacter extends React.Component {
 							/>
 						</Form.Field>
 						<Form.Field>
-							<label for="birthday" className="col-sm-2 control-label">
+							<label htmlFor="birthday" className="col-sm-2 control-label">
 								{intl.get('character.label-birthday')}
 							</label>
 							<input
@@ -225,7 +225,7 @@ export default class EditCharacter extends React.Component {
 						<Divider />
 
 						<Form.Field>
-							<label for="project" className="col-sm-2 control-label">
+							<label htmlFor="project" className="col-sm-2 control-label">
 								{intl.get('entity.project')}
 							</label>
 							<select onChange={evt => this.handleInput('project', evt)}>
@@ -233,7 +233,7 @@ export default class EditCharacter extends React.Component {
 									? this.props.projects.map(project => {
 										return (
 											<option
-												selected={this.props.character.project === project.id}
+												defaultValue={this.props.character.project === project.id}
 												value={project._id}
 												key={`charoption-${project._id}`}>
 												{project.title}
@@ -267,6 +267,6 @@ EditCharacter.propTypes = {
 		gender     : PropTypes.string,
 		birthday   : PropTypes.string,
 		origin     : PropTypes.string,
-		project    : PropTypes.number
+		project    : PropTypes.string
 	})
 };

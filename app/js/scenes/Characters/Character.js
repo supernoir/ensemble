@@ -25,11 +25,11 @@ export default class Character extends React.Component {
 			? <Loader loading={this.props.loading} />
 			:	<Container>
 				<Breadcrumb>
-					<Breadcrumb.Section link>
+					<Breadcrumb.Section>
 						<Link to="/">{intl.get('component.dashboard')}</Link>
 					</Breadcrumb.Section>
 					<Breadcrumb.Divider />
-					<Breadcrumb.Section link>
+					<Breadcrumb.Section>
 						<Link to="/characters">{intl.get('entity.characters')}</Link>
 					</Breadcrumb.Section>
 					<Breadcrumb.Divider />

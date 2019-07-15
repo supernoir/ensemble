@@ -78,8 +78,8 @@ export default class AdminPanel extends React.Component {
 				}
 
 				{this.props.adminData.api
-					? this.props.adminData.api.map(entry => {
-						return <Segment>
+					? this.props.adminData.api.map((entry, index) => {
+						return <Segment key={`${entry}-${index}`}>
 							<Header as="h3">
 								{'API'}
 							</Header>
@@ -123,8 +123,8 @@ export default class AdminPanel extends React.Component {
 				}
 
 				{this.props.adminData.db
-					? this.props.adminData.db.map(entry => {
-						return <Segment>
+					? this.props.adminData.db.map((entry, index) => {
+						return <Segment key={`${entry}-${index}`}>
 							<Header as="h3">
 								{'Database'}
 							</Header>
@@ -157,12 +157,16 @@ export default class AdminPanel extends React.Component {
 AdminPanel.propTypes = {
 	getAdminData: PropTypes.func,
 	adminData   : PropTypes.shape({
-		api: PropTypes.shape({
-			version: PropTypes.string,
-			uptime : PropTypes.string
-		}),
-		db: PropTypes.shape({
-			status: PropTypes.string
-		})
+		api: PropTypes.arrayOf(
+			PropTypes.shape({
+				version: PropTypes.string,
+				uptime : PropTypes.number
+			})
+		),
+		db: PropTypes.arrayOf(
+			PropTypes.shape({
+				status: PropTypes.string
+			})
+		)
 	})
 };

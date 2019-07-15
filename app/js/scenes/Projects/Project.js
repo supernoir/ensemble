@@ -19,11 +19,11 @@ export default class Project extends React.Component {
 			? <Loader loading={this.props.loading} />
 			: <Container>
 				<Breadcrumb>
-					<Breadcrumb.Section link>
+					<Breadcrumb.Section>
 						<Link to="/">{intl.get('component.dashboard')}</Link>
 					</Breadcrumb.Section>
 					<Breadcrumb.Divider />
-					<Breadcrumb.Section link>
+					<Breadcrumb.Section>
 						<Link to="/projects">{intl.get('entity.projects')}</Link>
 					</Breadcrumb.Section>
 					<Breadcrumb.Divider />
@@ -78,7 +78,7 @@ Project.propTypes = {
 	getProjectById: PropTypes.func,
 	match         : PropTypes.object,
 	project       : PropTypes.shape({
-		_id   : PropTypes.number,
+		_id   : PropTypes.string,
 		tags  : PropTypes.array,
 		title : PropTypes.string,
 		series: PropTypes.string,

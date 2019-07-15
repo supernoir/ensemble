@@ -103,11 +103,11 @@ export default class NewCharacter extends React.Component {
 			? <Loader loading={this.props.loading} />
 			:	<Container>
 				<Breadcrumb>
-					<Breadcrumb.Section link>
+					<Breadcrumb.Section>
 						<Link to="/">{intl.get('component.dashboard')}</Link>
 					</Breadcrumb.Section>
 					<Breadcrumb.Divider />
-					<Breadcrumb.Section link>
+					<Breadcrumb.Section>
 						<Link to="/characters">{intl.get('entity.characters')}</Link>
 					</Breadcrumb.Section>
 					<Breadcrumb.Divider />
@@ -125,35 +125,35 @@ export default class NewCharacter extends React.Component {
 
 					<Form>
 						<Form.Field>
-							<label for="desc">
+							<label htmlFor="desc">
 								{intl.get('character.label-desc')}
 							</label>
 							<input onChange={evt => this.handleInput('desc', evt)}
 								type="text" id="desc" placeholder="A most loveable person" />
 						</Form.Field>
 						<Form.Field>
-							<label for="firstname">
+							<label htmlFor="firstname">
 								{intl.get('character.label-firstname')}
 							</label>
 							<input onChange={evt => this.handleInput('firstname', evt)}
 								type="text" id="firstname" placeholder="Jane" required />
 						</Form.Field>
 						<Form.Field>
-							<label for="middlename">
+							<label htmlFor="middlename">
 								{intl.get('character.label-middlename')}
 							</label>
 							<input onChange={evt => this.handleInput('middlename', evt)}
 								type="text" id="middlename" placeholder="Agatha" />
 						</Form.Field>
 						<Form.Field>
-							<label for="lastname">
+							<label htmlFor="lastname">
 								{intl.get('character.label-lastname')}
 							</label>
 							<input onChange={evt => this.handleInput('lastname', evt)}
 								type="text" id="lastname" placeholder="Doe" />
 						</Form.Field>
 						<Form.Field>
-							<label for="gender" className="col-sm-2 control-label">
+							<label htmlFor="gender" className="col-sm-2 control-label">
 								{intl.get('character.label-gender')}
 							</label>
 							<input onChange={evt => this.handleInput('gender', evt)}
@@ -161,14 +161,14 @@ export default class NewCharacter extends React.Component {
 								placeholder="Non-binary" />
 						</Form.Field>
 						<Form.Field>
-							<label for="origin" className="col-sm-2 control-label">
+							<label htmlFor="origin" className="col-sm-2 control-label">
 								{intl.get('character.label-origin')}
 							</label>
 							<input onChange={evt => this.handleInput('origin', evt)}
 								type="text" className="form-control" id="origin" placeholder="Wakanda" />
 						</Form.Field>
 						<Form.Field>
-							<label for="birthday" className="col-sm-2 control-label">
+							<label htmlFor="birthday" className="col-sm-2 control-label">
 								{intl.get('character.label-birthday')}
 							</label>
 							<input onChange={evt => this.handleInput('birthday', evt)}
@@ -178,7 +178,7 @@ export default class NewCharacter extends React.Component {
 						<Divider />
 
 						<Form.Field>
-							<label for="project" className="col-sm-2 control-label">
+							<label htmlFor="project" className="col-sm-2 control-label">
 								{intl.get('entity.project')}
 							</label>
 							<select onChange={evt => this.handleInput('project', evt)}>
@@ -206,9 +206,11 @@ NewCharacter.propTypes = {
 	addCharacter: PropTypes.func,
 	addEvent    : PropTypes.func,
 	getProjects : PropTypes.func,
-	projects    : PropTypes.shape({
-		_id  : PropTypes.number,
-		title: PropTypes.string
-	}),
+	projects    : PropTypes.arrayOf(
+		PropTypes.shape({
+			_id  : PropTypes.string,
+			title: PropTypes.string
+		})
+	),
 	history: PropTypes.object,
 };

@@ -34,9 +34,11 @@ export default class NotificationCenter extends React.Component {
 }
 
 NotificationCenter.propTypes = {
-	messages: PropTypes.shape({
-		type       : PropTypes.string,
-		content    : PropTypes.string,
-		description: PropTypes.string
-	})
+	messages: PropTypes.arrayOf(
+		PropTypes.objectOf({
+			type       : PropTypes.string,
+			content    : PropTypes.string,
+			description: PropTypes.string,
+		})
+	)
 };
