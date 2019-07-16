@@ -5,6 +5,7 @@ import { Container, Breadcrumb, Segment, Header, Table, Divider, Button, Icon, L
 import Loader from '../../basics/Loader';
 import PropTypes from 'prop-types';
 import { projectStatus, projectStatusColormapping } from '../../constants/projectStatus';
+import { genreData } from '../../data/genres/genres';
 
 /**
  * Class Project
@@ -108,11 +109,15 @@ render() {
 				}
 
 				{
-					this.props.project.genre !== void 0
+					this.props.project.genres !== void 0
 						?	<Segment>
 							<Header as="h4">{intl.get('project.label-genres')}</Header>
-							{this.props.project.genre.map((genre, index) => {
-								return <Label key={`${genre}-${index}`}>{genre}</Label>;
+							{this.props.project.genres.map((genre, index) => {
+								return <Label key={`${genre}-${index}`}>
+									{
+									 genre
+									}
+								</Label>;
 							})}
 						</Segment>
 						: null

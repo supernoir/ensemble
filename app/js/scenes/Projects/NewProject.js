@@ -1,12 +1,13 @@
 import React from 'react';
 import intl from 'react-intl-universal';
 import { Link } from 'react-router-dom';
-import { Container, Segment, Form, Button, Divider, Header, Breadcrumb } from 'semantic-ui-react';
+import { Container, Segment, Form, Button, Divider, Header, Breadcrumb, Dropdown } from 'semantic-ui-react';
 import Loader from '../../basics/Loader';
 import { tagTypes } from '../../constants/tagTypes';
 import { projectTypes } from '../../constants/projectTypes';
 import { projectStatus } from '../../constants/projectStatus';
 import PropTypes from 'prop-types';
+import { genreData } from './../../data/genres/genres.js';
 
 /**
  * Class NewProject
@@ -26,7 +27,7 @@ export default class NewProject extends React.Component {
 		};
 	}
 
-	handleInput = (source, evt) => {
+	handleInput = (source, evt, val) => {
 		switch (source) {
 			case 'type':
 				this.setState({ type: evt.currentTarget.value });
@@ -38,7 +39,7 @@ export default class NewProject extends React.Component {
 				this.setState({ series: evt.currentTarget.value });
 				break;
 			case 'genres':
-				this.setState({ genres: evt.currentTarget.value.split(',').map(item => item.trim()) });
+				this.setState({ genres: val });
 				break;
 			case 'desc':
 				this.setState({ desc: evt.currentTarget.value });
@@ -164,8 +165,17 @@ export default class NewProject extends React.Component {
 						</Form.Field>
 						<Form.Field>
 							<label htmlFor="project" className="col-sm-2 control-label">{intl.get('project.label-genres')}</label>
-							<input onChange={evt => this.handleInput('genres', evt)}
-								type="text" className="form-control" id="genres" placeholder="Crime, Suspense" />
+
+							<Dropdown
+								placeholder='Genres'
+								fluid
+								multiple
+								search
+								selection
+								onChange={(evt, { value }) => this.handleInput('genres', evt, value)}
+								options={genreData}
+							/>
+
 						</Form.Field>
 						<Form.Field>
 							<label htmlFor="project" className="col-sm-2 control-label">{intl.get('project.label-series')}</label>
