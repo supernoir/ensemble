@@ -52,17 +52,23 @@ app.use(morgan(loggingFormat, { stream: accessLogStream }));
  */
 const Users = mongoose.model('Users', {
 	// The username given by the user
-	username : String,
+	username   : String,
+	// The permissions the user has
+	permissions: Array,
+	// THe entities the user can access
+	entities   : Array,
 	// The fullname optionally provided
-	full_name: String,
+	full_name  : String,
 	// The email address to contact the user
-	email    : String,
+	email      : String,
 	// The creation date of the user account
-	createdAt: String,
+	createdAt  : String,
 	// The projects associated with the user
-	projects : Array,
+	projects   : Array,
+	// The characters associated with the user
+	characters : Array,
 	// Reference to the Role Model
-	role     : String
+	role       : String
 });
 
 /**
@@ -491,6 +497,17 @@ const getDbReadyState = () => {
 	return status;
 };
 
+const getBackupDirs = () => {
+	let source = '../db_backups/';
+	const dirs = p => {
+		return fs.readdirSync(p)
+			.filter(f => {
+				return fs.statSync(path.join(p, f)).isDirectory();
+			});
+	};
+	return dirs(source);
+};
+
 app.get('/admin', (req, res) => {
 	res.json({
 		api: [
@@ -503,8 +520,9 @@ app.get('/admin', (req, res) => {
 		],
 		db: [
 			{
-				name  : mongoose.connection.db.databaseName,
-				status: getDbReadyState()
+				name   : mongoose.connection.db.databaseName,
+				status : getDbReadyState(),
+				backups: getBackupDirs()
 			}
 		]
 	});
