@@ -129,21 +129,23 @@ const Projects = mongoose.model('Projects', {
 	title        : String,
 	// The project status => statuses are saved in PROJECT_STATUS
 	status       : String,
-	// The author of the Project
-	author       : String,
+	// The authors of the Project
+	authors       : Array,
 	// Potential Collaborators on the project
 	collaborators: Array,
 	// If String given, Project will be grouped into the given series
 	// TODO: should be ref!
 	series       : String,
 	// The cast of characters associated with this project
-	cast         : String,
+	cast         : Array,
 	// A description for the project
 	desc         : String,
 	// The potential genre of the project
-	genre        : String,
+	genres        : Array,
 	// A set of tags to describe the given project
-	tags         : Array
+	tags         : Array,
+	// A set of texts compiled into the projects contents
+	content      : Array,
 });
 
 /**
@@ -203,13 +205,13 @@ app.post('/project', (req, res) => {
 	project.type = req.body.type;
 	project.title = req.body.title;
 	project.status = req.body.status;
-	project.author = req.body.author;
+	project.authors = req.body.authors;
 	project.collaborators = req.body.collaborators;
 	//TODO: Series should be a ref!
 	project.series = req.body.series;
 	project.cast = req.body.cast;
 	project.desc = req.body.desc;
-	project.genre = req.body.genre;
+	project.genres = req.body.genres;
 	project.read = req.body.read;
 	project.tags = req.body.tags;
 
@@ -230,12 +232,12 @@ app.put('/project/:id', (req, res) => {
 	editedProject.type = req.body.type;
 	editedProject.title = req.body.title;
 	editedProject.status = req.body.status;
-	editedProject.author = req.body.author;
+	editedProject.authors = req.body.authors;
 	editedProject.collaborators = req.body.collaborators;
 	editedProject.series = req.body.series;
 	editedProject.cast = req.body.cast;
 	editedProject.desc = req.body.desc;
-	editedProject.genre = req.body.genre;
+	editedProject.genres = req.body.genres;
 	editedProject.tags = req.body.tags;
 
 	Projects.findByIdAndUpdate(req.params.id, editedProject, { upsert: true }, (error, project) => {
