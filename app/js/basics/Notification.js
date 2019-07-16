@@ -1,7 +1,12 @@
 import React from 'react';
 import { Message } from 'semantic-ui-react';
 import { notificationTypes } from '../constants/notificationTypes';
+import PropTypes from 'prop-types';
 
+/**
+ * Class Notification
+ * handles displaying notifications in the app
+ */
 export default class Notification extends React.Component {
 	constructor() {
 		super();
@@ -42,3 +47,9 @@ export default class Notification extends React.Component {
 		);
 	}
 }
+
+Notification.propTypes = {
+	type       : PropTypes.string,
+	content    : PropTypes.string,
+	description: PropTypes.string
+};

@@ -1,3 +1,6 @@
+/**
+ * Project Status Constant
+ */
 export const projectStatus = {
 	DRAFT      : 'draft',
 	IN_PROGRESS: 'inprogress',

@@ -3,9 +3,7 @@
 exports[`EventsList -- Snapshot Test 1`] = `
 <Container>
   <Breadcrumb>
-    <BreadcrumbSection
-      link={true}
-    >
+    <BreadcrumbSection>
       <Link
         replace={false}
         to="/"

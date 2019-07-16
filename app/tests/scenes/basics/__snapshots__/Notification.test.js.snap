@@ -1,0 +1,15 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Notification -- Snapshot Test 1`] = `
+<Message
+  className="error"
+  onDismiss={[Function]}
+>
+  <MessageHeader>
+    A test error occurred
+  </MessageHeader>
+  <p>
+    Something went wrong
+  </p>
+</Message>
+`;

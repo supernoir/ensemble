@@ -4,7 +4,12 @@ import intl from 'react-intl-universal';
 import { Container, Breadcrumb, Segment, Header, Feed, Divider } from 'semantic-ui-react';
 import moment from 'moment';
 import Loader from '../../basics/Loader';
+import PropTypes from 'prop-types';
 
+/**
+ * Class EventsList
+ * List of events
+ */
 export default class EventsList extends React.Component {
 	parseEvent = event => {
 		switch (event.action) {
@@ -20,6 +25,7 @@ export default class EventsList extends React.Component {
 				return intl.get('event.action-deletecharacter', { ref: event.ref });
 			case 'delete_character':
 				return intl.get('event.action-deletecharacter', { ref: event.ref });
+			default: break;
 		}
 	};
 
@@ -32,7 +38,7 @@ export default class EventsList extends React.Component {
 			? <Loader loading={this.props.loading} />
 			:	<Container>
 				<Breadcrumb>
-					<Breadcrumb.Section link>
+					<Breadcrumb.Section>
 						<Link to="/">{intl.get('component.dashboard')}</Link>
 					</Breadcrumb.Section>
 					<Breadcrumb.Divider />
@@ -51,9 +57,9 @@ export default class EventsList extends React.Component {
 				<Divider />
 
 				{this.props.events
-					? this.props.events.map(event => {
+					? this.props.events.map((event, index) => {
 						return (
-							<Feed>
+							<Feed key={`feed-${index}`}>
 								<Feed.Event>
 									<Feed.Label image={'../../public/img/protouser.png'} />
 									<Feed.Content>
@@ -68,3 +74,15 @@ export default class EventsList extends React.Component {
 			</Container>;
 	}
 }
+
+EventsList.propTypes = {
+	loading  : PropTypes.bool,
+	getEvents: PropTypes.func,
+	events   : PropTypes.arrayOf(
+		PropTypes.shape({
+			timestamp: PropTypes.timestamp,
+			action   : PropTypes.string,
+			ref      : PropTypes.string
+		})
+	)
+};

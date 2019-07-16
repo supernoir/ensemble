@@ -3,11 +3,13 @@ import { Link } from 'react-router-dom';
 import intl from 'react-intl-universal';
 import { Container, Breadcrumb, Segment, Header, Table, Divider, Button, Icon, Label } from 'semantic-ui-react';
 import Loader from '../../basics/Loader';
+import PropTypes from 'prop-types';
 
 /**
- * Class EditProject
+ * Class Project
+ * Single Project view
  */
-export default class EditProject extends React.Component {
+export default class Project extends React.Component {
 	componentDidMount() {
 		this.props.getProjectById(this.props.match.params.id);
 	}
@@ -17,11 +19,11 @@ export default class EditProject extends React.Component {
 			? <Loader loading={this.props.loading} />
 			: <Container>
 				<Breadcrumb>
-					<Breadcrumb.Section link>
+					<Breadcrumb.Section>
 						<Link to="/">{intl.get('component.dashboard')}</Link>
 					</Breadcrumb.Section>
 					<Breadcrumb.Divider />
-					<Breadcrumb.Section link>
+					<Breadcrumb.Section>
 						<Link to="/projects">{intl.get('entity.projects')}</Link>
 					</Breadcrumb.Section>
 					<Breadcrumb.Divider />
@@ -70,3 +72,16 @@ export default class EditProject extends React.Component {
 			</Container>;
 	}
 }
+
+Project.propTypes = {
+	loading       : PropTypes.bool,
+	getProjectById: PropTypes.func,
+	match         : PropTypes.object,
+	project       : PropTypes.shape({
+		_id   : PropTypes.string,
+		tags  : PropTypes.array,
+		title : PropTypes.string,
+		series: PropTypes.string,
+		desc  : PropTypes.string
+	})
+};

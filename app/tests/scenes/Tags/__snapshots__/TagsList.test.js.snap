@@ -1,0 +1,36 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`TagsList -- Snapshot Test 1`] = `
+<Container>
+  <Breadcrumb>
+    <BreadcrumbSection>
+      <Link
+        replace={false}
+        to="/"
+      />
+    </BreadcrumbSection>
+    <BreadcrumbDivider />
+    <BreadcrumbSection
+      active={true}
+    >
+      <Link
+        replace={false}
+        to="/projects"
+      />
+    </BreadcrumbSection>
+  </Breadcrumb>
+  <Segment>
+    <Header
+      as="h2"
+    >
+      <HeaderSubheader />
+    </Header>
+  </Segment>
+  <Divider />
+  <Segment>
+    <LabelGroup
+      tag={true}
+    />
+  </Segment>
+</Container>
+`;

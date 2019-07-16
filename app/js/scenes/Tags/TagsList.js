@@ -3,7 +3,12 @@ import { Link } from 'react-router-dom';
 import intl from 'react-intl-universal';
 import { Container, Breadcrumb, Segment, Header, Divider, Label } from 'semantic-ui-react';
 import Loader from '../../basics/Loader';
+import PropTypes from 'prop-types';
 
+/**
+ * Class TagsList
+ * A list of tags
+ */
 export default class TagsList extends React.Component {
 
 	componentDidMount() {
@@ -15,7 +20,7 @@ export default class TagsList extends React.Component {
 			? <Loader loading={this.props.loading} />
 			: <Container>
 				<Breadcrumb>
-					<Breadcrumb.Section link>
+					<Breadcrumb.Section>
 						<Link to="/">{intl.get('component.dashboard')}</Link>
 					</Breadcrumb.Section>
 					<Breadcrumb.Divider />
@@ -45,3 +50,12 @@ export default class TagsList extends React.Component {
 			</Container>;
 	}
 }
+
+TagsList.propTypes = {
+	loading: PropTypes.bool,
+	tags   : PropTypes.arrayOf(
+		PropTypes.shape({
+			name: PropTypes.string
+		})
+	)
+};

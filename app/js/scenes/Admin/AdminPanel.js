@@ -1,7 +1,11 @@
 import React from 'react';
-import intl from 'react-intl-universal';
-import { Container, Breadcrumb, Segment, Header, Divider, Table, List } from 'semantic-ui-react';
-
+import { Container, Breadcrumb, Segment, Header, Divider, Table, List, Button, Label, Icon } from 'semantic-ui-react';
+import PropTypes from 'prop-types';
+import { Link } from 'react-router-dom';
+/**
+ * Class AdminPanel
+ * Administrative Panel to Overview the App's modules, entities and components
+ */
 export default class AdminPanel extends React.Component {
 
 	constructor(){
@@ -75,8 +79,8 @@ export default class AdminPanel extends React.Component {
 				}
 
 				{this.props.adminData.api
-					? this.props.adminData.api.map(entry => {
-						return <Segment>
+					? this.props.adminData.api.map((entry, index) => {
+						return <Segment key={`${entry}-${index}`}>
 							<Header as="h3">
 								{'API'}
 							</Header>
@@ -120,8 +124,8 @@ export default class AdminPanel extends React.Component {
 				}
 
 				{this.props.adminData.db
-					? this.props.adminData.db.map(entry => {
-						return <Segment>
+					? this.props.adminData.db.map((entry, index) => {
+						return <Segment key={`${entry}-${index}`}>
 							<Header as="h3">
 								{'Database'}
 							</Header>
@@ -139,6 +143,26 @@ export default class AdminPanel extends React.Component {
 										</Table.Cell>
 										<Table.Cell>{entry.status}</Table.Cell>
 									</Table.Row>
+									<Table.Row>
+										<Table.Cell collapsing>
+											{'DB Backups'}
+										</Table.Cell>
+										<Table.Cell>
+											<List divided verticalAlign='middle'>
+												{entry.backups.map((backup, index) => {
+													return <List.Item key={`${backup}-${index}`}>
+														<List.Content floated={'right'}>
+															<Link to="/admin">{'Restore'}</Link>
+														</List.Content>
+														<List.Content>
+															<List.Header><Icon name="folder"/> {backup}
+															</List.Header>
+														</List.Content>
+													</List.Item>;
+												})}
+											</List>
+										</Table.Cell>
+									</Table.Row>
 								</Table.Body>
 							</Table>
 						</Segment>;
@@ -150,3 +174,20 @@ export default class AdminPanel extends React.Component {
 		);
 	}
 }
+
+AdminPanel.propTypes = {
+	getAdminData: PropTypes.func,
+	adminData   : PropTypes.shape({
+		api: PropTypes.arrayOf(
+			PropTypes.shape({
+				version: PropTypes.string,
+				uptime : PropTypes.number
+			})
+		),
+		db: PropTypes.arrayOf(
+			PropTypes.shape({
+				status: PropTypes.string
+			})
+		)
+	})
+};

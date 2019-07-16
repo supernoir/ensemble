@@ -6,9 +6,11 @@ import Loader from '../../basics/Loader';
 import { tagTypes } from '../../constants/tagTypes';
 import { projectTypes } from '../../constants/projectTypes';
 import { projectStatus } from '../../constants/projectStatus';
+import PropTypes from 'prop-types';
 
 /**
  * Class EditProject
+ * View for Editing a single project
  */
 export default class EditProject extends React.Component {
 	constructor() {
@@ -121,11 +123,11 @@ export default class EditProject extends React.Component {
 			? <Loader loading={this.props.loading} />
 			: <Container>
 				<Breadcrumb>
-					<Breadcrumb.Section link>
+					<Breadcrumb.Section>
 						<Link to="/">{intl.get('component.dashboard')}</Link>
 					</Breadcrumb.Section>
 					<Breadcrumb.Divider />
-					<Breadcrumb.Section link>
+					<Breadcrumb.Section>
 						<Link to="/projects">{intl.get('entity.projects')}</Link>
 					</Breadcrumb.Section>
 					<Breadcrumb.Divider />
@@ -171,7 +173,7 @@ export default class EditProject extends React.Component {
 							</select>
 						</Form.Field>
 						<Form.Field>
-							<label for="project" className="col-sm-2 control-label">{intl.get('project.label-title')}</label>
+							<label htmlFor="project" className="col-sm-2 control-label">{intl.get('project.label-title')}</label>
 							<input
 								onChange={evt => this.handleInput('title', evt)}
 								type="text"
@@ -183,7 +185,7 @@ export default class EditProject extends React.Component {
 							/>
 						</Form.Field>
 						<Form.Field>
-							<label for="project" className="col-sm-2 control-label">{intl.get('project.label-genre')}</label>
+							<label htmlFor="project" className="col-sm-2 control-label">{intl.get('project.label-genre')}</label>
 							<input
 								onChange={evt => this.handleInput('genre', evt)}
 								type="text"
@@ -194,7 +196,7 @@ export default class EditProject extends React.Component {
 							/>
 						</Form.Field>
 						<Form.Field>
-							<label for="project" className="col-sm-2 control-label">{intl.get('project.label-series')}</label>
+							<label htmlFor="project" className="col-sm-2 control-label">{intl.get('project.label-series')}</label>
 							<input
 								onChange={evt => this.handleInput('series', evt)}
 								type="text"
@@ -205,7 +207,7 @@ export default class EditProject extends React.Component {
 							/>
 						</Form.Field>
 						<Form.Field>
-							<label for="project" className="col-sm-2 control-label">{intl.get('project.label-cast')}</label>
+							<label htmlFor="project" className="col-sm-2 control-label">{intl.get('project.label-cast')}</label>
 							<input
 								onChange={evt => this.handleInput('cast', evt)}
 								type="text"
@@ -216,7 +218,7 @@ export default class EditProject extends React.Component {
 							/>
 						</Form.Field>
 						<Form.Field>
-							<label for="project" className="col-sm-2 control-label">{intl.get('project.label-description')}</label>
+							<label htmlFor="project" className="col-sm-2 control-label">{intl.get('project.label-description')}</label>
 							<input
 								onChange={evt => this.handleInput('desc', evt)}
 								type="text"
@@ -228,7 +230,7 @@ export default class EditProject extends React.Component {
 							/>
 						</Form.Field>
 						<Form.Field>
-							<label for="project" className="col-sm-2 control-label">{intl.get('project.label-tags')}</label>
+							<label htmlFor="project" className="col-sm-2 control-label">{intl.get('project.label-tags')}</label>
 							<input
 								onChange={evt => this.handleInput('tags', evt)}
 								type="text"
@@ -249,3 +251,22 @@ export default class EditProject extends React.Component {
 			</Container>;
 	}
 }
+
+EditProject.propTypes = {
+	loading    : PropTypes.bool,
+	history    : PropTypes.object,
+	match      : PropTypes.object,
+	editProject: PropTypes.func,
+	addTag     : PropTypes.func,
+	project    : PropTypes.shape({
+		type  : PropTypes.string,
+		status: PropTypes.string,
+		title : PropTypes.string,
+		genre : PropTypes.genre,
+		series: PropTypes.series,
+		desc  : PropTypes.desc,
+		cast  : PropTypes.cast,
+		tags  : PropTypes.array
+	})
+
+};

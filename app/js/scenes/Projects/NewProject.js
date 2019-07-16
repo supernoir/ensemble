@@ -1,12 +1,17 @@
 import React from 'react';
 import intl from 'react-intl-universal';
 import { Link } from 'react-router-dom';
-import { Container, Segment, Form, Button, Divider, Header, Breadcrumb, Dropdown } from 'semantic-ui-react';
+import { Container, Segment, Form, Button, Divider, Header, Breadcrumb } from 'semantic-ui-react';
 import Loader from '../../basics/Loader';
 import { tagTypes } from '../../constants/tagTypes';
 import { projectTypes } from '../../constants/projectTypes';
 import { projectStatus } from '../../constants/projectStatus';
+import PropTypes from 'prop-types';
 
+/**
+ * Class NewProject
+ * Form page for new projects
+ */
 export default class NewProject extends React.Component {
 	constructor() {
 		super();
@@ -107,11 +112,11 @@ export default class NewProject extends React.Component {
 			? <Loader loading={this.props.loading} />
 			:	<Container>
 				<Breadcrumb>
-					<Breadcrumb.Section link>
+					<Breadcrumb.Section>
 						<Link to="/">{intl.get('component.dashboard')}</Link>
 					</Breadcrumb.Section>
 					<Breadcrumb.Divider />
-					<Breadcrumb.Section link>
+					<Breadcrumb.Section>
 						<Link to="/projects">{intl.get('entity.projects')}</Link>
 					</Breadcrumb.Section>
 					<Breadcrumb.Divider />
@@ -147,7 +152,7 @@ export default class NewProject extends React.Component {
 							</select>
 						</Form.Field>
 						<Form.Field>
-							<label for="project" className="col-sm-2 control-label">{intl.get('project.label-title')}</label>
+							<label htmlFor="project" className="col-sm-2 control-label">{intl.get('project.label-title')}</label>
 							<input
 								onChange={evt => this.handleInput('title', evt)}
 								type="text"
@@ -158,11 +163,12 @@ export default class NewProject extends React.Component {
 							/>
 						</Form.Field>
 						<Form.Field>
-							<label for="project" className="col-sm-2 control-label">{intl.get('project.label-genre')}</label>
-							<input onChange={evt => this.handleInput('genre', evt)} type="text" className="form-control" id="genre" placeholder="Crime, Suspense" />
+							<label htmlFor="project" className="col-sm-2 control-label">{intl.get('project.label-genre')}</label>
+							<input onChange={evt => this.handleInput('genre', evt)}
+								type="text" className="form-control" id="genre" placeholder="Crime, Suspense" />
 						</Form.Field>
 						<Form.Field>
-							<label for="project" className="col-sm-2 control-label">{intl.get('project.label-series')}</label>
+							<label htmlFor="project" className="col-sm-2 control-label">{intl.get('project.label-series')}</label>
 							<input
 								onChange={evt => this.handleInput('series', evt)}
 								type="text"
@@ -172,7 +178,7 @@ export default class NewProject extends React.Component {
 							/>
 						</Form.Field>
 						<Form.Field>
-							<label for="project" className="col-sm-2 control-label">{intl.get('project.label-cast')}</label>
+							<label htmlFor="project" className="col-sm-2 control-label">{intl.get('project.label-cast')}</label>
 							<input
 								onChange={evt => this.handleInput('cast', evt)}
 								type="text"
@@ -182,7 +188,7 @@ export default class NewProject extends React.Component {
 							/>
 						</Form.Field>
 						<Form.Field>
-							<label for="project" className="col-sm-2 control-label">{intl.get('project.label-description')}</label>
+							<label htmlFor="project" className="col-sm-2 control-label">{intl.get('project.label-description')}</label>
 							<input
 								onChange={evt => this.handleInput('desc', evt)}
 								type="text"
@@ -193,7 +199,7 @@ export default class NewProject extends React.Component {
 							/>
 						</Form.Field>
 						<Form.Field>
-							<label for="project" className="col-sm-2 control-label">{intl.get('project.label-tags')}</label>
+							<label htmlFor="project" className="col-sm-2 control-label">{intl.get('project.label-tags')}</label>
 							<input onChange={evt => this.handleInput('tags', evt)} type="text" className="form-control" id="tags" placeholder="crime, noir" />
 						</Form.Field>
 
@@ -204,3 +210,11 @@ export default class NewProject extends React.Component {
 			</Container>;
 	}
 }
+
+NewProject.propTypes = {
+	loading   : PropTypes.bool,
+	addProject: PropTypes.func,
+	addTag    : PropTypes.func,
+	addEvent  : PropTypes.func,
+	history   : PropTypes.object
+};

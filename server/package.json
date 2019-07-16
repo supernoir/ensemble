@@ -12,12 +12,15 @@
     "body-parser": "^1.18.3",
     "connect": "^3.6.6",
     "cors": "^2.8.5",
-    "express": "^4.15.3",
+    "express": "^4.17.1",
     "express-router": "^0.0.1",
     "mongoose": "^4.10.6",
     "morgan": "^1.9.1"
   },
   "devDependencies": {
-    "nodemon": "^1.11.0"
+    "@types/node": "^12.6.2",
+    "nodemon": "^1.11.0",
+    "tslint": "^5.18.0",
+    "typescript": "^3.5.3"
   }
 }

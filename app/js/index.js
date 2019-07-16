@@ -11,7 +11,6 @@ if ('serviceWorker' in navigator) {
 	//.catch(console.error('An error occurred while registering the SW'));
 }
 
-import App from './App';
 import { Container } from 'semantic-ui-react';
 
 import { createStore } from 'redux';
@@ -21,6 +20,10 @@ import AppStoreContainer from './containers/AppStoreContainer';
 
 const store = createStore(rootReducer, window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__());
 
+/**
+ * Class Ensemble
+ * Root component
+ */
 export default class Ensemble extends React.Component {
 
 	render() {

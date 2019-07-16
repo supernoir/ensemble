@@ -3,7 +3,12 @@ import intl from 'react-intl-universal';
 import { Link } from 'react-router-dom';
 import { Container, Breadcrumb, Segment, Divider, Header, Button, Icon } from 'semantic-ui-react';
 import Loader from '../../basics/Loader';
+import PropTypes from 'prop-types';
 
+/**
+ * Class Character
+ * Single Character View
+ */
 export default class Character extends React.Component {
 	constructor(){
 		super();
@@ -20,11 +25,11 @@ export default class Character extends React.Component {
 			? <Loader loading={this.props.loading} />
 			:	<Container>
 				<Breadcrumb>
-					<Breadcrumb.Section link>
+					<Breadcrumb.Section>
 						<Link to="/">{intl.get('component.dashboard')}</Link>
 					</Breadcrumb.Section>
 					<Breadcrumb.Divider />
-					<Breadcrumb.Section link>
+					<Breadcrumb.Section>
 						<Link to="/characters">{intl.get('entity.characters')}</Link>
 					</Breadcrumb.Section>
 					<Breadcrumb.Divider />
@@ -45,12 +50,25 @@ export default class Character extends React.Component {
 
 					<Divider/>
 					<Button>
-						{intl.get('character.action-edit')}
+						<Link to={`/editcharacter/${this.props.character._id}`}>{intl.get('character.action-edit')}</Link>
 					</Button>
 					<Button>
-						{intl.get('character.action-delete')}
+						<Link to={`/deletecharacter/${this.props.character._id}`}>{intl.get('character.action-delete')}</Link>
 					</Button>
 				</Segment>
 			</Container>;
 	}
 }
+
+Character.propTypes = {
+	loading         : PropTypes.bool,
+	match           : PropTypes.object,
+	getCharacterById: PropTypes.func,
+	character       : PropTypes.shape({
+		first_name: PropTypes.string,
+		last_name : PropTypes.string,
+		gender    : PropTypes.string,
+		age       : PropTypes.string,
+		desc      : PropTypes.string
+	})
+};
