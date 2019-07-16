@@ -17,9 +17,9 @@ export default class NewProject extends React.Component {
 		super();
 		this.state = {
 			title       : '',
-			genre       : '',
+			genres       : [],
 			series      : '',
-			cast        : '',
+			cast        : [],
 			desc        : '',
 			tags        : [],
 			projectTypes: []
@@ -37,14 +37,14 @@ export default class NewProject extends React.Component {
 			case 'series':
 				this.setState({ series: evt.currentTarget.value });
 				break;
-			case 'genre':
-				this.setState({ genre: evt.currentTarget.value });
+			case 'genres':
+				this.setState({ genres: evt.currentTarget.value.split(',').map(item => item.trim()) });
 				break;
 			case 'desc':
 				this.setState({ desc: evt.currentTarget.value });
 				break;
 			case 'cast':
-				this.setState({ cast: evt.currentTarget.value });
+				this.setState({ cast: evt.currentTarget.value.split(',').map(item => item.trim()) });
 				break;
 			case 'tags':
 				this.setState({
@@ -63,7 +63,7 @@ export default class NewProject extends React.Component {
 			type  : this.state.type,
 			status: projectStatus.DRAFT,
 			title : this.state.title,
-			genre : this.state.genre,
+			genres: this.state.genres,
 			series: this.state.series,
 			desc  : this.state.desc,
 			cast  : this.state.cast,
@@ -163,9 +163,9 @@ export default class NewProject extends React.Component {
 							/>
 						</Form.Field>
 						<Form.Field>
-							<label htmlFor="project" className="col-sm-2 control-label">{intl.get('project.label-genre')}</label>
-							<input onChange={evt => this.handleInput('genre', evt)}
-								type="text" className="form-control" id="genre" placeholder="Crime, Suspense" />
+							<label htmlFor="project" className="col-sm-2 control-label">{intl.get('project.label-genres')}</label>
+							<input onChange={evt => this.handleInput('genres', evt)}
+								type="text" className="form-control" id="genres" placeholder="Crime, Suspense" />
 						</Form.Field>
 						<Form.Field>
 							<label htmlFor="project" className="col-sm-2 control-label">{intl.get('project.label-series')}</label>

@@ -249,7 +249,7 @@ app.put('/project/:id', (req, res) => {
 	});
 });
 
-app.delete('/project', (req, res) => {
+app.delete('/project/:id', (req, res) => {
 	Projects.findByIdAndRemove(req.params.id, (error, project) => {
 		if (error) res.send(error);
 		res.json({ message: 'Project deleted!', data: project });

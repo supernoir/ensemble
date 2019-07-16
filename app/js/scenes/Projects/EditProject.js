@@ -18,9 +18,9 @@ export default class EditProject extends React.Component {
 		this.state = {
 			title        : '',
 			status       : '',
-			genre        : '',
+			genres        : [],
 			series       : '',
-			cast         : '',
+			cast         : [],
 			desc         : '',
 			tags         : [],
 			projectTypes : [],
@@ -43,14 +43,14 @@ export default class EditProject extends React.Component {
 			case 'series':
 				this.setState({ series: evt.currentTarget.value });
 				break;
-			case 'genre':
-				this.setState({ genre: evt.currentTarget.value });
+			case 'genres':
+				this.setState({ genres:  evt.currentTarget.value.split(',').map(item => item.trim()) });
 				break;
 			case 'desc':
 				this.setState({ desc: evt.currentTarget.value });
 				break;
 			case 'cast':
-				this.setState({ cast: evt.currentTarget.value });
+				this.setState({ cast:  evt.currentTarget.value.split(',').map(item => item.trim()) });
 				break;
 			case 'tags':
 				this.setState({
@@ -69,7 +69,7 @@ export default class EditProject extends React.Component {
 			type  : this.state.type || this.props.project.type,
 			status: this.state.status || this.props.project.status || projectStatus.DRAFT,
 			title : this.state.title || this.props.project.title,
-			genre : this.state.genre || this.props.project.genre,
+			genres: this.state.genres || this.props.project.genres,
 			series: this.state.series || this.props.project.series,
 			desc  : this.state.desc || this.props.project.desc,
 			cast  : this.state.cast || this.props.project.cast,
@@ -185,14 +185,14 @@ export default class EditProject extends React.Component {
 							/>
 						</Form.Field>
 						<Form.Field>
-							<label htmlFor="project" className="col-sm-2 control-label">{intl.get('project.label-genre')}</label>
+							<label htmlFor="project" className="col-sm-2 control-label">{intl.get('project.label-genres')}</label>
 							<input
-								onChange={evt => this.handleInput('genre', evt)}
+								onChange={evt => this.handleInput('genres', evt)}
 								type="text"
 								className="form-control"
-								id="genre"
+								id="genres"
 								placeholder="Crime, Suspense"
-								defaultValue={this.props.project.genre}
+								defaultValue={this.props.project.genres !== void 0 ? this.props.project.genres.join(', ') : ''}
 							/>
 						</Form.Field>
 						<Form.Field>
@@ -214,7 +214,7 @@ export default class EditProject extends React.Component {
 								className="form-control"
 								id="cast"
 								placeholder="Sherlock Holmes, James Watson"
-								defaultValue={this.props.project.cast}
+								defaultValue={this.props.project.cast !== void 0 ? this.props.project.cast.join(', ') : ''}
 							/>
 						</Form.Field>
 						<Form.Field>
@@ -262,10 +262,10 @@ EditProject.propTypes = {
 		type  : PropTypes.string,
 		status: PropTypes.string,
 		title : PropTypes.string,
-		genre : PropTypes.genre,
-		series: PropTypes.series,
-		desc  : PropTypes.desc,
-		cast  : PropTypes.cast,
+		genres: PropTypes.array,
+		series: PropTypes.string,
+		desc  : PropTypes.string,
+		cast  : PropTypes.array,
 		tags  : PropTypes.array
 	})
 
