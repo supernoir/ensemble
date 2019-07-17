@@ -5,15 +5,32 @@ import { Container, Breadcrumb, Segment, Header, Table, Divider, Button, Icon, L
 import Loader from '../../basics/Loader';
 import PropTypes from 'prop-types';
 import { projectStatus, projectStatusColormapping } from '../../constants/projectStatus';
-import { genreData } from '../../data/genres/genres';
-
+import DeleteModal from './../../basics/DeleteModal';
 /**
  * Class Project
  * Single Project view
  */
 export default class Project extends React.Component {
+	constructor(){
+		super();
+		this.state = {
+			showDeleteModal: false,
+			projectId      : null
+		};
+	}
 	componentDidMount() {
 		this.props.getProjectById(this.props.match.params.id);
+	}
+
+	/**
+	 * toggleDeleteModal method
+	 * toggles showing/hiding the modal
+	 */
+	toggleDeleteModal = id => {
+		this.setState({
+			showDeleteModal: !this.state.showDeleteModal,
+			projectId      : id
+		});
 	}
 
 getStatusColorMapping = (status) => {
@@ -35,6 +52,17 @@ render() {
 	return this.props.loading
 		? <Loader loading={this.props.loading} />
 		: <Container>
+			{this.state.showDeleteModal
+				? <DeleteModal
+					open={this.state.showDeleteModal}
+					close={this.toggleDeleteModal}
+					entity={intl.get('entity.project')}
+					ref={'testProject'}
+					target={'/projects'}
+					item={this.state.projectId}
+					confirmDelete={id => this.props.deleteSpecificProject(id)}
+				/>
+				: null}
 			<Breadcrumb>
 				<Breadcrumb.Section>
 					<Link to="/">{intl.get('component.dashboard')}</Link>
@@ -114,9 +142,7 @@ render() {
 							<Header as="h4">{intl.get('project.label-genres')}</Header>
 							{this.props.project.genres.map((genre, index) => {
 								return <Label key={`${genre}-${index}`}>
-									{
-									 genre
-									}
+									{genre}
 								</Label>;
 							})}
 						</Segment>
@@ -166,12 +192,12 @@ render() {
 				}
 
 				<Segment>
-					<Button>
-						<Link to={`/editproject/${this.props.project._id}`}>{intl.get('project.action-edit')}</Link>
-					</Button>
-					<Button>
-						{intl.get('project.action-delete')}
-					</Button>
+					<Link to={`/editproject/${this.props.project._id}`}>
+						<Button>
+							{intl.get('project.action-edit')}
+						</Button>
+					</Link>
+					<Button onClick={() => this.toggleDeleteModal(this.props.project._id)} content={intl.get('project.action-delete')}/>
 				</Segment>
 
 			</SegmentGroup>

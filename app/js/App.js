@@ -337,6 +337,9 @@ export default class App extends React.Component {
 									match={props.match}
 									getProjectById={id => this.sendApiRequest(API_URI, API_ACTIONS.GET, 'project', id)}
 									project={this.state.project !== void 0 ? this.state.project : {}}
+									deleteSpecificProject={id => {
+										this.sendApiRequest(API_URI, API_ACTIONS.DELETE, 'project', id);
+									}}
 								/>
 							)}
 						/>
