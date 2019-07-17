@@ -19,6 +19,12 @@ export default class CharactersList extends React.Component {
 		this.props.getProjectById(id);
 	};
 
+	parseProjectTitle = (project, character) => {
+		if (project._id === character.project) {
+			return project.title;
+		}
+	}
+
 	render() {
 		return this.props.loading
 			? <Loader loading={this.props.loading} />
@@ -47,16 +53,19 @@ export default class CharactersList extends React.Component {
 				<Divider />
 
 				<Card.Group>
-					{this.props.characters.map((character, index) => {
-						return (
-							<CharacterCard
-								key={`${character}-${index}`}
-								character={character}
-								projectTitle={this.props.project !== void 0 ? this.props.project.title : ''}
-								getProjectTitle={() => this.getProjectById(character.project)}
-							/>
-						);
-					})}
+					{this.props.project !== void 0
+						? this.props.characters.map((character, index) => {
+							return (
+								<CharacterCard
+									key={`${character}-${index}`}
+									character={character}
+									projectTitle={this.parseProjectTitle(this.props.project, character)}
+									getProjectTitle={() => this.getProjectById(character.project)}
+								/>
+							);
+						})
+						: null
+					}
 				</Card.Group>
 			</Container>;
 	}
