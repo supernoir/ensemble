@@ -49,6 +49,7 @@ import MessengerContainer from './containers/MessengerContainer';
 import { SET_LOCALE } from './actions/setLocale';
 import { GET_PROJECT_BY_ID } from './actions/getProjectbyId';
 import { GET_ALL_PROJECTS } from './actions/getAllProjects';
+import { LOAD_CURRENT_PAGE } from './actions/loadCurrentPage';
 
 /**
  * Class App
@@ -84,12 +85,14 @@ export default class App extends React.Component {
 	 * @param {string} locale
 	 */
 	setCurrentLocale = locale => {
+		this.props.loadCurrentPage({ type: LOAD_CURRENT_PAGE, loading: true });
 		this.setState({
 			loading      : true,
 			currentLocale: locale || DEFAULT_LOCALE
 		});
 		this.props.setLocale({ type: SET_LOCALE, locale });
 		this.loadLocales(locale);
+		this.props.loadCurrentPage({ type: LOAD_CURRENT_PAGE, loading: false });
 		this.setState({
 			loading: false
 		});
@@ -127,6 +130,7 @@ export default class App extends React.Component {
 	}
 
 	sendApiRequest = (uri, action, resource, param, payload) => {
+		this.props.loadCurrentPage({ type: LOAD_CURRENT_PAGE, loading: true });
 		this.setState({
 			loading: true
 		});
@@ -268,6 +272,8 @@ export default class App extends React.Component {
 				loading: false
 			});
 		}
+		this.props.loadCurrentPage({ type: LOAD_CURRENT_PAGE, loading: false });
+
 		this.setState({
 			loading: false
 		});
@@ -276,7 +282,12 @@ export default class App extends React.Component {
  	 * Method componentWillMount
  	 */
 	componentWillMount() {
+		this.props.loadCurrentPage({ type: LOAD_CURRENT_PAGE, loading: true });
 		this.loadLocales(this.state.currentLocale);
+	}
+
+	componentDidMount() {
+		this.props.loadCurrentPage({ type: LOAD_CURRENT_PAGE, loading: false });
 	}
 
 	/**
@@ -295,7 +306,7 @@ export default class App extends React.Component {
 							render={props => (
 								<Dashboard
 									{...props}
-									loading={this.state.loading}
+									loading={this.props.loading}
 									dashboardData={this.state.dashboard}
 									getDashboardData={() => this.sendApiRequest(API_URI, API_ACTIONS.GET, 'dashboard')}
 									eventsData={this.state.events}
@@ -308,7 +319,7 @@ export default class App extends React.Component {
 							path="/admin"
 							render={() => (
 								<AdminPanel
-									loading={this.state.loading}
+									loading={this.props.loading}
 									adminData={this.state.admin}
 									getAdminData={() => this.sendApiRequest(API_URI, API_ACTIONS.GET, 'admin')}
 								/>
@@ -320,7 +331,7 @@ export default class App extends React.Component {
 							path="/projects"
 							render={props => (
 								<ProjectsList
-									loading={this.state.loading}
+									loading={this.props.loading}
 									getProjects={() => this.sendApiRequest(API_URI, API_ACTIONS.GET, 'projects')}
 									deleteSpecificProject={id => {
 										this.sendApiRequest(API_URI, API_ACTIONS.DELETE, 'project', id);
@@ -334,7 +345,7 @@ export default class App extends React.Component {
 							path="/addproject"
 							render={props => (
 								<NewProject
-									loading={this.state.loading}
+									loading={this.props.loading}
 									genres={this.state.genres}
 									addProject={data => {
 										this.sendApiRequest(API_URI, API_ACTIONS.POST, 'project', '', data);
@@ -353,7 +364,7 @@ export default class App extends React.Component {
 							path="/project/:id"
 							render={props => (
 								<Project
-									loading={this.state.loading}
+									loading={this.props.loading}
 									match={props.match}
 									getProjectById={id => this.sendApiRequest(API_URI, API_ACTIONS.GET, 'project', id)}
 									project={this.props.project !== void 0 ? this.props.project : {}}
@@ -367,7 +378,7 @@ export default class App extends React.Component {
 							path="/editproject/:id"
 							render={props => (
 								<EditProject
-									loading={this.state.loading}
+									loading={this.props.loading}
 									editProject={(id, data) => {
 										this.sendApiRequest(API_URI, API_ACTIONS.PUT, 'project', id, data);
 									}}
@@ -390,7 +401,7 @@ export default class App extends React.Component {
 							path="/characters"
 							render={() => (
 								<CharactersList
-									loading={this.state.loading}
+									loading={this.props.loading}
 									getCharacters={() => this.sendApiRequest(API_URI, API_ACTIONS.GET, 'characters')}
 									characters={this.state.characters !== void 0 ? this.state.characters : []}
 									getProjectById={id => this.sendApiRequest(API_URI, API_ACTIONS.GET, 'project', id)}
@@ -402,7 +413,7 @@ export default class App extends React.Component {
 							path="/addcharacter"
 							render={props => (
 								<NewCharacter
-									loading={this.state.loading}
+									loading={this.props.loading}
 									addCharacter={data => {
 										this.sendApiRequest(API_URI, API_ACTIONS.POST, 'character', '', data);
 									}}
@@ -419,7 +430,7 @@ export default class App extends React.Component {
 							path="/editcharacter/:id"
 							render={props => (
 								<EditCharacter
-									loading={this.state.loading}
+									loading={this.props.loading}
 									editCharacter={(id, data) => {
 										this.sendApiRequest(API_URI, API_ACTIONS.PUT, 'character', id, data);
 									}}
@@ -439,7 +450,7 @@ export default class App extends React.Component {
 							path="/character/:id"
 							render={props => (
 								<Character
-									loading={this.state.loading}
+									loading={this.props.loading}
 									getCharacterById={id => this.sendApiRequest(API_URI, API_ACTIONS.GET, 'character', id)}
 									character={this.state.character !== void 0 ? this.state.character : {}}
 									match={props.match}
@@ -451,7 +462,7 @@ export default class App extends React.Component {
 							exact
 							path="/events"
 							render={() => (
-								<EventsList loading={this.state.loading} events={this.state.events} getEvents={() => this.sendApiRequest(API_URI, API_ACTIONS.GET, 'events')} />
+								<EventsList loading={this.props.loading} events={this.state.events} getEvents={() => this.sendApiRequest(API_URI, API_ACTIONS.GET, 'events')} />
 							)}
 						/>
 						{/** Tags */}
@@ -459,7 +470,7 @@ export default class App extends React.Component {
 							exact
 							path="/tags"
 							render={() => (
-								<TagsList loading={this.state.loading} tags={this.state.tags} getTags={() => this.sendApiRequest(API_URI, API_ACTIONS.GET, 'tags')} />
+								<TagsList loading={this.props.loading} tags={this.state.tags} getTags={() => this.sendApiRequest(API_URI, API_ACTIONS.GET, 'tags')} />
 							)}
 						/>
 					</main>

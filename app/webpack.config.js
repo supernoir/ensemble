@@ -11,12 +11,12 @@ const Dotenv = require('dotenv-webpack');
 module.exports = {
 	mode   : 'development',
 	context: path.resolve(__dirname),
-	entry  : 	['@babel/polyfill', './js/index.js'],
+	entry  : ['@babel/polyfill', './js/index.js'],
 	output : {
 		path    : path.resolve(__dirname, 'dist'),
 		filename: 'bundle.js'
 	},
-	devtool  : false,
+	devtool  : eval,
 	devServer: {
 		historyApiFallback: true
 	},
@@ -69,11 +69,11 @@ module.exports = {
 			template: 'index.html'
 		}),
 		new Dotenv({
-			path: path.resolve(__dirname,'.env')
+			path: path.resolve(__dirname, '.env')
 		}),
 		new ServiceWorkerWebpackPlugin({
 			entry   : path.join(__dirname, 'sw.js'),
-			excludes: ['**/.*', '**/*.map', '*.html'],
+			excludes: ['**/.*', '**/*.map', '*.html']
 		})
 	]
 };

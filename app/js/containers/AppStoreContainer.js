@@ -6,16 +6,18 @@ const mapStateToProps = state => {
 		locale  : state.switchLocale || 'en-US',
 		messages: state.Messenger,
 		project : state.retrieveSingleProject,
-		projects: state.retrieveAllProjects
+		projects: state.retrieveAllProjects,
+		loading : state.lockCurrentPage
 	};
 };
 
 const mapDispatchToProps = dispatch => {
 	return {
-		setLocale     : locale => dispatch(locale),
-		addMessage    : message => dispatch(message),
-		getProjectById: project => dispatch(project),
-		getAllProjects: projects => dispatch(projects)
+		setLocale      : locale => dispatch(locale),
+		addMessage     : message => dispatch(message),
+		getProjectById : project => dispatch(project),
+		getAllProjects : projects => dispatch(projects),
+		loadCurrentPage: loading => dispatch(loading)
 	};
 };
 
