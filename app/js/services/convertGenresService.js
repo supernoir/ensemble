@@ -121,9 +121,9 @@ const convertValueToOptionsMap = (val, key) => {
 	};
 };
 
-const convertGenresToOptionsMap = (data) => {
+const convertGenresToOptionsMap = data => {
 	return data !== void 0 && data.length > 0
-		? data.map((val,key)=> {
+		? data.map((val, key) => {
 			return convertValueToOptionsMap(val, key);
 		})
 		: [];

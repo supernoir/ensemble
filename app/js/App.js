@@ -47,20 +47,19 @@ import TagsList from './scenes/Tags/TagsList';
 
 import MessengerContainer from './containers/MessengerContainer';
 import { SET_LOCALE } from './actions/setLocale';
-import { GET_PROJECT_BY_ID } from './actions/getProjectbyId';
-import { GET_ALL_PROJECTS } from './actions/getAllProjects';
 import { LOAD_CURRENT_PAGE } from './actions/loadCurrentPage';
+import { GET_SINGLE_PROJECT } from './actions/getSingleProject';
+import { GET_ALL_PROJECTS } from './actions/getAllProjects';
+import { GET_SINGLE_CHARACTER } from './actions/getSingleCharacter';
+import { GET_ALL_CHARACTERS } from './actions/getAllCharacters';
 
 /**
  * Class App
  */
 export default class App extends React.Component {
-	/**
-	 * Constructor
-	 * @param {*} props
-	 */
 	constructor(props) {
 		super(props);
+
 		// Initialize Auth
 		this.auth = new Auth(this.props.history);
 
@@ -87,15 +86,11 @@ export default class App extends React.Component {
 	setCurrentLocale = locale => {
 		this.props.loadCurrentPage({ type: LOAD_CURRENT_PAGE, loading: true });
 		this.setState({
-			loading      : true,
 			currentLocale: locale || DEFAULT_LOCALE
 		});
 		this.props.setLocale({ type: SET_LOCALE, locale });
 		this.loadLocales(locale);
 		this.props.loadCurrentPage({ type: LOAD_CURRENT_PAGE, loading: false });
-		this.setState({
-			loading: false
-		});
 	}
 
 	/**
@@ -131,9 +126,6 @@ export default class App extends React.Component {
 
 	sendApiRequest = (uri, action, resource, param, payload) => {
 		this.props.loadCurrentPage({ type: LOAD_CURRENT_PAGE, loading: true });
-		this.setState({
-			loading: true
-		});
 		let targetUri = uri;
 		resource !== void 0 ? (targetUri += '/' + resource) : '';
 		param !== void 0 ? (targetUri += '/' + param) : '';
@@ -155,15 +147,13 @@ export default class App extends React.Component {
 								content: err.message
 							});
 
-							this.setState({
-								loading: false
-							});
+							this.props.loadCurrentPage({ type: LOAD_CURRENT_PAGE, loading: false });
 						})
 						.then(res => {
 							switch (resource) {
 								case 'project':
-									this.props.getProjectById({
-										type   : GET_PROJECT_BY_ID,
+									this.props.getSingleProject({
+										type   : GET_SINGLE_PROJECT,
 										project: res.data
 									});
 									break;
@@ -173,13 +163,25 @@ export default class App extends React.Component {
 										projects: res.data
 									});
 									break;
+								case 'character':
+									this.props.getSingleCharacter({
+										type     : GET_SINGLE_CHARACTER,
+										character: res.data
+									});
+									break;
+								case 'characters':
+									this.props.getAllCharacters({
+										type      : GET_ALL_CHARACTERS,
+										characters: res.data
+									});
+									break;
 								default:
 									break;
 							}
+							this.props.loadCurrentPage({ type: LOAD_CURRENT_PAGE, loading: false });
 
 							this.setState({
-								[resource]: res.data,
-								loading   : false
+								[resource]: res.data
 							});
 						});
 					break;
@@ -200,14 +202,13 @@ export default class App extends React.Component {
 								content: err.message
 							});
 
-							this.setState({
-								loading: false
-							});
+							this.props.loadCurrentPage({ type: LOAD_CURRENT_PAGE, loading: false });
 						})
 						.then(res => {
+							this.props.loadCurrentPage({ type: LOAD_CURRENT_PAGE, loading: false });
+
 							this.setState({
-								[resource]: res.data,
-								loading   : false
+								[resource]: res.data
 							});
 						});
 					break;
@@ -228,14 +229,12 @@ export default class App extends React.Component {
 								content: err.message
 							});
 
-							this.setState({
-								loading: false
-							});
+							this.props.loadCurrentPage({ type: LOAD_CURRENT_PAGE, loading: false });
 						})
 						.then(res => {
+							this.props.loadCurrentPage({ type: LOAD_CURRENT_PAGE, loading: false });
 							this.setState({
-								[resource]: res.data,
-								loading   : false
+								[resource]: res.data
 							});
 						});
 					break;
@@ -254,9 +253,7 @@ export default class App extends React.Component {
 							content: err.message
 						});
 
-						this.setState({
-							loading: false
-						});
+						this.props.loadCurrentPage({ type: LOAD_CURRENT_PAGE, loading: false });
 					});
 					break;
 				default:
@@ -268,16 +265,11 @@ export default class App extends React.Component {
 				content: err.message
 			});
 
-			this.setState({
-				loading: false
-			});
+			this.props.loadCurrentPage({ type: LOAD_CURRENT_PAGE, loading: false });
 		}
 		this.props.loadCurrentPage({ type: LOAD_CURRENT_PAGE, loading: false });
-
-		this.setState({
-			loading: false
-		});
 	}
+
 	/**
  	 * Method componentWillMount
  	 */
@@ -403,7 +395,7 @@ export default class App extends React.Component {
 								<CharactersList
 									loading={this.props.loading}
 									getCharacters={() => this.sendApiRequest(API_URI, API_ACTIONS.GET, 'characters')}
-									characters={this.state.characters !== void 0 ? this.state.characters : []}
+									characters={this.props.characters !== void 0 ? this.props.characters : []}
 									getProjectById={id => this.sendApiRequest(API_URI, API_ACTIONS.GET, 'project', id)}
 									project={this.props.project}
 								/>
@@ -435,7 +427,7 @@ export default class App extends React.Component {
 										this.sendApiRequest(API_URI, API_ACTIONS.PUT, 'character', id, data);
 									}}
 									getCharacterById={id => this.sendApiRequest(API_URI, API_ACTIONS.GET, 'character', id)}
-									character={this.state.character !== void 0 ? this.state.character : {}}
+									character={this.props.character !== void 0 ? this.props.character : {}}
 									getProjects={() => this.sendApiRequest(API_URI, API_ACTIONS.GET, 'projects')}
 									projects={this.props.projects}
 									addEvent={data => {
@@ -452,7 +444,7 @@ export default class App extends React.Component {
 								<Character
 									loading={this.props.loading}
 									getCharacterById={id => this.sendApiRequest(API_URI, API_ACTIONS.GET, 'character', id)}
-									character={this.state.character !== void 0 ? this.state.character : {}}
+									character={this.props.character !== void 0 ? this.props.character : {}}
 									match={props.match}
 								/>
 							)}
