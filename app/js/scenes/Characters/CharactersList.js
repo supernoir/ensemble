@@ -17,7 +17,7 @@ export default class CharactersList extends React.Component {
 
 	getProjectById = id => {
 		this.props.getProjectById(id);
-	};
+	}
 
 	parseProjectTitle = (project, character) => {
 		if (project._id === character.project) {
@@ -28,7 +28,7 @@ export default class CharactersList extends React.Component {
 	render() {
 		return this.props.loading
 			? <Loader loading={this.props.loading} />
-			:	<Container>
+			: <Container>
 				<Breadcrumb>
 					<Breadcrumb.Section>
 						<Link to="/">{intl.get('component.dashboard')}</Link>
@@ -46,7 +46,7 @@ export default class CharactersList extends React.Component {
 					</Header>
 					<Divider />
 					<Button>
-						<Icon name={'add'}/> <Link to="/addcharacter">{intl.get('character.action-add')}</Link>
+						<Icon name={'add'} /> <Link to="/addcharacter">{intl.get('character.action-add')}</Link>
 					</Button>
 				</Segment>
 
@@ -64,8 +64,7 @@ export default class CharactersList extends React.Component {
 								/>
 							);
 						})
-						: null
-					}
+						: null}
 				</Card.Group>
 			</Container>;
 	}
@@ -77,7 +76,7 @@ CharactersList.propTypes = {
 	getProjectById: PropTypes.func,
 	characters    : PropTypes.arrayOf(
 		PropTypes.shape({
-			project: PropTypes.string,
+			project: PropTypes.string
 		})
 	),
 	project: PropTypes.shape({
