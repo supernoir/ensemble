@@ -414,6 +414,8 @@ export default class App extends React.Component {
 									}}
 									getProjects={() => this.sendApiRequest(API_URI, API_ACTIONS.GET, 'projects')}
 									projects={this.props.projects}
+									getProjectById={id => this.sendApiRequest(API_URI, API_ACTIONS.GET, 'project', id)}
+									project={this.props.project !== void 0 ? this.props.project : {}}
 									{...props}
 								/>
 							)}

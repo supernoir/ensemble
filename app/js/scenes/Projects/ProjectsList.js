@@ -155,7 +155,9 @@ export default class ProjectsList extends React.Component {
 
 					<Grid.Column textAlign="center">
 						<Header>{intl.get('project.status-inprogress')}</Header>
+
 						<Divider />
+
 						{props.projects !== void 0
 							? <Card.Group>
 								{props.projects.map((project, index) => {

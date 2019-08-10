@@ -96,7 +96,7 @@ const Tags = mongoose.model('Tags', {
 const Characters = mongoose.model('Characters', {
 	// The project associated with the character
 	// TODO: project should be a ref!
-	project    : String,
+	projects   : Array,
 	// A Description of the character
 	desc       : String,
 	// The first name of the character
@@ -130,7 +130,7 @@ const Projects = mongoose.model('Projects', {
 	// The project status => statuses are saved in PROJECT_STATUS
 	status       : String,
 	// The authors of the Project
-	authors       : Array,
+	authors      : Array,
 	// Potential Collaborators on the project
 	collaborators: Array,
 	// If String given, Project will be grouped into the given series
@@ -141,11 +141,11 @@ const Projects = mongoose.model('Projects', {
 	// A description for the project
 	desc         : String,
 	// The potential genre of the project
-	genres        : Array,
+	genres       : Array,
 	// A set of tags to describe the given project
 	tags         : Array,
 	// A set of texts compiled into the projects contents
-	content      : Array,
+	content      : Array
 });
 
 /**
@@ -290,7 +290,7 @@ app.post('/character', (req, res, next) => {
 	character.nationality = req.body.nationality;
 	character.origin = req.body.origin;
 	character.gender = req.body.gender;
-	character.project = req.body.project;
+	character.projects = req.body.projects;
 	character.series = req.body.series;
 	character.desc = req.body.desc;
 
@@ -314,7 +314,7 @@ app.put('/character/:id', (req, res) => {
 	editedCharacter.nationality = req.body.nationality;
 	editedCharacter.origin = req.body.origin;
 	editedCharacter.gender = req.body.gender;
-	editedCharacter.project = req.body.project;
+	editedCharacter.projects = req.body.projects;
 	editedCharacter.series = req.body.series;
 	editedCharacter.desc = req.body.desc;
 
@@ -502,10 +502,9 @@ const getDbReadyState = () => {
 const getBackupDirs = () => {
 	let source = '../db_backups/';
 	const dirs = p => {
-		return fs.readdirSync(p)
-			.filter(f => {
-				return fs.statSync(path.join(p, f)).isDirectory();
-			});
+		return fs.readdirSync(p).filter(f => {
+			return fs.statSync(path.join(p, f)).isDirectory();
+		});
 	};
 	return dirs(source);
 };

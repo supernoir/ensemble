@@ -21,27 +21,23 @@ export default class CharacterCard extends React.Component {
 						<Link to={`/character/${this.props.character._id}`}>{this.props.character.full_name}</Link>
 					</Card.Header>
 
-					{
-						this.props.character.birthday !== void 0 && this.props.character.birthday.length > 0
-							? <Card.Meta>
-								<Icon name={'birthday cake'} /> {this.props.character.birthday}
-							</Card.Meta>
-							: null
-					}
+					{this.props.character.birthday !== void 0 && this.props.character.birthday.length > 0
+						? <Card.Meta>
+							<Icon name={'birthday cake'} /> {this.props.character.birthday}
+						</Card.Meta>
+						: null}
 
-					{
-						this.props.character.gender !== void 0 && this.props.character.gender.length > 0
-							? <Card.Meta>
-								<Icon name={'transgender'} /> {this.props.character.gender}
-							</Card.Meta>
-							: null
-					}
+					{this.props.character.gender !== void 0 && this.props.character.gender.length > 0
+						? <Card.Meta>
+							<Icon name={'transgender'} /> {this.props.character.gender}
+						</Card.Meta>
+						: null}
 
 					<Card.Description>{this.props.character.desc}</Card.Description>
 				</Card.Content>
 				{this.props.character.project !== void 0 && this.props.projectTitle !== void 0
 					? <Card.Content>
-						<Button icon basic labelPosition='left'>
+						<Button icon basic labelPosition="left">
 							<Icon name={'book'} /> <Link to={`/project/${this.props.character.project}`}>{this.props.projectTitle}</Link>
 						</Button>
 					</Card.Content>
