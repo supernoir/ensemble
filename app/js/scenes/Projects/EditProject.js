@@ -18,7 +18,7 @@ export default class EditProject extends React.Component {
 		this.state = {
 			title        : '',
 			status       : '',
-			genres        : [],
+			genres       : [],
 			series       : '',
 			cast         : [],
 			desc         : '',
@@ -44,13 +44,13 @@ export default class EditProject extends React.Component {
 				this.setState({ series: evt.currentTarget.value });
 				break;
 			case 'genres':
-				this.setState({ genres:  evt.currentTarget.value.split(',').map(item => item.trim()) });
+				this.setState({ genres: evt.currentTarget.value.split(',').map(item => item.trim()) });
 				break;
 			case 'desc':
 				this.setState({ desc: evt.currentTarget.value });
 				break;
 			case 'cast':
-				this.setState({ cast:  evt.currentTarget.value.split(',').map(item => item.trim()) });
+				this.setState({ cast: evt.currentTarget.value.split(',').map(item => item.trim()) });
 				break;
 			case 'tags':
 				this.setState({
@@ -241,10 +241,7 @@ export default class EditProject extends React.Component {
 							/>
 						</Form.Field>
 
-						<Button
-							onClick={evt => this.postEditedProject(evt)}
-							type="submit"
-							className="btn btn-default">{intl.get('project.action-edit')}</Button>
+						<Button onClick={evt => this.postEditedProject(evt)} type="submit" className="btn btn-default">{intl.get('project.action-edit')}</Button>
 					</Form>
 
 				</Segment>
@@ -268,5 +265,4 @@ EditProject.propTypes = {
 		cast  : PropTypes.array,
 		tags  : PropTypes.array
 	})
-
 };

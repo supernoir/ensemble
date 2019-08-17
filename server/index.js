@@ -341,8 +341,8 @@ app.post('/edit_character', (req, res) => {
 	});
 });
 
-app.post('/delete_character', (req, res) => {
-	Characters.findByIdAndRemove(req.body._id, (err, character) => {
+app.delete('/character/:id', (req, res) => {
+	Characters.findByIdAndRemove(req.params.id, (err, character) => {
 		if (err) res.send(err);
 		res.json({ message: 'Character deleted!', data: character });
 	});

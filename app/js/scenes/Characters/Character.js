@@ -14,12 +14,24 @@ export default class Character extends React.Component {
 	constructor() {
 		super();
 		this.state = {
-			showDeleteModal: false
+			showDeleteModal: false,
+			projectId      : ''
 		};
 	}
 
 	componentDidMount() {
 		this.props.getCharacterById(this.props.match.params.id);
+	}
+
+	/**
+	 * toggleDeleteModal method
+	 * toggles showing/hiding the modal
+	 */
+	toggleDeleteModal = id => {
+		this.setState({
+			showDeleteModal: !this.state.showDeleteModal,
+			projectId      : id
+		});
 	}
 
 	render() {
@@ -32,9 +44,9 @@ export default class Character extends React.Component {
 						close={this.toggleDeleteModal}
 						entity={intl.get('entity.character')}
 						ref={'testCharacter'}
-						target={'/character'}
+						target={'/characters'}
 						item={this.props.character._id}
-						confirmDelete={id => this.props.deleteSpecificProject(id)}
+						confirmDelete={id => this.props.deleteSpecificCharacter(id)}
 					/>
 					: null}
 				<Breadcrumb>

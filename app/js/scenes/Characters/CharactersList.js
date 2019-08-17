@@ -25,6 +25,16 @@ export default class CharactersList extends React.Component {
 		}
 	}
 
+	/**
+	 * deleteSpecificCharacter method
+	 * triggers deleteSpecificCharacter with the given id
+	 * @param {*} id The id of the specific character
+	 */
+	deleteSpecificCharacter = id => {
+		this.props.deleteSpecificCharacter(id);
+		this.props.getCharacters();
+	}
+
 	render() {
 		return this.props.loading
 			? <Loader loading={this.props.loading} />
@@ -61,6 +71,7 @@ export default class CharactersList extends React.Component {
 									character={character}
 									projectTitle={this.parseProjectTitle(this.props.project, character)}
 									getProjectTitle={() => this.getProjectById(character.project)}
+									deleteSpecificCharacter={id => this.deleteSpecificCharacter(id)}
 								/>
 							);
 						})

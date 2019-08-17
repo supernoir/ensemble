@@ -46,7 +46,6 @@ export default class CharacterCard extends React.Component {
 					<Link to={`/editcharacter/${this.props.character._id}`}>
 						<Button circular basic icon="edit" color="blue" content={intl.get('app.edit')} />
 					</Link>
-					<Button circular basic icon="delete" color="red" content={intl.get('app.delete')} />
 				</Card.Content>
 			</Card>
 		);

@@ -397,6 +397,9 @@ export default class App extends React.Component {
 									getCharacters={() => this.sendApiRequest(API_URI, API_ACTIONS.GET, 'characters')}
 									characters={this.props.characters !== void 0 ? this.props.characters : []}
 									getProjectById={id => this.sendApiRequest(API_URI, API_ACTIONS.GET, 'project', id)}
+									deleteSpecificCharacter={id => {
+										this.sendApiRequest(API_URI, API_ACTIONS.DELETE, 'character', id);
+									}}
 									project={this.props.project}
 								/>
 							)}
@@ -447,6 +450,9 @@ export default class App extends React.Component {
 									loading={this.props.loading}
 									getCharacterById={id => this.sendApiRequest(API_URI, API_ACTIONS.GET, 'character', id)}
 									character={this.props.character !== void 0 ? this.props.character : {}}
+									deleteSpecificCharacter={id => {
+										this.sendApiRequest(API_URI, API_ACTIONS.DELETE, 'character', id);
+									}}
 									match={props.match}
 								/>
 							)}
