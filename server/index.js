@@ -11,6 +11,8 @@ const fs = require('fs');
 const path = require('path');
 const mongoose = require('mongoose');
 const genres_en = require('./data/genres/en-US.json');
+const helmet = require('helmet');
+const cors = require('cors');
 
 const apiVersion = 'v0.0.1';
 const app = express();
@@ -35,6 +37,9 @@ app.use((req, res, next) => {
 	res.header('Access-Control-Allow-Methods', 'POST, GET, PUT, DELETE, OPTIONS');
 	next();
 });
+
+app.use(helmet());
+app.use(cors());
 
 // Write Logs to file
 const accessLogStream = fs.createWriteStream(path.join(__dirname, 'access.log'), { flags: 'a' });
