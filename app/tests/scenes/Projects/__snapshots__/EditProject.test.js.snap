@@ -1,0 +1,191 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`EditProject -- Snapshot Test 1`] = `
+<Container>
+  <Breadcrumb>
+    <BreadcrumbSection>
+      <Link
+        replace={false}
+        to="/"
+      />
+    </BreadcrumbSection>
+    <BreadcrumbDivider />
+    <BreadcrumbSection>
+      <Link
+        replace={false}
+        to="/projects"
+      />
+    </BreadcrumbSection>
+    <BreadcrumbDivider />
+    <BreadcrumbSection
+      active={true}
+    />
+  </Breadcrumb>
+  <Segment>
+    <Header
+      as="h2"
+    />
+    <Divider />
+    <Form
+      as="form"
+    >
+      <FormField>
+        <label
+          className="col-sm-2 control-label"
+          htmlFor="type"
+        />
+        <select
+          className="ui search selection dropdown"
+          name="type"
+          onChange={[Function]}
+        >
+          <option
+            key="shortstory-0"
+            value="shortstory"
+          />
+          <option
+            key="script-1"
+            value="script"
+          />
+          <option
+            key="novel-2"
+            value="novel"
+          />
+          <option
+            key="essay-3"
+            value="essay"
+          />
+          <option
+            key="poem-4"
+            value="poem"
+          />
+        </select>
+      </FormField>
+      <FormField>
+        <label
+          className="col-sm-2 control-label"
+          htmlFor="status"
+        />
+        <select
+          className="ui search selection dropdown"
+          name="status"
+          onChange={[Function]}
+        >
+          <option
+            key="draft-0"
+            value="draft"
+          />
+          <option
+            key="inprogress-1"
+            value="inprogress"
+          />
+          <option
+            key="inreview-2"
+            value="inreview"
+          />
+          <option
+            key="editing-3"
+            value="editing"
+          />
+          <option
+            key="published-4"
+            value="published"
+          />
+        </select>
+      </FormField>
+      <FormField>
+        <label
+          className="col-sm-2 control-label"
+          htmlFor="project"
+        />
+        <input
+          className="form-control"
+          defaultValue="The Passersby"
+          id="title"
+          onChange={[Function]}
+          placeholder="The Final Problem"
+          required={true}
+          type="text"
+        />
+      </FormField>
+      <FormField>
+        <label
+          className="col-sm-2 control-label"
+          htmlFor="project"
+        />
+        <input
+          className="form-control"
+          defaultValue="Drama"
+          id="genres"
+          onChange={[Function]}
+          placeholder="Crime, Suspense"
+          type="text"
+        />
+      </FormField>
+      <FormField>
+        <label
+          className="col-sm-2 control-label"
+          htmlFor="project"
+        />
+        <input
+          className="form-control"
+          defaultValue="The Passersby"
+          id="series"
+          onChange={[Function]}
+          placeholder="The Memoirs of Sherlock Holmes"
+          type="text"
+        />
+      </FormField>
+      <FormField>
+        <label
+          className="col-sm-2 control-label"
+          htmlFor="project"
+        />
+        <input
+          className="form-control"
+          defaultValue="David, Sean"
+          id="cast"
+          onChange={[Function]}
+          placeholder="Sherlock Holmes, James Watson"
+          type="text"
+        />
+      </FormField>
+      <FormField>
+        <label
+          className="col-sm-2 control-label"
+          htmlFor="project"
+        />
+        <input
+          className="form-control"
+          defaultValue="Dublin story"
+          id="desc"
+          onChange={[Function]}
+          placeholder="The Adventures of Sherlock Holmes"
+          required={true}
+          type="text"
+        />
+      </FormField>
+      <FormField>
+        <label
+          className="col-sm-2 control-label"
+          htmlFor="project"
+        />
+        <input
+          className="form-control"
+          defaultValue="example, sample, test"
+          id="tags"
+          onChange={[Function]}
+          placeholder="crime, noir"
+          type="text"
+        />
+      </FormField>
+      <Button
+        as="button"
+        className="btn btn-default"
+        onClick={[Function]}
+        type="submit"
+      />
+    </Form>
+  </Segment>
+</Container>
+`;

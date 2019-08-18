@@ -1,7 +1,7 @@
 import React from 'react';
 import intl from 'react-intl-universal';
 import { Link } from 'react-router-dom';
-import { Container, Segment, Form, Button, Divider, Header, Breadcrumb } from 'semantic-ui-react';
+import { Container, Segment, Form, Button, Divider, Header, Breadcrumb, Dropdown } from 'semantic-ui-react';
 import Loader from '../../basics/Loader';
 import PropTypes from 'prop-types';
 
@@ -22,13 +22,25 @@ export default class NewCharacter extends React.Component {
 			origin     : '',
 			nationality: '',
 			family     : '',
-			project    : '',
+			projects   : [],
 			series     : '',
 			imgurl     : ''
 		};
 	}
 
-	handleInput = (source, evt) => {
+	convertProjectToOptions = data => {
+		return data !== void 0 && data.length > 0
+			? data.map((val, key) => {
+				return {
+					key,
+					text : val.title,
+					value: val._id
+				};
+			})
+			: [];
+	}
+
+	handleInput = (source, evt, val) => {
 		switch (source) {
 			case 'firstname':
 				this.setState({ firstname: evt.currentTarget.value });
@@ -48,8 +60,8 @@ export default class NewCharacter extends React.Component {
 			case 'origin':
 				this.setState({ origin: evt.currentTarget.value });
 				break;
-			case 'project':
-				this.setState({ project: evt.currentTarget.value });
+			case 'projects':
+				this.setState({ projects: val });
 				break;
 			case 'desc':
 				this.setState({ desc: evt.currentTarget.value });
@@ -57,7 +69,7 @@ export default class NewCharacter extends React.Component {
 			default:
 				break;
 		}
-	};
+	}
 
 	assembleFullName = (first, middle, last) => {
 		try {
@@ -68,7 +80,7 @@ export default class NewCharacter extends React.Component {
 		} catch (err) {
 			throw err;
 		}
-	};
+	}
 
 	postnewCharacter(evt) {
 		evt.preventDefault();
@@ -82,7 +94,7 @@ export default class NewCharacter extends React.Component {
 			gender     : this.state.gender,
 			birthday   : this.state.birthday,
 			origin     : this.state.origin,
-			project    : this.state.project
+			projects   : this.state.projects
 		});
 
 		this.props.addEvent({
@@ -101,7 +113,7 @@ export default class NewCharacter extends React.Component {
 	render() {
 		return this.props.loading
 			? <Loader loading={this.props.loading} />
-			:	<Container>
+			: <Container>
 				<Breadcrumb>
 					<Breadcrumb.Section>
 						<Link to="/">{intl.get('component.dashboard')}</Link>
@@ -128,54 +140,61 @@ export default class NewCharacter extends React.Component {
 							<label htmlFor="desc">
 								{intl.get('character.label-desc')}
 							</label>
-							<input onChange={evt => this.handleInput('desc', evt)}
-								type="text" id="desc" placeholder="A most loveable person" />
+							<input onChange={evt => this.handleInput('desc', evt)} type="text" id="desc" placeholder="A most loveable person" />
 						</Form.Field>
 						<Form.Field>
 							<label htmlFor="firstname">
 								{intl.get('character.label-firstname')}
 							</label>
-							<input onChange={evt => this.handleInput('firstname', evt)}
-								type="text" id="firstname" placeholder="Jane" required />
+							<input onChange={evt => this.handleInput('firstname', evt)} type="text" id="firstname" placeholder="Jane" required />
 						</Form.Field>
 						<Form.Field>
 							<label htmlFor="middlename">
 								{intl.get('character.label-middlename')}
 							</label>
-							<input onChange={evt => this.handleInput('middlename', evt)}
-								type="text" id="middlename" placeholder="Agatha" />
+							<input onChange={evt => this.handleInput('middlename', evt)} type="text" id="middlename" placeholder="Agatha" />
 						</Form.Field>
 						<Form.Field>
 							<label htmlFor="lastname">
 								{intl.get('character.label-lastname')}
 							</label>
-							<input onChange={evt => this.handleInput('lastname', evt)}
-								type="text" id="lastname" placeholder="Doe" />
+							<input onChange={evt => this.handleInput('lastname', evt)} type="text" id="lastname" placeholder="Doe" />
 						</Form.Field>
 						<Form.Field>
 							<label htmlFor="gender" className="col-sm-2 control-label">
 								{intl.get('character.label-gender')}
 							</label>
-							<input onChange={evt => this.handleInput('gender', evt)}
-								type="text"	className="form-control" id="gender"
-								placeholder="Non-binary" />
+							<input onChange={evt => this.handleInput('gender', evt)} type="text" className="form-control" id="gender" placeholder="Non-binary" />
 						</Form.Field>
 						<Form.Field>
 							<label htmlFor="origin" className="col-sm-2 control-label">
 								{intl.get('character.label-origin')}
 							</label>
-							<input onChange={evt => this.handleInput('origin', evt)}
-								type="text" className="form-control" id="origin" placeholder="Wakanda" />
+							<input onChange={evt => this.handleInput('origin', evt)} type="text" className="form-control" id="origin" placeholder="Wakanda" />
 						</Form.Field>
 						<Form.Field>
 							<label htmlFor="birthday" className="col-sm-2 control-label">
 								{intl.get('character.label-birthday')}
 							</label>
-							<input onChange={evt => this.handleInput('birthday', evt)}
-								type="date" className="form-control" id="birthday" placeholder="01-07-2019" />
+							<input onChange={evt => this.handleInput('birthday', evt)} type="date" className="form-control" id="birthday" placeholder="01-07-2019" />
 						</Form.Field>
 
 						<Divider />
+
+						<Form.Field>
+							<label htmlFor="projects" className="col-sm-2 control-label">{intl.get('entity.projects')}</label>
+
+							<Dropdown
+								placeholder="Projects"
+								fluid
+								multiple
+								search
+								selection
+								onChange={(evt, { value }) => this.handleInput('projects', evt, value)}
+								options={this.convertProjectToOptions(this.props.projects)}
+							/>
+
+						</Form.Field>
 
 						<Form.Field>
 							<label htmlFor="project" className="col-sm-2 control-label">
@@ -190,8 +209,7 @@ export default class NewCharacter extends React.Component {
 							</select>
 						</Form.Field>
 
-						<Button onClick={evt => this.postnewCharacter(evt)}
-							type="submit" className="btn btn-default">
+						<Button onClick={evt => this.postnewCharacter(evt)} type="submit" className="btn btn-default">
 							{intl.get('character.action-add')}
 						</Button>
 					</Form>
@@ -202,7 +220,7 @@ export default class NewCharacter extends React.Component {
 }
 
 NewCharacter.propTypes = {
-	loading      : PropTypes.bool,
+	loading     : PropTypes.bool,
 	addCharacter: PropTypes.func,
 	addEvent    : PropTypes.func,
 	getProjects : PropTypes.func,
@@ -212,5 +230,5 @@ NewCharacter.propTypes = {
 			title: PropTypes.string
 		})
 	),
-	history: PropTypes.object,
+	history: PropTypes.object
 };

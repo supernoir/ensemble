@@ -33,9 +33,10 @@ export default class Dashboard extends React.Component {
 				return intl.get('event.action-deletecharacter', { ref: event.ref });
 			case 'delete_character':
 				return intl.get('event.action-deletecharacter', { ref: event.ref });
-			default: break;
+			default:
+				break;
 		}
-	};
+	}
 
 	componentDidMount() {
 		this.props.getEvents();
@@ -103,9 +104,11 @@ Dashboard.propTypes = {
 	getEvents       : PropTypes.func,
 	getDashboardData: PropTypes.func,
 	dashboardData   : PropTypes.any,
-	eventsData      : PropTypes.arrayOf(PropTypes.shape({
-		timestamp: PropTypes.string,
-		action   : PropTypes.string,
-		ref      : PropTypes.string
-	}))
+	eventsData      : PropTypes.arrayOf(
+		PropTypes.shape({
+			timestamp: PropTypes.string,
+			action   : PropTypes.string,
+			ref      : PropTypes.string
+		})
+	)
 };

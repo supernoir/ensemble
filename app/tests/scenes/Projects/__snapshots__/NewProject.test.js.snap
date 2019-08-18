@@ -1,0 +1,727 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`NewProject -- Snapshot Test 1`] = `
+<Container>
+  <Breadcrumb>
+    <BreadcrumbSection>
+      <Link
+        replace={false}
+        to="/"
+      />
+    </BreadcrumbSection>
+    <BreadcrumbDivider />
+    <BreadcrumbSection>
+      <Link
+        replace={false}
+        to="/projects"
+      />
+    </BreadcrumbSection>
+    <BreadcrumbDivider />
+    <BreadcrumbSection
+      active={true}
+    />
+  </Breadcrumb>
+  <Segment>
+    <Header
+      as="h2"
+    />
+    <Divider />
+    <Form
+      as="form"
+    >
+      <FormField>
+        <label
+          className="col-sm-2 control-label"
+          htmlFor="type"
+        />
+        <select
+          className="ui search selection dropdown"
+          name="type"
+          onChange={[Function]}
+        >
+          <option
+            key="shortstory-0"
+            value="shortstory"
+          />
+          <option
+            key="script-1"
+            value="script"
+          />
+          <option
+            key="novel-2"
+            value="novel"
+          />
+          <option
+            key="essay-3"
+            value="essay"
+          />
+          <option
+            key="poem-4"
+            value="poem"
+          />
+        </select>
+      </FormField>
+      <FormField>
+        <label
+          className="col-sm-2 control-label"
+          htmlFor="project"
+        />
+        <input
+          className="form-control"
+          id="title"
+          onChange={[Function]}
+          placeholder="The Final Problem"
+          required={true}
+          type="text"
+        />
+      </FormField>
+      <FormField>
+        <label
+          className="col-sm-2 control-label"
+          htmlFor="project"
+        />
+        <Dropdown
+          additionLabel="Add "
+          additionPosition="top"
+          closeOnBlur={true}
+          closeOnEscape={true}
+          deburr={false}
+          fluid={true}
+          icon="dropdown"
+          minCharacters={1}
+          multiple={true}
+          noResultsMessage="No results found."
+          onChange={[Function]}
+          openOnFocus={true}
+          options={
+            Array [
+              Object {
+                "key": 1,
+                "text": "Adventure novel",
+                "value": "adventurenovel",
+              },
+              Object {
+                "key": 2,
+                "text": "British Literature",
+                "value": "britishliterature",
+              },
+              Object {
+                "key": 3,
+                "text": "Children's literature",
+                "value": "children'sliterature",
+              },
+              Object {
+                "key": 4,
+                "text": "Young adult fiction",
+                "value": "youngadultfiction",
+              },
+              Object {
+                "key": 5,
+                "text": "School story",
+                "value": "schoolstory",
+              },
+              Object {
+                "key": 6,
+                "text": "Romance",
+                "value": "romance",
+              },
+              Object {
+                "key": 7,
+                "text": "Varsity novel",
+                "value": "varsitynovel",
+              },
+              Object {
+                "key": 8,
+                "text": "Erotic fiction",
+                "value": "eroticfiction",
+              },
+              Object {
+                "key": 9,
+                "text": "Erotic romance",
+                "value": "eroticromance",
+              },
+              Object {
+                "key": 10,
+                "text": "Women's erotica",
+                "value": "women'serotica",
+              },
+              Object {
+                "key": 11,
+                "text": "Men's erotica",
+                "value": "men'serotica",
+              },
+              Object {
+                "key": 12,
+                "text": "Experimental fiction",
+                "value": "experimentalfiction",
+              },
+              Object {
+                "key": 13,
+                "text": "Antinovel",
+                "value": "antinovel",
+              },
+              Object {
+                "key": 14,
+                "text": "Graphic novel",
+                "value": "graphicnovel",
+              },
+              Object {
+                "key": 15,
+                "text": "Historical fiction",
+                "value": "historicalfiction",
+              },
+              Object {
+                "key": 16,
+                "text": "Historical romance",
+                "value": "historicalromance",
+              },
+              Object {
+                "key": 17,
+                "text": "Historical mystery",
+                "value": "historicalmystery",
+              },
+              Object {
+                "key": 18,
+                "text": "Prehistoric fiction",
+                "value": "prehistoricfiction",
+              },
+              Object {
+                "key": 19,
+                "text": "Regency novel",
+                "value": "regencynovel",
+              },
+              Object {
+                "key": 20,
+                "text": "Literary fiction",
+                "value": "literaryfiction",
+              },
+              Object {
+                "key": 21,
+                "text": "Mathematical fiction",
+                "value": "mathematicalfiction",
+              },
+              Object {
+                "key": 22,
+                "text": "Nonfiction novel",
+                "value": "nonfictionnovel",
+              },
+              Object {
+                "key": 23,
+                "text": "Bildungsroman",
+                "value": "bildungsroman",
+              },
+              Object {
+                "key": 24,
+                "text": "Biographical novel",
+                "value": "biographicalnovel",
+              },
+              Object {
+                "key": 25,
+                "text": "Occupational fiction",
+                "value": "occupationalfiction",
+              },
+              Object {
+                "key": 26,
+                "text": "Hollywood novel",
+                "value": "hollywoodnovel",
+              },
+              Object {
+                "key": 27,
+                "text": "Lab lit",
+                "value": "lablit",
+              },
+              Object {
+                "key": 28,
+                "text": "Medical fiction",
+                "value": "medicalfiction",
+              },
+              Object {
+                "key": 29,
+                "text": "Musical fiction",
+                "value": "musicalfiction",
+              },
+              Object {
+                "key": 30,
+                "text": "Sports fiction",
+                "value": "sportsfiction",
+              },
+              Object {
+                "key": 31,
+                "text": "Philosophical fiction",
+                "value": "philosophicalfiction",
+              },
+              Object {
+                "key": 32,
+                "text": "Existentialist fiction",
+                "value": "existentialistfiction",
+              },
+              Object {
+                "key": 33,
+                "text": "Novel of ideas",
+                "value": "novelofideas",
+              },
+              Object {
+                "key": 34,
+                "text": "Platonic dialogues",
+                "value": "platonicdialogues",
+              },
+              Object {
+                "key": 35,
+                "text": "Political fiction",
+                "value": "politicalfiction",
+              },
+              Object {
+                "key": 36,
+                "text": "Political satire",
+                "value": "politicalsatire",
+              },
+              Object {
+                "key": 37,
+                "text": "Pulp fiction",
+                "value": "pulpfiction",
+              },
+              Object {
+                "key": 38,
+                "text": "Quantum fiction",
+                "value": "quantumfiction",
+              },
+              Object {
+                "key": 39,
+                "text": "Religious fiction",
+                "value": "religiousfiction",
+              },
+              Object {
+                "key": 40,
+                "text": "Christian fiction",
+                "value": "christianfiction",
+              },
+              Object {
+                "key": 41,
+                "text": "Islamic fiction",
+                "value": "islamicfiction",
+              },
+              Object {
+                "key": 42,
+                "text": "Jewish fiction",
+                "value": "jewishfiction",
+              },
+              Object {
+                "key": 43,
+                "text": "Saga",
+                "value": "saga",
+              },
+              Object {
+                "key": 44,
+                "text": "Family saga",
+                "value": "familysaga",
+              },
+              Object {
+                "key": 45,
+                "text": "Speculative fiction",
+                "value": "speculativefiction",
+              },
+              Object {
+                "key": 46,
+                "text": "Epic fantasy",
+                "value": "epicfantasy",
+              },
+              Object {
+                "key": 47,
+                "text": "Hard fantasy",
+                "value": "hardfantasy",
+              },
+              Object {
+                "key": 48,
+                "text": "Historical fantasy",
+                "value": "historicalfantasy",
+              },
+              Object {
+                "key": 49,
+                "text": "Low fantasy",
+                "value": "lowfantasy",
+              },
+              Object {
+                "key": 50,
+                "text": "Urban fantasy",
+                "value": "urbanfantasy",
+              },
+              Object {
+                "key": 51,
+                "text": "Comic fantasy",
+                "value": "comicfantasy",
+              },
+              Object {
+                "key": 52,
+                "text": "Contemporary fantasy",
+                "value": "contemporaryfantasy",
+              },
+              Object {
+                "key": 53,
+                "text": "Dark fantasy",
+                "value": "darkfantasy",
+              },
+              Object {
+                "key": 54,
+                "text": "Heroic fantasy",
+                "value": "heroicfantasy",
+              },
+              Object {
+                "key": 55,
+                "text": "Magic realism",
+                "value": "magicrealism",
+              },
+              Object {
+                "key": 56,
+                "text": "Mythic",
+                "value": "mythic",
+              },
+              Object {
+                "key": 57,
+                "text": "Paranormal fantasy",
+                "value": "paranormalfantasy",
+              },
+              Object {
+                "key": 58,
+                "text": "Superhero fantasy",
+                "value": "superherofantasy",
+              },
+              Object {
+                "key": 59,
+                "text": "Sword and sorcery",
+                "value": "swordandsorcery",
+              },
+              Object {
+                "key": 60,
+                "text": "Horror",
+                "value": "horror",
+              },
+              Object {
+                "key": 61,
+                "text": "Splatterpunk",
+                "value": "splatterpunk",
+              },
+              Object {
+                "key": 62,
+                "text": "Erotic",
+                "value": "erotic",
+              },
+              Object {
+                "key": 63,
+                "text": "Gothic fiction",
+                "value": "gothicfiction",
+              },
+              Object {
+                "key": 64,
+                "text": "Psychological",
+                "value": "psychological",
+              },
+              Object {
+                "key": 65,
+                "text": "Lovecraftian",
+                "value": "lovecraftian",
+              },
+              Object {
+                "key": 66,
+                "text": "Ghost story",
+                "value": "ghoststory",
+              },
+              Object {
+                "key": 67,
+                "text": "Monster literature",
+                "value": "monsterliterature",
+              },
+              Object {
+                "key": 68,
+                "text": "Occult detective",
+                "value": "occultdetective",
+              },
+              Object {
+                "key": 69,
+                "text": "Science fiction",
+                "value": "sciencefiction",
+              },
+              Object {
+                "key": 70,
+                "text": "Alien invasion",
+                "value": "alieninvasion",
+              },
+              Object {
+                "key": 71,
+                "text": "Post-apocalyptic",
+                "value": "post-apocalyptic",
+              },
+              Object {
+                "key": 72,
+                "text": "Cyberpunk",
+                "value": "cyberpunk",
+              },
+              Object {
+                "key": 73,
+                "text": "Steampunk",
+                "value": "steampunk",
+              },
+              Object {
+                "key": 74,
+                "text": "Dystopian",
+                "value": "dystopian",
+              },
+              Object {
+                "key": 75,
+                "text": "Hard science fiction",
+                "value": "hardsciencefiction",
+              },
+              Object {
+                "key": 76,
+                "text": "Military science fiction",
+                "value": "militarysciencefiction",
+              },
+              Object {
+                "key": 77,
+                "text": "Alternative history",
+                "value": "alternativehistory",
+              },
+              Object {
+                "key": 78,
+                "text": "Scientific romance",
+                "value": "scientificromance",
+              },
+              Object {
+                "key": 79,
+                "text": "Soft science fiction",
+                "value": "softsciencefiction",
+              },
+              Object {
+                "key": 80,
+                "text": "Space opera",
+                "value": "spaceopera",
+              },
+              Object {
+                "key": 81,
+                "text": "Speculative fiction",
+                "value": "speculativefiction",
+              },
+              Object {
+                "key": 82,
+                "text": "Climate fiction",
+                "value": "climatefiction",
+              },
+              Object {
+                "key": 83,
+                "text": "Dying Earth",
+                "value": "dyingearth",
+              },
+              Object {
+                "key": 84,
+                "text": "Science fantasy",
+                "value": "sciencefantasy",
+              },
+              Object {
+                "key": 85,
+                "text": "Slipstream",
+                "value": "slipstream",
+              },
+              Object {
+                "key": 86,
+                "text": "Weird fiction",
+                "value": "weirdfiction",
+              },
+              Object {
+                "key": 87,
+                "text": "Suspense fiction",
+                "value": "suspensefiction",
+              },
+              Object {
+                "key": 88,
+                "text": "Crime fiction",
+                "value": "crimefiction",
+              },
+              Object {
+                "key": 89,
+                "text": "Detective fiction",
+                "value": "detectivefiction",
+              },
+              Object {
+                "key": 90,
+                "text": "Mystery fiction",
+                "value": "mysteryfiction",
+              },
+              Object {
+                "key": 91,
+                "text": "Thriller",
+                "value": "thriller",
+              },
+              Object {
+                "key": 92,
+                "text": "Legal thriller",
+                "value": "legalthriller",
+              },
+              Object {
+                "key": 93,
+                "text": "Medical thriller",
+                "value": "medicalthriller",
+              },
+              Object {
+                "key": 94,
+                "text": "Political thriller",
+                "value": "politicalthriller",
+              },
+              Object {
+                "key": 95,
+                "text": "Spy fiction",
+                "value": "spyfiction",
+              },
+              Object {
+                "key": 96,
+                "text": "Psychological thriller",
+                "value": "psychologicalthriller",
+              },
+              Object {
+                "key": 97,
+                "text": "Techno-thriller",
+                "value": "techno-thriller",
+              },
+              Object {
+                "key": 98,
+                "text": "Tragedy",
+                "value": "tragedy",
+              },
+              Object {
+                "key": 99,
+                "text": "Melodrama",
+                "value": "melodrama",
+              },
+              Object {
+                "key": 100,
+                "text": "Urban fiction",
+                "value": "urbanfiction",
+              },
+              Object {
+                "key": 101,
+                "text": "Western",
+                "value": "western",
+              },
+              Object {
+                "key": 102,
+                "text": "Chick lit",
+                "value": "chicklit",
+              },
+              Object {
+                "key": 103,
+                "text": "Femslash",
+                "value": "femslash",
+              },
+              Object {
+                "key": 104,
+                "text": "Romance novel",
+                "value": "romancenovel",
+              },
+              Object {
+                "key": 105,
+                "text": "Historical romance",
+                "value": "historicalromance",
+              },
+              Object {
+                "key": 106,
+                "text": "Juvenile fantasy",
+                "value": "juvenilefantasy",
+              },
+              Object {
+                "key": 107,
+                "text": "LGBT pulp fiction",
+                "value": "lgbtpulpfiction",
+              },
+              Object {
+                "key": 108,
+                "text": "Paranormal romance",
+                "value": "paranormalromance",
+              },
+              Object {
+                "key": 109,
+                "text": "Romantic fantasy",
+                "value": "romanticfantasy",
+              },
+              Object {
+                "key": 110,
+                "text": "Tragicomedy",
+                "value": "tragicomedy",
+              },
+              Object {
+                "key": 111,
+                "text": "Modern literature",
+                "value": "modernliterature",
+              },
+            ]
+          }
+          placeholder="Genres"
+          renderLabel={[Function]}
+          search={true}
+          searchInput="text"
+          selectOnBlur={true}
+          selectOnNavigation={true}
+          selection={true}
+          wrapSelection={true}
+        />
+      </FormField>
+      <FormField>
+        <label
+          className="col-sm-2 control-label"
+          htmlFor="project"
+        />
+        <input
+          className="form-control"
+          id="series"
+          onChange={[Function]}
+          placeholder="The Memoirs of Sherlock Holmes"
+          type="text"
+        />
+      </FormField>
+      <FormField>
+        <label
+          className="col-sm-2 control-label"
+          htmlFor="project"
+        />
+        <input
+          className="form-control"
+          id="cast"
+          onChange={[Function]}
+          placeholder="Sherlock Holmes, James Watson"
+          type="text"
+        />
+      </FormField>
+      <FormField>
+        <label
+          className="col-sm-2 control-label"
+          htmlFor="project"
+        />
+        <input
+          className="form-control"
+          id="desc"
+          onChange={[Function]}
+          placeholder="The Adventures of Sherlock Holmes"
+          required={true}
+          type="text"
+        />
+      </FormField>
+      <FormField>
+        <label
+          className="col-sm-2 control-label"
+          htmlFor="project"
+        />
+        <input
+          className="form-control"
+          id="tags"
+          onChange={[Function]}
+          placeholder="crime, noir"
+          type="text"
+        />
+      </FormField>
+      <Button
+        as="button"
+        className="btn btn-default"
+        onClick={[Function]}
+        type="submit"
+      />
+    </Form>
+  </Segment>
+</Container>
+`;

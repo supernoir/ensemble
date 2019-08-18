@@ -1,0 +1,108 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Project -- Snapshot Test 1`] = `
+<Container>
+  <Breadcrumb>
+    <BreadcrumbSection>
+      <Link
+        replace={false}
+        to="/"
+      />
+    </BreadcrumbSection>
+    <BreadcrumbDivider />
+    <BreadcrumbSection>
+      <Link
+        replace={false}
+        to="/characters"
+      />
+    </BreadcrumbSection>
+    <BreadcrumbDivider />
+    <BreadcrumbSection
+      active={true}
+    >
+      Michelle Romaine Toulouse-Lautrec
+    </BreadcrumbSection>
+  </Breadcrumb>
+  <SegmentGroup>
+    <Segment>
+      <Header
+        as="h2"
+      >
+        Michelle Romaine Toulouse-Lautrec
+      </Header>
+    </Segment>
+    <SegmentGroup
+      horizontal={true}
+    >
+      <Segment>
+        <Header
+          as="h4"
+        />
+        <Label
+          content="Non-binary"
+          icon="transgender"
+          size="large"
+        />
+      </Segment>
+      <Segment>
+        <Header
+          as="h4"
+        />
+        <Label
+          content="2015-03-03"
+          icon="birthday cake"
+          size="large"
+        />
+      </Segment>
+    </SegmentGroup>
+    <Segment>
+      <Header
+        as="h4"
+      />
+      <p>
+        Un ecrivain
+      </p>
+    </Segment>
+    <Segment>
+      <Header
+        as="h4"
+      />
+      <p>
+        Paris, France
+      </p>
+    </Segment>
+    <Segment>
+      <Header
+        as="h4"
+      />
+      <Label
+        content="5d17dafd4ea603c5dcff98de"
+        icon="book"
+        key="5d17dafd4ea603c5dcff98de-0"
+        size="large"
+      />
+      <Label
+        content="5d13a6864ea603c5dcff98d8"
+        icon="book"
+        key="5d13a6864ea603c5dcff98d8-1"
+        size="large"
+      />
+    </Segment>
+    <Segment>
+      <Link
+        replace={false}
+        to="/editcharacter/5d57d0d2c39bc90249b6917c"
+      >
+        <Button
+          as="button"
+        />
+      </Link>
+      <Button
+        as="button"
+        content=""
+        onClick={[Function]}
+      />
+    </Segment>
+  </SegmentGroup>
+</Container>
+`;

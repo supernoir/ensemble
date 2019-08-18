@@ -1,0 +1,164 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`NewCharacter -- Snapshot Test 1`] = `
+<Container>
+  <Breadcrumb>
+    <BreadcrumbSection>
+      <Link
+        replace={false}
+        to="/"
+      />
+    </BreadcrumbSection>
+    <BreadcrumbDivider />
+    <BreadcrumbSection>
+      <Link
+        replace={false}
+        to="/characters"
+      />
+    </BreadcrumbSection>
+    <BreadcrumbDivider />
+    <BreadcrumbSection
+      active={true}
+    />
+  </Breadcrumb>
+  <Segment>
+    <Header
+      as="h2"
+    />
+    <Divider />
+    <Form
+      as="form"
+    >
+      <FormField>
+        <label
+          htmlFor="desc"
+        />
+        <input
+          id="desc"
+          onChange={[Function]}
+          placeholder="A most loveable person"
+          type="text"
+        />
+      </FormField>
+      <FormField>
+        <label
+          htmlFor="firstname"
+        />
+        <input
+          id="firstname"
+          onChange={[Function]}
+          placeholder="Jane"
+          required={true}
+          type="text"
+        />
+      </FormField>
+      <FormField>
+        <label
+          htmlFor="middlename"
+        />
+        <input
+          id="middlename"
+          onChange={[Function]}
+          placeholder="Agatha"
+          type="text"
+        />
+      </FormField>
+      <FormField>
+        <label
+          htmlFor="lastname"
+        />
+        <input
+          id="lastname"
+          onChange={[Function]}
+          placeholder="Doe"
+          type="text"
+        />
+      </FormField>
+      <FormField>
+        <label
+          className="col-sm-2 control-label"
+          htmlFor="gender"
+        />
+        <input
+          className="form-control"
+          id="gender"
+          onChange={[Function]}
+          placeholder="Non-binary"
+          type="text"
+        />
+      </FormField>
+      <FormField>
+        <label
+          className="col-sm-2 control-label"
+          htmlFor="origin"
+        />
+        <input
+          className="form-control"
+          id="origin"
+          onChange={[Function]}
+          placeholder="Wakanda"
+          type="text"
+        />
+      </FormField>
+      <FormField>
+        <label
+          className="col-sm-2 control-label"
+          htmlFor="birthday"
+        />
+        <input
+          className="form-control"
+          id="birthday"
+          onChange={[Function]}
+          placeholder="01-07-2019"
+          type="date"
+        />
+      </FormField>
+      <Divider />
+      <FormField>
+        <label
+          className="col-sm-2 control-label"
+          htmlFor="projects"
+        />
+        <Dropdown
+          additionLabel="Add "
+          additionPosition="top"
+          closeOnBlur={true}
+          closeOnEscape={true}
+          deburr={false}
+          fluid={true}
+          icon="dropdown"
+          minCharacters={1}
+          multiple={true}
+          noResultsMessage="No results found."
+          onChange={[Function]}
+          openOnFocus={true}
+          options={Array []}
+          placeholder="Projects"
+          renderLabel={[Function]}
+          search={true}
+          searchInput="text"
+          selectOnBlur={true}
+          selectOnNavigation={true}
+          selection={true}
+          wrapSelection={true}
+        />
+      </FormField>
+      <FormField>
+        <label
+          className="col-sm-2 control-label"
+          htmlFor="project"
+        />
+        <select
+          onChange={[Function]}
+        />
+      </FormField>
+      <Button
+        as="button"
+        className="btn btn-default"
+        onClick={[Function]}
+        type="submit"
+      />
+    </Form>
+  </Segment>
+</Container>
+`;

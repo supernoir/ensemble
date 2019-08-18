@@ -1,12 +1,13 @@
 import React from 'react';
 import intl from 'react-intl-universal';
 import { Link } from 'react-router-dom';
-import { Container, Segment, Form, Button, Divider, Header, Breadcrumb } from 'semantic-ui-react';
+import { Container, Segment, Form, Button, Divider, Header, Breadcrumb, Dropdown } from 'semantic-ui-react';
 import Loader from '../../basics/Loader';
 import { tagTypes } from '../../constants/tagTypes';
 import { projectTypes } from '../../constants/projectTypes';
 import { projectStatus } from '../../constants/projectStatus';
 import PropTypes from 'prop-types';
+import { genreData } from './../../data/genres/genres.js';
 
 /**
  * Class NewProject
@@ -17,16 +18,16 @@ export default class NewProject extends React.Component {
 		super();
 		this.state = {
 			title       : '',
-			genre       : '',
+			genres       : [],
 			series      : '',
-			cast        : '',
+			cast        : [],
 			desc        : '',
 			tags        : [],
 			projectTypes: []
 		};
 	}
 
-	handleInput = (source, evt) => {
+	handleInput = (source, evt, val) => {
 		switch (source) {
 			case 'type':
 				this.setState({ type: evt.currentTarget.value });
@@ -37,14 +38,14 @@ export default class NewProject extends React.Component {
 			case 'series':
 				this.setState({ series: evt.currentTarget.value });
 				break;
-			case 'genre':
-				this.setState({ genre: evt.currentTarget.value });
+			case 'genres':
+				this.setState({ genres: val });
 				break;
 			case 'desc':
 				this.setState({ desc: evt.currentTarget.value });
 				break;
 			case 'cast':
-				this.setState({ cast: evt.currentTarget.value });
+				this.setState({ cast: evt.currentTarget.value.split(',').map(item => item.trim()) });
 				break;
 			case 'tags':
 				this.setState({
@@ -63,7 +64,7 @@ export default class NewProject extends React.Component {
 			type  : this.state.type,
 			status: projectStatus.DRAFT,
 			title : this.state.title,
-			genre : this.state.genre,
+			genres: this.state.genres,
 			series: this.state.series,
 			desc  : this.state.desc,
 			cast  : this.state.cast,
@@ -163,9 +164,18 @@ export default class NewProject extends React.Component {
 							/>
 						</Form.Field>
 						<Form.Field>
-							<label htmlFor="project" className="col-sm-2 control-label">{intl.get('project.label-genre')}</label>
-							<input onChange={evt => this.handleInput('genre', evt)}
-								type="text" className="form-control" id="genre" placeholder="Crime, Suspense" />
+							<label htmlFor="project" className="col-sm-2 control-label">{intl.get('project.label-genres')}</label>
+
+							<Dropdown
+								placeholder='Genres'
+								fluid
+								multiple
+								search
+								selection
+								onChange={(evt, { value }) => this.handleInput('genres', evt, value)}
+								options={genreData}
+							/>
+
 						</Form.Field>
 						<Form.Field>
 							<label htmlFor="project" className="col-sm-2 control-label">{intl.get('project.label-series')}</label>

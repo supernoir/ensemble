@@ -47,17 +47,19 @@ import TagsList from './scenes/Tags/TagsList';
 
 import MessengerContainer from './containers/MessengerContainer';
 import { SET_LOCALE } from './actions/setLocale';
+import { LOAD_CURRENT_PAGE } from './actions/loadCurrentPage';
+import { GET_SINGLE_PROJECT } from './actions/getSingleProject';
+import { GET_ALL_PROJECTS } from './actions/getAllProjects';
+import { GET_SINGLE_CHARACTER } from './actions/getSingleCharacter';
+import { GET_ALL_CHARACTERS } from './actions/getAllCharacters';
 
 /**
  * Class App
  */
 export default class App extends React.Component {
-	/**
-	 * Constructor
-	 * @param {*} props
-	 */
 	constructor(props) {
 		super(props);
+
 		// Initialize Auth
 		this.auth = new Auth(this.props.history);
 
@@ -82,15 +84,13 @@ export default class App extends React.Component {
 	 * @param {string} locale
 	 */
 	setCurrentLocale = locale => {
+		this.props.loadCurrentPage({ type: LOAD_CURRENT_PAGE, loading: true });
 		this.setState({
-			loading      : true,
 			currentLocale: locale || DEFAULT_LOCALE
 		});
 		this.props.setLocale({ type: SET_LOCALE, locale });
 		this.loadLocales(locale);
-		this.setState({
-			loading: false
-		});
+		this.props.loadCurrentPage({ type: LOAD_CURRENT_PAGE, loading: false });
 	}
 
 	/**
@@ -109,7 +109,8 @@ export default class App extends React.Component {
 	}
 
 	retrieveGenres = lang => {
-		axios.get(`http://localhost:3030/genres/${lang}`)
+		axios
+			.get(`http://localhost:3030/genres/${lang}`)
 			.catch(err => {
 				this.props.addMessage({
 					type   : 'error',
@@ -124,9 +125,7 @@ export default class App extends React.Component {
 	}
 
 	sendApiRequest = (uri, action, resource, param, payload) => {
-		this.setState({
-			loading: true
-		});
+		this.props.loadCurrentPage({ type: LOAD_CURRENT_PAGE, loading: true });
 		let targetUri = uri;
 		resource !== void 0 ? (targetUri += '/' + resource) : '';
 		param !== void 0 ? (targetUri += '/' + param) : '';
@@ -148,14 +147,41 @@ export default class App extends React.Component {
 								content: err.message
 							});
 
-							this.setState({
-								loading: false
-							});
+							this.props.loadCurrentPage({ type: LOAD_CURRENT_PAGE, loading: false });
 						})
 						.then(res => {
+							switch (resource) {
+								case 'project':
+									this.props.getSingleProject({
+										type   : GET_SINGLE_PROJECT,
+										project: res.data
+									});
+									break;
+								case 'projects':
+									this.props.getAllProjects({
+										type    : GET_ALL_PROJECTS,
+										projects: res.data
+									});
+									break;
+								case 'character':
+									this.props.getSingleCharacter({
+										type     : GET_SINGLE_CHARACTER,
+										character: res.data
+									});
+									break;
+								case 'characters':
+									this.props.getAllCharacters({
+										type      : GET_ALL_CHARACTERS,
+										characters: res.data
+									});
+									break;
+								default:
+									break;
+							}
+							this.props.loadCurrentPage({ type: LOAD_CURRENT_PAGE, loading: false });
+
 							this.setState({
-								[resource]: res.data,
-								loading   : false
+								[resource]: res.data
 							});
 						});
 					break;
@@ -176,14 +202,13 @@ export default class App extends React.Component {
 								content: err.message
 							});
 
-							this.setState({
-								loading: false
-							});
+							this.props.loadCurrentPage({ type: LOAD_CURRENT_PAGE, loading: false });
 						})
 						.then(res => {
+							this.props.loadCurrentPage({ type: LOAD_CURRENT_PAGE, loading: false });
+
 							this.setState({
-								[resource]: res.data,
-								loading   : false
+								[resource]: res.data
 							});
 						});
 					break;
@@ -204,14 +229,12 @@ export default class App extends React.Component {
 								content: err.message
 							});
 
-							this.setState({
-								loading: false
-							});
+							this.props.loadCurrentPage({ type: LOAD_CURRENT_PAGE, loading: false });
 						})
 						.then(res => {
+							this.props.loadCurrentPage({ type: LOAD_CURRENT_PAGE, loading: false });
 							this.setState({
-								[resource]: res.data,
-								loading   : false
+								[resource]: res.data
 							});
 						});
 					break;
@@ -230,9 +253,7 @@ export default class App extends React.Component {
 							content: err.message
 						});
 
-						this.setState({
-							loading: false
-						});
+						this.props.loadCurrentPage({ type: LOAD_CURRENT_PAGE, loading: false });
 					});
 					break;
 				default:
@@ -244,19 +265,21 @@ export default class App extends React.Component {
 				content: err.message
 			});
 
-			this.setState({
-				loading: false
-			});
+			this.props.loadCurrentPage({ type: LOAD_CURRENT_PAGE, loading: false });
 		}
-		this.setState({
-			loading: false
-		});
+		this.props.loadCurrentPage({ type: LOAD_CURRENT_PAGE, loading: false });
 	}
+
 	/**
  	 * Method componentWillMount
  	 */
 	componentWillMount() {
+		this.props.loadCurrentPage({ type: LOAD_CURRENT_PAGE, loading: true });
 		this.loadLocales(this.state.currentLocale);
+	}
+
+	componentDidMount() {
+		this.props.loadCurrentPage({ type: LOAD_CURRENT_PAGE, loading: false });
 	}
 
 	/**
@@ -275,7 +298,7 @@ export default class App extends React.Component {
 							render={props => (
 								<Dashboard
 									{...props}
-									loading={this.state.loading}
+									loading={this.props.loading}
 									dashboardData={this.state.dashboard}
 									getDashboardData={() => this.sendApiRequest(API_URI, API_ACTIONS.GET, 'dashboard')}
 									eventsData={this.state.events}
@@ -288,7 +311,7 @@ export default class App extends React.Component {
 							path="/admin"
 							render={() => (
 								<AdminPanel
-									loading={this.state.loading}
+									loading={this.props.loading}
 									adminData={this.state.admin}
 									getAdminData={() => this.sendApiRequest(API_URI, API_ACTIONS.GET, 'admin')}
 								/>
@@ -300,12 +323,12 @@ export default class App extends React.Component {
 							path="/projects"
 							render={props => (
 								<ProjectsList
-									loading={this.state.loading}
+									loading={this.props.loading}
 									getProjects={() => this.sendApiRequest(API_URI, API_ACTIONS.GET, 'projects')}
 									deleteSpecificProject={id => {
 										this.sendApiRequest(API_URI, API_ACTIONS.DELETE, 'project', id);
 									}}
-									projects={this.state.projects}
+									projects={this.props.projects}
 									{...props}
 								/>
 							)}
@@ -314,7 +337,7 @@ export default class App extends React.Component {
 							path="/addproject"
 							render={props => (
 								<NewProject
-									loading={this.state.loading}
+									loading={this.props.loading}
 									genres={this.state.genres}
 									addProject={data => {
 										this.sendApiRequest(API_URI, API_ACTIONS.POST, 'project', '', data);
@@ -333,10 +356,13 @@ export default class App extends React.Component {
 							path="/project/:id"
 							render={props => (
 								<Project
-									loading={this.state.loading}
+									loading={this.props.loading}
 									match={props.match}
 									getProjectById={id => this.sendApiRequest(API_URI, API_ACTIONS.GET, 'project', id)}
-									project={this.state.project !== void 0 ? this.state.project : {}}
+									project={this.props.project !== void 0 ? this.props.project : {}}
+									deleteSpecificProject={id => {
+										this.sendApiRequest(API_URI, API_ACTIONS.DELETE, 'project', id);
+									}}
 								/>
 							)}
 						/>
@@ -344,12 +370,12 @@ export default class App extends React.Component {
 							path="/editproject/:id"
 							render={props => (
 								<EditProject
-									loading={this.state.loading}
+									loading={this.props.loading}
 									editProject={(id, data) => {
 										this.sendApiRequest(API_URI, API_ACTIONS.PUT, 'project', id, data);
 									}}
 									getProjectById={id => this.sendApiRequest(API_URI, API_ACTIONS.GET, 'project', id)}
-									project={this.state.project !== void 0 ? this.state.project : {}}
+									project={this.props.project !== void 0 ? this.props.project : {}}
 									addEvent={data => {
 										this.sendApiRequest(API_URI, API_ACTIONS.POST, 'event', '', data);
 									}}
@@ -367,11 +393,14 @@ export default class App extends React.Component {
 							path="/characters"
 							render={() => (
 								<CharactersList
-									loading={this.state.loading}
+									loading={this.props.loading}
 									getCharacters={() => this.sendApiRequest(API_URI, API_ACTIONS.GET, 'characters')}
-									characters={this.state.characters !== void 0 ? this.state.characters : []}
+									characters={this.props.characters !== void 0 ? this.props.characters : []}
 									getProjectById={id => this.sendApiRequest(API_URI, API_ACTIONS.GET, 'project', id)}
-									project={this.state.project}
+									deleteSpecificCharacter={id => {
+										this.sendApiRequest(API_URI, API_ACTIONS.DELETE, 'character', id);
+									}}
+									project={this.props.project}
 								/>
 							)}
 						/>
@@ -379,7 +408,7 @@ export default class App extends React.Component {
 							path="/addcharacter"
 							render={props => (
 								<NewCharacter
-									loading={this.state.loading}
+									loading={this.props.loading}
 									addCharacter={data => {
 										this.sendApiRequest(API_URI, API_ACTIONS.POST, 'character', '', data);
 									}}
@@ -387,7 +416,9 @@ export default class App extends React.Component {
 										this.sendApiRequest(API_URI, API_ACTIONS.POST, 'event', '', data);
 									}}
 									getProjects={() => this.sendApiRequest(API_URI, API_ACTIONS.GET, 'projects')}
-									projects={this.state.projects}
+									projects={this.props.projects}
+									getProjectById={id => this.sendApiRequest(API_URI, API_ACTIONS.GET, 'project', id)}
+									project={this.props.project !== void 0 ? this.props.project : {}}
 									{...props}
 								/>
 							)}
@@ -396,14 +427,14 @@ export default class App extends React.Component {
 							path="/editcharacter/:id"
 							render={props => (
 								<EditCharacter
-									loading={this.state.loading}
+									loading={this.props.loading}
 									editCharacter={(id, data) => {
 										this.sendApiRequest(API_URI, API_ACTIONS.PUT, 'character', id, data);
 									}}
 									getCharacterById={id => this.sendApiRequest(API_URI, API_ACTIONS.GET, 'character', id)}
-									character={this.state.character !== void 0 ? this.state.character : {}}
+									character={this.props.character !== void 0 ? this.props.character : {}}
 									getProjects={() => this.sendApiRequest(API_URI, API_ACTIONS.GET, 'projects')}
-									projects={this.state.projects}
+									projects={this.props.projects}
 									addEvent={data => {
 										this.sendApiRequest(API_URI, API_ACTIONS.POST, 'event', '', data);
 									}}
@@ -416,9 +447,12 @@ export default class App extends React.Component {
 							path="/character/:id"
 							render={props => (
 								<Character
-									loading={this.state.loading}
+									loading={this.props.loading}
 									getCharacterById={id => this.sendApiRequest(API_URI, API_ACTIONS.GET, 'character', id)}
-									character={this.state.character !== void 0 ? this.state.character : {}}
+									character={this.props.character !== void 0 ? this.props.character : {}}
+									deleteSpecificCharacter={id => {
+										this.sendApiRequest(API_URI, API_ACTIONS.DELETE, 'character', id);
+									}}
 									match={props.match}
 								/>
 							)}
@@ -428,10 +462,7 @@ export default class App extends React.Component {
 							exact
 							path="/events"
 							render={() => (
-								<EventsList
-									loading={this.state.loading}
-									events={this.state.events}
-									getEvents={() => this.sendApiRequest(API_URI, API_ACTIONS.GET, 'events')} />
+								<EventsList loading={this.props.loading} events={this.state.events} getEvents={() => this.sendApiRequest(API_URI, API_ACTIONS.GET, 'events')} />
 							)}
 						/>
 						{/** Tags */}
@@ -439,10 +470,7 @@ export default class App extends React.Component {
 							exact
 							path="/tags"
 							render={() => (
-								<TagsList
-									loading={this.state.loading}
-									tags={this.state.tags}
-									getTags={() => this.sendApiRequest(API_URI, API_ACTIONS.GET, 'tags')} />
+								<TagsList loading={this.props.loading} tags={this.state.tags} getTags={() => this.sendApiRequest(API_URI, API_ACTIONS.GET, 'tags')} />
 							)}
 						/>
 					</main>

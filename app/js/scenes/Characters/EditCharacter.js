@@ -10,8 +10,8 @@ import PropTypes from 'prop-types';
  * Edit Single Character
  */
 export default class EditCharacter extends React.Component {
-	constructor() {
-		super();
+	constructor(props) {
+		super(props);
 		this.state = {
 			firstname  : '',
 			middlename : '',
@@ -23,6 +23,7 @@ export default class EditCharacter extends React.Component {
 			nationality: '',
 			family     : '',
 			project    : '',
+			projects   : [],
 			series     : '',
 			imgurl     : ''
 		};
@@ -57,7 +58,7 @@ export default class EditCharacter extends React.Component {
 			default:
 				break;
 		}
-	};
+	}
 
 	assembleFullName = (first, middle, last) => {
 		try {
@@ -68,21 +69,26 @@ export default class EditCharacter extends React.Component {
 		} catch (err) {
 			throw err;
 		}
-	};
+	}
 
 	postnewCharacter(evt) {
 		evt.preventDefault();
 
 		this.props.editCharacter(this.props.match.params.id, {
-			desc       : this.state.desc,
-			first_name : this.state.firstname,
-			middle_name: this.state.middlename,
-			last_name  : this.state.lastname,
-			full_name  : this.assembleFullName(this.state.firstname, this.state.middlename, this.state.lastname),
-			gender     : this.state.gender,
-			birthday   : this.state.birthday,
-			origin     : this.state.origin,
-			project    : this.state.project
+			desc       : this.state.desc || this.props.character.desc,
+			first_name : this.state.firstname || this.props.character.first_name,
+			middle_name: this.state.middlename || this.props.character.middle_name,
+			last_name  : this.state.lastname || this.props.character.last_name,
+			full_name  : this.assembleFullName(
+				this.state.firstname || this.props.character.first_name,
+				this.state.middlename || this.props.character.middle_name,
+				this.state.lastname || this.props.character.last_Name
+			),
+			gender  : this.state.gender || this.props.character.gender,
+			birthday: this.state.birthday || this.props.character.birthday,
+			origin  : this.state.origin || this.props.character.origin,
+			project : this.state.project || this.props.character.project,
+			projects: this.state.project || this.props.character.projects
 		});
 
 		this.props.addEvent({
@@ -95,8 +101,8 @@ export default class EditCharacter extends React.Component {
 	}
 
 	componentDidMount() {
-		this.assembleFullName();
 		this.props.getCharacterById(this.props.match.params.id);
+		this.assembleFullName();
 		this.props.getProjects();
 	}
 
@@ -118,7 +124,7 @@ export default class EditCharacter extends React.Component {
 	render() {
 		return this.props.loading
 			? <Loader loading={this.props.loading} />
-			:	<Container>
+			: <Container>
 				<Breadcrumb>
 					<Breadcrumb.Section>
 						<Link to="/">{intl.get('component.dashboard')}</Link>
@@ -232,10 +238,7 @@ export default class EditCharacter extends React.Component {
 								{this.props.projects !== void 0
 									? this.props.projects.map(project => {
 										return (
-											<option
-												defaultValue={this.props.character.project === project.id}
-												value={project._id}
-												key={`charoption-${project._id}`}>
+											<option defaultValue={this.props.character.project === project.id} value={project._id} key={`charoption-${project._id}`}>
 												{project.title}
 											</option>
 										);
@@ -245,7 +248,7 @@ export default class EditCharacter extends React.Component {
 						</Form.Field>
 
 						<Button onClick={evt => this.postnewCharacter(evt)} type="submit" className="btn btn-default">
-							{intl.get('character.action-add')}
+							{intl.get('character.action-edit')}
 						</Button>
 					</Form>
 				</Segment>
@@ -264,9 +267,9 @@ EditCharacter.propTypes = {
 		middlename: PropTypes.string,
 		lastname  : PropTypes.string,
 		fullname  : PropTypes.string,
-		gender     : PropTypes.string,
-		birthday   : PropTypes.string,
-		origin     : PropTypes.string,
-		project    : PropTypes.string
+		gender    : PropTypes.string,
+		birthday  : PropTypes.string,
+		origin    : PropTypes.string,
+		project   : PropTypes.string
 	})
 };

@@ -20,6 +20,9 @@ export default class ProjectsList extends React.Component {
 		};
 	}
 
+	componentWillMount() {
+		this.props.getProjects();
+	}
 	componentDidMount() {
 		this.props.getProjects();
 	}
@@ -29,8 +32,9 @@ export default class ProjectsList extends React.Component {
 	 * triggers deleteSpecificProject with the given id
 	 * @param {*} id The id of the specific project
 	 */
-	deleteSpecificProject(id) {
+	deleteSpecificProject = id => {
 		this.props.deleteSpecificProject(id);
+		this.props.getProjects();
 	}
 
 	/**
@@ -104,10 +108,7 @@ export default class ProjectsList extends React.Component {
 									<Link to={`/editproject/${project._id}`}>
 										<Button circular basic icon="edit" color="blue" content={intl.get('app.edit')} />
 									</Link>
-									<Button circular basic
-										icon="delete"
-										color="red"
-										onClick={() => this.toggleDeleteModal(project._id)} content={intl.get('app.delete')} />
+									<Button circular basic icon="delete" color="red" onClick={() => this.toggleDeleteModal(project._id)} content={intl.get('app.delete')} />
 								</Card.Content>
 							</Card>
 						);
@@ -121,7 +122,7 @@ export default class ProjectsList extends React.Component {
 	 * Method displayProjectBoard
 	 * @param {string} props
 	 */
-	displayProjectBoard = (props) => {
+	displayProjectBoard = props => {
 		return (
 			<Grid columns="equal" divided relaxed>
 				<Grid.Row>
@@ -154,7 +155,9 @@ export default class ProjectsList extends React.Component {
 
 					<Grid.Column textAlign="center">
 						<Header>{intl.get('project.status-inprogress')}</Header>
+
 						<Divider />
+
 						{props.projects !== void 0
 							? <Card.Group>
 								{props.projects.map((project, index) => {
@@ -297,7 +300,7 @@ export default class ProjectsList extends React.Component {
 					</Header>
 					<Divider />
 					<Button>
-						<Icon name='add'/> <Link to="/addproject">{intl.get('project.action-add')}</Link>
+						<Icon name="add" /> <Link to="/addproject">{intl.get('project.action-add')}</Link>
 					</Button>
 
 				</Segment>
@@ -313,17 +316,3 @@ ProjectsList.propTypes = {
 	getProjects          : PropTypes.func,
 	deleteSpecificProject: PropTypes.func
 };
-
-
-// Project PropTypes
-/*
-	projects             : PropTypes.shape({
-		_id   : PropTypes.number,
-		title : PropTypes.string,
-		type  : PropTypes.string,
-		status: PropTypes.string,
-		series: PropTypes.string,
-		desc  : PropTypes.string,
-		tags  : PropTypes.array
-	})
-*/

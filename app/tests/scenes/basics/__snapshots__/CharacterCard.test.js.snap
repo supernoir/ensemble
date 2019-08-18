@@ -22,7 +22,7 @@ exports[`CharacterCard -- Snapshot Test 1`] = `
     <CardMeta>
       <Icon
         as="i"
-        name="transgender alternate"
+        name="transgender"
       />
        
       TestGender
@@ -32,15 +32,24 @@ exports[`CharacterCard -- Snapshot Test 1`] = `
     </CardDescription>
   </CardContent>
   <CardContent>
-    <Icon
-      as="i"
-      name="book"
-    />
-     
-    <Link
-      replace={false}
-      to="/project/TestTitle"
-    />
+    <Button
+      as="button"
+      basic={true}
+      icon={true}
+      labelPosition="left"
+    >
+      <Icon
+        as="i"
+        name="book"
+      />
+       
+      <Link
+        replace={false}
+        to="/project/2"
+      >
+        TestTitle
+      </Link>
+    </Button>
   </CardContent>
   <CardContent
     extra={true}
@@ -51,17 +60,13 @@ exports[`CharacterCard -- Snapshot Test 1`] = `
     >
       <Button
         as="button"
+        basic={true}
         circular={true}
-        color="green"
+        color="blue"
+        content=""
         icon="edit"
       />
     </Link>
-    <Button
-      as="button"
-      circular={true}
-      color="red"
-      icon="delete"
-    />
   </CardContent>
 </Card>
 `;

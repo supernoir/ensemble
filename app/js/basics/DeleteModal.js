@@ -44,7 +44,7 @@ export default withRouter(DeleteModal);
 
 DeleteModal.propTypes = {
 	close        : PropTypes.func,
-	open         : PropTypes.func,
+	open         : PropTypes.bool,
 	history      : PropTypes.object,
 	confirmDelete: PropTypes.func,
 	entity       : PropTypes.string,

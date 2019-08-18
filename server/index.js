@@ -96,7 +96,7 @@ const Tags = mongoose.model('Tags', {
 const Characters = mongoose.model('Characters', {
 	// The project associated with the character
 	// TODO: project should be a ref!
-	project    : String,
+	projects   : Array,
 	// A Description of the character
 	desc       : String,
 	// The first name of the character
@@ -129,21 +129,23 @@ const Projects = mongoose.model('Projects', {
 	title        : String,
 	// The project status => statuses are saved in PROJECT_STATUS
 	status       : String,
-	// The author of the Project
-	author       : String,
+	// The authors of the Project
+	authors      : Array,
 	// Potential Collaborators on the project
 	collaborators: Array,
 	// If String given, Project will be grouped into the given series
 	// TODO: should be ref!
 	series       : String,
 	// The cast of characters associated with this project
-	cast         : String,
+	cast         : Array,
 	// A description for the project
 	desc         : String,
 	// The potential genre of the project
-	genre        : String,
+	genres       : Array,
 	// A set of tags to describe the given project
-	tags         : Array
+	tags         : Array,
+	// A set of texts compiled into the projects contents
+	content      : Array
 });
 
 /**
@@ -203,13 +205,13 @@ app.post('/project', (req, res) => {
 	project.type = req.body.type;
 	project.title = req.body.title;
 	project.status = req.body.status;
-	project.author = req.body.author;
+	project.authors = req.body.authors;
 	project.collaborators = req.body.collaborators;
 	//TODO: Series should be a ref!
 	project.series = req.body.series;
 	project.cast = req.body.cast;
 	project.desc = req.body.desc;
-	project.genre = req.body.genre;
+	project.genres = req.body.genres;
 	project.read = req.body.read;
 	project.tags = req.body.tags;
 
@@ -230,12 +232,12 @@ app.put('/project/:id', (req, res) => {
 	editedProject.type = req.body.type;
 	editedProject.title = req.body.title;
 	editedProject.status = req.body.status;
-	editedProject.author = req.body.author;
+	editedProject.authors = req.body.authors;
 	editedProject.collaborators = req.body.collaborators;
 	editedProject.series = req.body.series;
 	editedProject.cast = req.body.cast;
 	editedProject.desc = req.body.desc;
-	editedProject.genre = req.body.genre;
+	editedProject.genres = req.body.genres;
 	editedProject.tags = req.body.tags;
 
 	Projects.findByIdAndUpdate(req.params.id, editedProject, { upsert: true }, (error, project) => {
@@ -247,7 +249,7 @@ app.put('/project/:id', (req, res) => {
 	});
 });
 
-app.delete('/project', (req, res) => {
+app.delete('/project/:id', (req, res) => {
 	Projects.findByIdAndRemove(req.params.id, (error, project) => {
 		if (error) res.send(error);
 		res.json({ message: 'Project deleted!', data: project });
@@ -288,7 +290,7 @@ app.post('/character', (req, res, next) => {
 	character.nationality = req.body.nationality;
 	character.origin = req.body.origin;
 	character.gender = req.body.gender;
-	character.project = req.body.project;
+	character.projects = req.body.projects;
 	character.series = req.body.series;
 	character.desc = req.body.desc;
 
@@ -312,7 +314,7 @@ app.put('/character/:id', (req, res) => {
 	editedCharacter.nationality = req.body.nationality;
 	editedCharacter.origin = req.body.origin;
 	editedCharacter.gender = req.body.gender;
-	editedCharacter.project = req.body.project;
+	editedCharacter.projects = req.body.projects;
 	editedCharacter.series = req.body.series;
 	editedCharacter.desc = req.body.desc;
 
@@ -339,8 +341,8 @@ app.post('/edit_character', (req, res) => {
 	});
 });
 
-app.post('/delete_character', (req, res) => {
-	Characters.findByIdAndRemove(req.body._id, (err, character) => {
+app.delete('/character/:id', (req, res) => {
+	Characters.findByIdAndRemove(req.params.id, (err, character) => {
 		if (err) res.send(err);
 		res.json({ message: 'Character deleted!', data: character });
 	});
@@ -500,10 +502,9 @@ const getDbReadyState = () => {
 const getBackupDirs = () => {
 	let source = '../db_backups/';
 	const dirs = p => {
-		return fs.readdirSync(p)
-			.filter(f => {
-				return fs.statSync(path.join(p, f)).isDirectory();
-			});
+		return fs.readdirSync(p).filter(f => {
+			return fs.statSync(path.join(p, f)).isDirectory();
+		});
 	};
 	return dirs(source);
 };

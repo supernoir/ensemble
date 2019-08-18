@@ -8,3 +8,11 @@ export const projectStatus = {
 	EDITING    : 'editing',
 	PUBLISHED  : 'published'
 };
+
+export const projectStatusColormapping = {
+	draft      	: 'grey',
+	inprogress: 'blue',
+	inreview  	: 'red',
+	editing    	: 'yellow',
+	published  	: 'green'
+};

@@ -17,12 +17,28 @@ export default class CharactersList extends React.Component {
 
 	getProjectById = id => {
 		this.props.getProjectById(id);
-	};
+	}
+
+	parseProjectTitle = (project, character) => {
+		if (project._id === character.project) {
+			return project.title;
+		}
+	}
+
+	/**
+	 * deleteSpecificCharacter method
+	 * triggers deleteSpecificCharacter with the given id
+	 * @param {*} id The id of the specific character
+	 */
+	deleteSpecificCharacter = id => {
+		this.props.deleteSpecificCharacter(id);
+		this.props.getCharacters();
+	}
 
 	render() {
 		return this.props.loading
 			? <Loader loading={this.props.loading} />
-			:	<Container>
+			: <Container>
 				<Breadcrumb>
 					<Breadcrumb.Section>
 						<Link to="/">{intl.get('component.dashboard')}</Link>
@@ -40,23 +56,26 @@ export default class CharactersList extends React.Component {
 					</Header>
 					<Divider />
 					<Button>
-						<Icon name={'add'}/> <Link to="/addcharacter">{intl.get('character.action-add')}</Link>
+						<Icon name={'add'} /> <Link to="/addcharacter">{intl.get('character.action-add')}</Link>
 					</Button>
 				</Segment>
 
 				<Divider />
 
 				<Card.Group>
-					{this.props.characters.map((character, index) => {
-						return (
-							<CharacterCard
-								key={`${character}-${index}`}
-								character={character}
-								projectTitle={this.props.project !== void 0 ? this.props.project.title : ''}
-								getProjectTitle={() => this.getProjectById(character.project)}
-							/>
-						);
-					})}
+					{this.props.project !== void 0
+						? this.props.characters.map((character, index) => {
+							return (
+								<CharacterCard
+									key={`${character}-${index}`}
+									character={character}
+									projectTitle={this.parseProjectTitle(this.props.project, character)}
+									getProjectTitle={() => this.getProjectById(character.project)}
+									deleteSpecificCharacter={id => this.deleteSpecificCharacter(id)}
+								/>
+							);
+						})
+						: null}
 				</Card.Group>
 			</Container>;
 	}
@@ -68,7 +87,7 @@ CharactersList.propTypes = {
 	getProjectById: PropTypes.func,
 	characters    : PropTypes.arrayOf(
 		PropTypes.shape({
-			project: PropTypes.string,
+			project: PropTypes.string
 		})
 	),
 	project: PropTypes.shape({
