@@ -67,14 +67,6 @@ exports[`CharacterCard -- Snapshot Test 1`] = `
         icon="edit"
       />
     </Link>
-    <Button
-      as="button"
-      basic={true}
-      circular={true}
-      color="red"
-      content=""
-      icon="delete"
-    />
   </CardContent>
 </Card>
 `;

@@ -1,0 +1,91 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`CharactersList -- Snapshot Test 1`] = `
+<Container>
+  <Breadcrumb>
+    <BreadcrumbSection>
+      <Link
+        replace={false}
+        to="/"
+      />
+    </BreadcrumbSection>
+    <BreadcrumbDivider />
+    <BreadcrumbSection
+      active={true}
+    >
+      <Link
+        replace={false}
+        to="/characters"
+      />
+    </BreadcrumbSection>
+  </Breadcrumb>
+  <Segment>
+    <Header
+      as="h2"
+    >
+      <HeaderSubheader />
+    </Header>
+    <Divider />
+    <Button
+      as="button"
+    >
+      <Icon
+        as="i"
+        name="add"
+      />
+       
+      <Link
+        replace={false}
+        to="/addcharacter"
+      />
+    </Button>
+  </Segment>
+  <Divider />
+  <CardGroup>
+    <CharacterCard
+      character={
+        Object {
+          "_id": "1",
+          "birthday": "2019-01-01",
+          "desc": "Test1",
+          "first_name": "Harry",
+          "full_name": "Harry James Potter",
+          "gender": "Male",
+          "last_name": "Potter",
+          "middle_name": "James",
+          "origin": "Little Whinging, United Kingdom",
+          "projects": Array [
+            "1",
+            "2",
+          ],
+        }
+      }
+      deleteSpecificCharacter={[Function]}
+      getProjectTitle={[Function]}
+      key="[object Object]-0"
+    />
+    <CharacterCard
+      character={
+        Object {
+          "_id": "2",
+          "birthday": "2015-02-02",
+          "desc": "Test2",
+          "first_name": "Hermione",
+          "full_name": "Hermione Granger",
+          "gender": "Female",
+          "last_name": "Granger",
+          "middle_name": "",
+          "origin": "London, United Kingdom",
+          "projects": Array [
+            "2",
+            "3",
+          ],
+        }
+      }
+      deleteSpecificCharacter={[Function]}
+      getProjectTitle={[Function]}
+      key="[object Object]-1"
+    />
+  </CardGroup>
+</Container>
+`;
