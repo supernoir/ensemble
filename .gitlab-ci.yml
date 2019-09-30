@@ -1,0 +1,59 @@
+---
+image: node:8.16.0-jessie
+
+variables:
+  NODE_VERSION: "8.16.0"
+
+stages:
+  - test
+  - build
+
+
+# ----------------------------------
+# TEST
+# ----------------------------------
+
+test app:
+  stage: test
+  image: node:$NODE_VERSION
+  before_script:
+  - cd app
+  script:
+    - npm install
+    - npm run test-app
+
+test server:
+  stage: test
+  image: node:$NODE_VERSION
+  before_script:
+    - cd server
+  script:
+    - npm install
+    - npm run test
+
+
+# ----------------------------------
+# BUILD
+# ----------------------------------
+
+build app:
+  only:
+  - master
+  stage: build
+  image: node:$NODE_VERSION
+  before_script:
+  - cd app
+  script:
+    - npm install
+    - npm run start-server
+
+build server:
+  only:
+  - master
+  stage: build
+  image: node:$NODE_VERSION
+  before_script:
+    - cd server
+  script:
+    - npm install
+    - npm run build

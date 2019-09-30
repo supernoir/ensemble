@@ -1,0 +1,45 @@
+{
+  "compilerOptions": {
+    //"outFile": "../htdocs/macmon/ui/tsc.js",
+    "sourceMap": true,
+    "noImplicitAny": true,
+    "module": "commonjs",
+    "target": "es6",
+    "jsx": "react",
+    "isolatedModules": false,
+    "moduleResolution": "node",
+    "resolveJsonModule": true,
+    "lib": [
+      "dom",
+      "dom.iterable",
+      "es6",
+      "es2015.core",
+      "es2015.iterable",
+      "es2015.promise",
+      "es2015.collection",
+      "es2016.array.include",
+      "es2017.string",
+      "es2017.object",
+      "es2018.promise",
+      "scripthost"
+    ],
+    "removeComments": false,
+    "skipLibCheck": true,
+    // Make synthetic default import so we don't have to import React with "import * as React from 'react'"
+    // This is only to get compiling work. The browser will throw errors!
+    "allowSyntheticDefaultImports": true,
+    // https://github.com/Microsoft/TypeScript/wiki/What%27s-new-in-TypeScript#support-for-import-d-from-cjs-form-commonjs-modules-with---esmoduleinterop
+    // Otherwise we have to use "import * as React from 'react'"
+    "esModuleInterop": true,
+    // Only new line with LF
+    "newLine": "LF",
+    // Don't output emit
+    "noEmit": true
+  },
+  "include": [
+    "./**/*"
+  ],
+  "exclude": [
+    "node_modules"
+  ]
+}

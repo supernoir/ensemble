@@ -1,1 +1,12 @@
+# Ignore folders
 node_modules
+
+# Ignore hidden files
+.DS_Store
+
+# Ignore Lockfiles
+yarn.lock
+package-lock.json
+
+# Ignore Environment Variable Files
+.env

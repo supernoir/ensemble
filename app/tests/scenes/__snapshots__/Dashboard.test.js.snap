@@ -1,0 +1,35 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Dashboard -- Snapshot Test 1`] = `
+<Container>
+  <Segment>
+    <Header>
+      Dashboard
+    </Header>
+    <Divider />
+    <CardGroup>
+      <Card
+        header="Projects"
+        image="../../public/img/photo-1443188631128-a1b6b1c5c207.jpeg"
+        meta="0 Projects available"
+        onClick={[Function]}
+      />
+      <Card
+        header="Characters"
+        image="../../public/img/photo-1427805371062-cacdd21273f1.jpeg"
+        meta="0 Characters available"
+        onClick={[Function]}
+      />
+    </CardGroup>
+    <Header>
+      <Link
+        replace={false}
+        to="/events"
+      >
+        Recent Activity
+      </Link>
+      <Divider />
+    </Header>
+  </Segment>
+</Container>
+`;
